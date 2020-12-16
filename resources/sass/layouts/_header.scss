@@ -1,0 +1,10 @@
+.l-header {
+  padding: 45px 80px 30px;
+  background: #fff;
+  height: 15%;
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}

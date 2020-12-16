@@ -1,0 +1,35 @@
+
+.c-card {
+  background : #fff;
+  height : 200px;
+  width : 100%;
+  margin-bottom : 60px;
+  &__body {
+    display : flex;
+    height : 100%;
+  }
+  &__date {
+    background : #ddd;
+    color : #fff;
+    border-radius: 50%;
+    width : 150px;
+    height : 150px;
+    text-align: center;
+    font-size: 1.8rem;
+    padding-top : 30px;
+    margin : 0 auto;
+    & span {
+      font-size : 1.25rem;
+      border-top : 1px solid #fff;
+      display : block;
+      padding-top : 5px;
+      width: 80%;
+      margin : 0 auto;
+    }
+  }
+  &__text {
+    padding : 30px;
+    border-left : 1px solid #ddd;
+    width : 80%;
+  }
+}

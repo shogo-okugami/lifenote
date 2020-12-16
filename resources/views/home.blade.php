@@ -1,23 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
+<div class="c-card">
+  <div class="c-card__body">
+    <div class="fullheight padding20px width20">
+      <div class="c-card__date">
+        12 / 14<span>2020</span>
+      </div>
     </div>
+    <div class="c-card__text">
+      <p>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+    </p>
+    </div>
+  </div>
+</div>
+
+<div class="c-card">
+  <div class="c-card__body">
+    <div class="fullheight padding20px width20">
+      <div class="c-card__date">
+        12/14<span>2020</span>
+      </div>
+    </div>
+    <div class="c-card__text">
+      <p>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+    </p>
+    </div>
+  </div>
+</div>
+
+<div class="c-card">
+  <div class="c-card__body">
+    <div class="fullheight padding20px width20">
+      <div class="c-card__date">
+        12/14<span>2020</span>
+      </div>
+    </div>
+    <div class="c-card__text">
+      <p>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+        今日はとても寒い日でした。しかも、風が強くていつもより寒かった。<br>
+    </p>
+    </div>
+  </div>
 </div>
 @endsection

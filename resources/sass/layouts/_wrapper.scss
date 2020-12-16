@@ -1,0 +1,12 @@
+
+.l-wrapper {
+  display : flex;
+  justify-content: space-between;
+  height : 85%;
+  &__inner {
+    padding : 60px 0;
+    margin : 0 auto;
+    width : 1200px;
+    height : 100%;
+  }
+}

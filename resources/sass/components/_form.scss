@@ -1,0 +1,19 @@
+
+.c-form {
+  background : #fff;
+  padding : 40px;
+  min-height : 100%;
+  &__item {
+    margin-bottom : 60px;
+  }
+  &__input {
+    border-bottom :  1px solid #3ca8f0;
+    width : 100%;
+    padding : 10px;
+  }
+  &__textarea {
+    border :  1px solid #3ca8f0;
+    width : 100%;
+    padding : 10px;
+  }
+}
