@@ -7,7 +7,7 @@
     <input id="js-input-date" name="created_at" class="c-form__input js-flatpickr" value="{{ date('Y-m-d') }}">
   </div>
   <div class="c-form__item">
-    <textarea name="text" class="c-form__textarea" rows="20" placeholder="Please write a dialry"></textarea>
+    <textarea name="text" class="c-form__textarea" rows="18" placeholder="Please write a dialry"></textarea>
     @error('text')
       <div class="c-form__message">{{ $message }}</div>
     @enderror
