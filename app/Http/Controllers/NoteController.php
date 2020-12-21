@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Note;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreNoteRequest;
+use DebugBar\DebugBar;
+use Illuminate\Contracts\Cache\Store;
+use Illuminate\Support\Facades\Log;
 
 class NoteController extends Controller
 {
@@ -23,6 +26,7 @@ class NoteController extends Controller
       ->get();
 
     return view('home', ['notes' => $notes]);
+    
   }
 
   /**
@@ -43,13 +47,12 @@ class NoteController extends Controller
    */
   public function store(StoreNoteRequest $request)
   {
-    $note = new Note;
-
-    $note->fill($request->all());
-    $note->user_id = Auth::id();
-
+    $user_id = Auth::id();
+    $note = Note::updateOrCreate(
+      ['created_at' => $request->created_at],
+      ['text' => $request->text, 'user_id' => $user_id, 'created_at' => $request->created_at,]
+    );
     $note->save();
-
     return redirect()->route('home');
   }
 
@@ -82,9 +85,12 @@ class NoteController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(StoreNoteRequest $request, $id, ?Note $note)
   {
-    //
+    $note->where('id', $id);
+    $note->text = $request->text;
+    $note->user_id = Auth::id();
+    $note->save();
   }
 
   /**
