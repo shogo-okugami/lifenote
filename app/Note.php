@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Note extends Model
 {
 
+  protected $fillable = ['created_at','text'];
+  
   public $dt; //日記投稿日
 
   public function __construct(array $attributes = [])
