@@ -17,7 +17,7 @@ class NoteController extends Controller
   public function index()
   {
     $user_id = Auth::id();
-    
+
     $notes = Note::where('user_id', $user_id)
       ->orderBy('updated_at', 'desc')
       ->get();
@@ -43,20 +43,14 @@ class NoteController extends Controller
    */
   public function store(StoreNoteRequest $request)
   {
-
     $note = new Note;
 
-    $note->text = $request->text;
-    $note->created_at = $request->created_at;
+    $note->fill($request->all());
     $note->user_id = Auth::id();
 
-    if ($note->save()) {
+    $note->save();
 
-      return redirect('home');
-    } else {
-
-      return redirect()->route('notes.create');
-    }
+    return redirect()->route('home');
   }
 
   /**
