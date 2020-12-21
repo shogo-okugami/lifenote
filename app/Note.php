@@ -8,30 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Note extends Model
 {
 
-  protected $fillable = ['created_at','text'];
-  
-  public $dt; //日記投稿日
-
-  public function __construct(array $attributes = [])
-  {
-    parent::__construct($attributes);
-    
-    $this->dt = new Carbon($this->created_at);
-  }
+  protected $fillable = ['created_at','text','user_id'];
 
   //アクセサ　年・月・日
   public function getYearAttribute()
   {
-    return $this->dt->year;
+    return $this->created_at->year;
   }
 
   public function getMonthAttribute()
   {
-    return $this->dt->month;
+    return $this->created_at->month;
   }
 
   public function getDayAttribute()
   {
-    return $this->dt->day;
+    return $this->created_at->day;
   }
 }
