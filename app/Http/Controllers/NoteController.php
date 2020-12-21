@@ -16,7 +16,13 @@ class NoteController extends Controller
    */
   public function index()
   {
-    //
+    $user_id = Auth::id();
+    
+    $notes = Note::where('user_id', $user_id)
+      ->orderBy('updated_at', 'desc')
+      ->get();
+
+    return view('home', ['notes' => $notes]);
   }
 
   /**
@@ -47,11 +53,9 @@ class NoteController extends Controller
     if ($note->save()) {
 
       return redirect('home');
-
     } else {
 
       return redirect()->route('notes.create');
-
     }
   }
 
