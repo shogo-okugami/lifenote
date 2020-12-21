@@ -7,7 +7,7 @@
   <div class="c-card__body">
     <div class="c-card__date">
       <div class="c-card__date__inner">
-        {{ $note-><span>2020</span>
+        {{ $note->month }} / {{ $note->day }}<span>{{ $note->year }}</span>
       </div>
     </div>
     <div class="c-card__text">
