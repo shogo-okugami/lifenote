@@ -13,42 +13,46 @@ const Calendar = () => {
   const lastMonthEndDate = new Date(year, month - 1, 0)
   const lastMonthEndDayCount = lastMonthEndDate.getDate()
   const startDay = startDate.getDay()
+
   let dayCount = 1
 
   const calendarBody = () => {
 
     return (
       <tbody className="p-calendar__body">
+        <tr>
+          {
+            weeks.map((day, index) => <td key={index}>{day}</td>)
+          }
+        </tr>
         {(() => {
-          (() => {
-            for (let i = 0; i < weeks.length; i++) {
-              <td>{weeks[i]}</td>
-            }
+          const rows = []
+          for (let w = 0; w < 6; w++) {
+            rows.push(<tr>
+              {
+                (() => {
 
-            (() => {
-              for (let w = 0; w < 6; w++) {
-                <tr>
-                  {(() => {
-                    for (let d = 0; d < 7; d++) {
-                      if (w == 0 && d < startDay) {
-                        // 1行目で1日の曜日の前
-                        let num = lastMonthEndDayCount - startDay + d + 1;
-                        < td className="is-disabled" >{num}</td>
-                      } else if (dayCount > endDayCount) {
-                        // 末尾の日数を超えた
-                        let num = dayCount - endDayCount;
-                        < td className="is-disabled" >{num}</td>
-                        dayCount++;
-                      } else {
-                        <td>{dayCount}</td>
-                        dayCount++;
-                      }
+                  const date = [];
+
+                  for (let d = 0; d < 7; d++) {
+                    if (w === 0 && d < startDay) {
+                      let num = lastMonthEndDayCount - startDay + d + 1
+                      date.push(<td>{num}</td>)
+                    } else if (dayCount > endDayCount) {
+                      let num = dayCount - endDayCount
+                      date.push(<td>{num}</td>)
+                      dayCount++
+                    } else {
+                      date.push(<td>{dayCount}</td>)
+                      dayCount++
                     }
-                  })()}
-                </tr>;
+                  }
+                  return date
+                })()
               }
-            })()
-          })()
+            </tr>)
+          }
+          return rows
         })()}
       </tbody>
     )
