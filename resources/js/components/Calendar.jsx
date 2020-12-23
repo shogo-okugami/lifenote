@@ -8,7 +8,7 @@ const Calendar = () => {
 
   const isFirstRender = useRef(false)
 
-  const date = new Date()
+  const [date, setDate] = useState(new Date())
   const [year, setYear] = useState(date.getFullYear())
   const [month, setMonth] = useState(date.getMonth() + 1)
   console.log(year, month)
@@ -36,17 +36,16 @@ const Calendar = () => {
   }
 
   useEffect(() => {
-    isFirstRender.current = true
+    console.log(`本当の初回レンダー`)
   }, [])
 
   useEffect(() => {
-    if (isFirstRender) {
-      isFirstRender.current = false
-    } else {
-      console.log(`effect${month}`)
-      if (month === 0) {
-        setYear(year + 1)
+    if (isFirstRender.current) {
+      if( month === 1 ){
+          setYear(year + 1)
       }
+    } else {
+      isFirstRender.current = true;
     }
   }, [month])
 
