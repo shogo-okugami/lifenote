@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -6,13 +6,19 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 const Calendar = () => {
 
+  const isFirstRender = useRef(false)
+
   const date = new Date()
   const [year, setYear] = useState(date.getFullYear())
   const [month, setMonth] = useState(date.getMonth() + 1)
+  console.log(year, month)
 
   const startDate = new Date(year, month - 1, 1) //月の最初の年月日を取得
+  console.log(startDate)
 
   const endDate = new Date(year, month, 0) //月の最後の年月日を取得 
+  console.log(endDate)
+  console.log(month)
   const endDayCount = endDate.getDate() //月の末日を取得
   const lastMonthEndDate = new Date(year, month - 1, 0)
   const lastMonthEndDayCount = lastMonthEndDate.getDate()
@@ -21,13 +27,28 @@ const Calendar = () => {
   let dayCount = 1
 
   const increaseMonth = () => {
-    setMonth(month + 1)
+    console.log(month)
+    month === 12 ? setMonth(1) : setMonth(month + 1);
   }
 
   const decreaceMonth = () => {
-    setMonth(month - 1)
+    month === 1 ? setMonth(12) : setMonth(month - 1);
   }
 
+  useEffect(() => {
+    isFirstRender.current = true
+  }, [])
+
+  useEffect(() => {
+    if (isFirstRender) {
+      isFirstRender.current = false
+    } else {
+      console.log(`effect${month}`)
+      if (month === 0) {
+        setYear(year + 1)
+      }
+    }
+  }, [month])
 
   const calendarBody = () => {
 
