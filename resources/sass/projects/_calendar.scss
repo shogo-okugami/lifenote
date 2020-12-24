@@ -1,0 +1,62 @@
+.p-calendar {
+  background: #fff;
+  padding: 40px;
+  color: #444;
+  &__heading {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px 0;
+    letter-spacing: 1px;
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+  }
+  & table {
+    padding: 40px;
+  }
+  &__body {
+    width: 50%;
+    margin: 0 auto;
+  }
+  &__date {
+    padding: 25px 0;
+    font-size: 18px;
+    text-align: center;
+    &:first-child {
+      color: $red;
+    }
+    &:last-child {
+      color: $blue;
+    }
+    &--disabled {
+      padding: 25px 0;
+      font-size: 18px;
+      text-align: center;
+      color: #ccc;
+    }
+  }
+  &__switch {
+    &--prev {
+      position: absolute;
+      top: 35%;
+      right: 90%;
+      & img {
+        width: 25px;
+        height: 25px;
+        display: block;
+      }
+    }
+    &--next {
+      position: absolute;
+      top: 35%;
+      left: 90%;
+      & img {
+        width: 25px;
+        height: 25px;
+        display: block;
+      }
+    }
+  }
+}
