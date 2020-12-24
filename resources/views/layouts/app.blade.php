@@ -14,8 +14,10 @@
   <script src="{{ asset('js/app.js') }}" defer></script>
 
   <!-- Fonts -->
-  <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -36,7 +38,7 @@
       <nav class="l-nav">
         <ul class="c-list">
           <li class="c-list__item"><a href="{{ route('home') }}">home</a></li>
-          <li class="c-list__item"><a>calendar</a></li>
+          <li class="c-list__item"><a href="{{ route('calendar') }}">calendar</a></li>
           <li class="c-list__item"><a href="{{ route('notes.create') }}">dialry</a></li>
           <li class="c-list__item"><a>logout</a></li>
         </ul>
