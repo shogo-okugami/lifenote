@@ -22,11 +22,11 @@ class NoteController extends Controller
     $user_id = Auth::id();
 
     $notes = Note::where('user_id', $user_id)
-      ->orderBy('updated_at', 'desc')
+      ->orderBy('created_at', 'desc')
       ->get();
 
     return view('home', ['notes' => $notes]);
-    
+
   }
 
   /**
