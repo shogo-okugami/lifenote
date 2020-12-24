@@ -23,4 +23,8 @@ Auth::routes();
 
 Route::get('/home', 'NoteController@index')->name('home')->middleware('auth');
 
-Route::resource('notes', 'NoteController')->except(['index','show'])->middleware('auth');
+Route::resource('notes', 'NoteController')->except(['index', 'show'])->middleware('auth');
+
+Route::get('calendar', function () {
+  return view('calendar');
+})->name('calendar')->middleware('auth');
