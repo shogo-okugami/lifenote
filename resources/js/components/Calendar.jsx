@@ -1,24 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-
-const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+import weeks from '../weeks'
+import months from '../months'
 
 const Calendar = () => {
 
-  const isFirstRender = useRef(false)
-
   const [date, setDate] = useState(new Date())
-  const [year, setYear] = useState(date.getFullYear())
-  const [month, setMonth] = useState(date.getMonth() + 1)
-  console.log(year, month)
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1;
 
   const startDate = new Date(year, month - 1, 1) //月の最初の年月日を取得
-  console.log(startDate)
 
   const endDate = new Date(year, month, 0) //月の最後の年月日を取得 
-  console.log(endDate)
-  console.log(month)
   const endDayCount = endDate.getDate() //月の末日を取得
   const lastMonthEndDate = new Date(year, month - 1, 0)
   const lastMonthEndDayCount = lastMonthEndDate.getDate()
@@ -26,28 +19,13 @@ const Calendar = () => {
 
   let dayCount = 1
 
-  const increaseMonth = () => {
-    console.log(month)
-    month === 12 ? setMonth(1) : setMonth(month + 1);
+  const changeNextMonth = () => {
+    month === 12 ? setDate(new Date(year + 1 , month  - 12)) : setDate(new Date(year , month ));
   }
 
-  const decreaceMonth = () => {
-    month === 1 ? setMonth(12) : setMonth(month - 1);
+  const changePrevMonth = () => {
+    month === 1 ? setDate(new Date(year - 1 , month + 10)) : setDate(new Date(year , month - 2 ));
   }
-
-  useEffect(() => {
-    console.log(`本当の初回レンダー`)
-  }, [])
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      if( month === 1 ){
-          setYear(year + 1)
-      }
-    } else {
-      isFirstRender.current = true;
-    }
-  }, [month])
 
   const calendarBody = () => {
 
@@ -94,10 +72,10 @@ const Calendar = () => {
   return (
     <div className="p-calendar">
       <div className="p-calendar__heading">
-        <div className="p-calendar__switch"><img onClick={() => decreaceMonth()} src="images/nav-left.svg" /></div>
+        <div className="p-calendar__switch--prev"><img onClick={() => changePrevMonth()} src="images/nav-left.svg" /></div>
         <div>{months[month - 1]}</div>
         <div>{year}</div>
-        <div className="p-calendar__switch"><img onClick={() => increaseMonth()} src="images/nav-right.svg" /></div>
+        <div className="p-calendar__switch--next"><img onClick={() => changeNextMonth()} src="images/nav-right.svg" /></div>
       </div>
       <table className="p-calendar__body">
         <tbody>
