@@ -17,15 +17,14 @@ class NoteController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
-    $user_id = Auth::id();
+    $user_id = $request->input('user_id');
 
-    $notes = Note::where('user_id', $user_id)
-      ->orderBy('created_at', 'desc')
+    $notes = Note::where('user_id',$user_id)->orderBy('created_at', 'desc')
       ->get();
 
-    return view('home', ['notes' => $notes]);
+    return response()->json($notes);
 
   }
 
