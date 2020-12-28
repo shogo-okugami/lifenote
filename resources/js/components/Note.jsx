@@ -16,8 +16,8 @@ const Note = (props) => {
         try {
             const res = await fetch(`api/home?user_id=${props.userId}`)
             const notes = await res.json()
-            console.log(notes)
-            setNotes(notes)
+            console.log(notes.data)
+            setNotes(notes.data)
         } catch (error) {
             console.log(error)
         }
