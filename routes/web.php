@@ -21,7 +21,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'NoteController@index')->name('home')->middleware('auth');
+Route::get('/home', function(){
+    return view('home');
+})->name('home')->middleware('auth');
 
 Route::resource('notes', 'NoteController')->except(['index', 'show'])->middleware('auth');
 
