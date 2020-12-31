@@ -1,58 +1,86 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import InfiniteScroll from 'react-infinite-scroller';
+
 
 const Note = (props) => {
 
-    const [notes, setNotes] = useState([])
+    const [index, setIndex] = useState({
+        notes: [],
+        page: 0,
+        nextPage: 20,
+    })
 
-    useEffect(() => {
-        getNotes()
-    }, [])
+    const [hasMore, setHasMore] = useState(true)
 
+    const loadMore = async (pageStart) => {
 
-
-    const getNotes = async () => {
-
-        try {
-            const res = await fetch(`api/home?user_id=${props.userId}`)
-            const notes = await res.json()
-            console.log(notes.data)
-            setNotes(notes.data)
-        } catch (error) {
-            console.log(error)
+        console.log(hasMore)
+        console.log(index.page)
+        console.log(index.nextPage)
+        if (hasMore) {
+            try {
+                const res = await fetch(`api/home?user_id=${props.userId}&page=${index.page}&nextPage=${index.nextPage}`)
+                const resp = await res.json()
+                console.log(resp)
+                if (resp.data.length > 0) {
+                    setIndex({
+                        notes: [...index.notes,...resp.data],
+                        page: index.page + 20,
+                        nextPage: 20,
+                    })
+                } else if (resp.data.length < 1) {
+                    setHasMore(false)
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
-
     }
 
-    const getNoteDate = (date) =>{
-      let str = date.substr(0,10)
-      str = str.split('-')
-      date = str.map ( value => parseInt(value))
-      date = new Date(date[0],date[1]-1,date[2])
-      //date = date.substr(0,16)
-      console.log(date)
-      return str
+    const getNoteDate = (date) => {
+        let str = date.substr(0, 10)
+        str = str.split('-')
+        date = str.map(value => parseInt(value))
+        date = new Date(date[0], date[1] - 1, date[2])
+        //date = date.substr(0,16)
+        return str
     }
 
-    return (
-        <>{notes.map(note => {
-            return (
-                <div key={note.id} className="c-card">
-                    <div className="c-card__body">
-                        <div className="c-card__date">
-                            <div className="c-card__date__inner">
-                                <span>{ getNoteDate(note.created_at)}</span>
+    const loader = <div className="loader" key={0}>Loading ...</div>
+
+    const items = (
+        <>
+            {index.notes.map(note => {
+                return (
+                    <div key={note.id} className="c-card">
+                        <div className="c-card__body">
+                            <div className="c-card__date">
+                                <div className="c-card__date__inner">
+                                    <span>{getNoteDate(note.created_at)}</span>
+                                </div>
+                            </div>
+                            <div className="c-card__text">
+                                <p>
+                                    {note.text}
+                                </p>
                             </div>
                         </div>
-                        <div className="c-card__text">
-                            <p>
-                                {note.text}
-                            </p>
-                        </div>
                     </div>
-                </div>
-            )
-        })}
+                )
+            })}
+        </>
+    )
+
+    return (
+        <>
+            <InfiniteScroll
+                pageStart={index.page}
+                loadMore={loadMore}
+                hasMore={hasMore}
+                loader={loader}>
+                {items}
+            </InfiniteScroll>
         </>
     )
 }
