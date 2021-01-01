@@ -15,3 +15,4 @@ require('./bootstrap');
 require('./components/Calendar');
 require('./flatpickr');
 require('./components/NoteList')
+require('./components/Note')
