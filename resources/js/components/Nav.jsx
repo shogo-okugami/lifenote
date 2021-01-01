@@ -14,17 +14,27 @@ const Nav = () => {
     const handeleScroll = () => {
         let height = document.getElementById('header').offsetHeight
         if (document.documentElement.scrollTop > height) {
+            console.log('true')
             setIsFixed(true)
+        } else {
+            console.log('false')
+            setIsFixed(false)
         }
     }
 
+    const nav = document.getElementById('nav')
+    const main = document.getElementById('main')
+
     if (isFixed) {
-        const nav = document.getElementById('nav')
+
         nav.classList.add('is-fixed')
         let navWidth = nav.offsetWidth
-        const main = document.getElementById('main')
+
         console.log(navWidth)
         main.style.marginLeft = navWidth += 'px'
+    } else {
+        nav.classList.remove('is-fixed')
+        main.style.marginLeft = 0
     }
 
 
