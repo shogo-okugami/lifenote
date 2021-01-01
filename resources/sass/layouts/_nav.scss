@@ -3,4 +3,12 @@
   background : #fff;
   width : 20%;
   height : 100%;
+  &.is-fixed {
+    position : fixed;
+    width : 20%;
+    height : 100%;
+    background : #fff;
+    top : 0;
+    left : 0;
+  }
 }
