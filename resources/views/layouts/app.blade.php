@@ -25,7 +25,7 @@
 
 <body>
   <div id="app">
-    <header class="l-header">
+    <header id="header" class="l-header">
       <div class="l-header__inner">
         <h1 class="c-heading--large">lifenote</h1>
         <div>
@@ -34,15 +34,8 @@
       </div>
     </header>
 
-    <main class="l-wrapper">
-      <nav class="l-nav">
-        <ul class="c-list">
-          <li class="c-list__item"><a href="{{ route('home') }}">home</a></li>
-          <li class="c-list__item"><a href="{{ route('calendar') }}">calendar</a></li>
-          <li class="c-list__item"><a href="{{ route('notes.create') }}">dialry</a></li>
-          <li class="c-list__item"><a>logout</a></li>
-        </ul>
-      </nav>
+    <main id="main" class="l-wrapper">
+      <div id="nav" class="l-nav"></div>
       <div class="l-wrapper__inner">
         @yield('content')
       </div>
