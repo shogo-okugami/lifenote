@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import InfiniteScroll from 'react-infinite-scroller'
+import ReactLoading from 'react-loading'
 import Note from './Note'
 
 const NoteList = (props) => {
@@ -15,21 +16,17 @@ const NoteList = (props) => {
 
     const loadMore = async (pageStart) => {
 
-        console.log(hasMore)
-        console.log(index.page)
-        console.log(index.nextPage)
         if (hasMore) {
             try {
                 const res = await fetch(`api/home?user_id=${props.userId}&page=${index.page}&nextPage=${index.nextPage}`)
                 const resp = await res.json()
-                console.log(resp)
                 if (resp.data.length > 0) {
                     setIndex({
                         notes: [...index.notes, ...resp.data],
                         page: index.page + 20,
                         nextPage: 20,
                     })
-                } else if (resp.data.length < 1) {
+                } else {//if (resp.data.length < 1) {
                     setHasMore(false)
                 }
             } catch (error) {
@@ -38,7 +35,7 @@ const NoteList = (props) => {
         }
     }
 
-    const loader = <div className="loader" key={0}>Loading ...</div>
+    const loader = <ReactLoading key={0} type={'spokes'} color={'#444'} delay={5000} />
 
     const items = (
         <>
@@ -63,9 +60,4 @@ const NoteList = (props) => {
     )
 }
 
-const Element = document.getElementById('note');
-if (Element) {
-    const userId = Element.getAttribute('userId');
-    const parsedUserId = JSON.parse(userId);
-    ReactDOM.render(<NoteList userId={parsedUserId} />, Element);
-}
+export default NoteList

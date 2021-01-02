@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import weeks from '../weeks'
 import months from '../months'
@@ -8,6 +8,12 @@ const Calendar = () => {
     const [date, setDate] = useState(new Date())
     const year = date.getFullYear()
     const month = date.getMonth() + 1;
+    const [isOpen, setIsOpen] = useState(false)
+    const menuRef = useRef(null)
+
+    useEffect(() => {
+        isOpen && menuRef.current.focus()
+    }, [isOpen])
 
     const startDate = new Date(year, month - 1, 1) //月の最初の年月日を取得
 
@@ -73,8 +79,10 @@ const Calendar = () => {
         <div className="p-calendar">
             <div className="p-calendar__heading">
                 <div className="p-calendar__switch--prev"><img onClick={() => changePrevMonth()} src="images/nav-left.svg" /></div>
-                <div>{months[month - 1]}</div>
-                <div>{year}</div>
+                <div onClick={() => setIsOpen(!isOpen)} onBlur={() => setIsOpen(false)} ref={menuRef} tabIndex={0} className="p-calendar__month">{months[month - 1]}
+                    <ul className={"p-calendar__month__menu"} style={isOpen ? { display: 'block' } : { display: 'none' }}>{months.map((month, index) => <li onClick={() => setDate(new Date(year, index))} key={index}>{month}</li>)}</ul>
+                </div>
+                <div className="p-calendar__year">{year}</div>
                 <div className="p-calendar__switch--next"><img onClick={() => changeNextMonth()} src="images/nav-right.svg" /></div>
             </div>
             <table className="p-calendar__body">
@@ -86,7 +94,5 @@ const Calendar = () => {
     );
 }
 
-if (document.getElementById('calendar')) {
-    ReactDOM.render(<Calendar />, document.getElementById('calendar'));
-}
+export default Calendar
 

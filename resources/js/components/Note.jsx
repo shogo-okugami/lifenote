@@ -1,13 +1,10 @@
-import { result } from 'lodash';
+
 import React from 'react';
-import ReactDOM from 'react-dom';
 import weeks from '../weeks'
 
 const Note = (props) => {
 
     const note = props.note
-
-    console.log(note.created_at)
 
     const getNoteDate = (date) => {
         let str = date.substr(0, 10)
@@ -19,7 +16,6 @@ const Note = (props) => {
         result.month = date.getMonth() + 1
         result.year = date.getFullYear()
         result.ofWeek = weeks[date.getDay()]
-        console.log(result)
         return result
     }
 
