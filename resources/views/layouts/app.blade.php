@@ -24,23 +24,7 @@
 </head>
 
 <body>
-  <div id="app">
-    <header id="header" class="l-header">
-      <div class="l-header__inner">
-        <h1 class="c-heading--large">lifenote</h1>
-        <div>
-          login/register
-        </div>
-      </div>
-    </header>
-
-    <main id="main" class="l-wrapper">
-      <div id="nav" class="l-nav"></div>
-      <div class="l-wrapper__inner">
-        @yield('content')
-      </div>
-    </main>
-  </div>
+  @yield('content')
 </body>
 
 </html>
