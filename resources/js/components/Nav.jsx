@@ -1,7 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ReactDOM from 'react-dom'
+import { settingContext } from './App'
 
 const Nav = () => {
+
+    const useSettingContext = useContext(settingContext)
+
+    const { color, setColor } = useSettingContext.colorMode
+
+    const { dark: isDark, setIsDark } = useSettingContext.darkMode
+
+    console.log(isDark)
 
     useEffect(() => {
         document.addEventListener('scroll', handeleScroll)
@@ -31,12 +40,12 @@ const Nav = () => {
 
     return (
         <>
-            <nav id="nav" className="l-nav">
+            <nav id="nav" className={'l-nav ' + (isDark ? 'is-dark' : '')}>
                 <ul className="c-list">
-                    <li className="c-list__item"><a href="http://localhost:8888/lifenote/public/home">home</a></li>
-                    <li className="c-list__item"><a href="http://localhost:8888/lifenote/public/calendar">calendar</a></li>
-                    <li className="c-list__item"><a href="http://localhost:8888/lifenote/public/notes/create">dialry</a></li>
-                    <li className="c-list__item"><a>logout</a></li>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/home">home</a></li>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/calendar">calendar</a></li>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/notes/create">dialry</a></li>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a>logout</a></li>
                 </ul>
             </nav>
         </>
