@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React , {useContext} from 'react';
 import weeks from '../weeks'
+import { settingContext } from './App'
 
 const Note = (props) => {
 
@@ -21,13 +22,17 @@ const Note = (props) => {
 
     const date = getNoteDate(note.created_at)
 
+    const useSettingContext = useContext(settingContext)
+
+    const isDark = useSettingContext.darkMode.isDark
+
     return (
         <>
-            <div key={note.id} className="c-card">
+            <div key={note.id} className={'c-card ' + (isDark ? 'is-dark' : '')}>
                 <div className="c-card__body">
-                    <div className="c-card__date">
+                    <div className={'c-card__date ' + (isDark ? 'is-dark' : '')}>
                         <div className="c-card__date__inner">
-                            {date.month}/{date.day} {date.ofWeek}<span>{date.year}</span>
+                            {date.month}/{date.day} {date.ofWeek}<span className={ isDark ? 'is-dark' : ''}>{date.year}</span>
                         </div>
                     </div>
                     <div className="c-card__text">
