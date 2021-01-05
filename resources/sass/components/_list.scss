@@ -15,9 +15,10 @@
         color : #555;
       }
     }
-    /*&:last-of-type {
-      border-bottom: none;
+    &.is-dark {
+        background : #222;
+        color : #fff;
+        border-bottom : 1px solid #555;
     }
-    */
   }
 }

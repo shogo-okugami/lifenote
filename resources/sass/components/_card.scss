@@ -22,12 +22,23 @@
         padding-top: 5px;
         width: 80%;
         margin: 0 auto;
+        &.is-dark {
+          border-top : 1px solid #555;
+        }
       }
+    }
+    &.is-dark {
+        background : #222;
+        color : #fff;
+        border-right : 1px solid #555;
     }
   }
   &__text {
     padding: 30px;
-    border-left: 1px solid #ddd;
     width: 80%;
+  }
+  &.is-dark {
+      background : #222;
+      color : #fff;
   }
 }
