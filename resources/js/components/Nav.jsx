@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from 'react'
 import ReactDOM from 'react-dom'
 import { settingContext } from './App'
 
-const Nav = () => {
+const Nav = (props) => {
 
+    console.log(props.csrf)
     const useSettingContext = useContext(settingContext)
 
     const { color, setColor } = useSettingContext.colorMode
 
-    const { dark: isDark, setIsDark } = useSettingContext.darkMode
+    const  isDark = useSettingContext.darkMode.isDark
 
     console.log(isDark)
 
@@ -45,7 +46,7 @@ const Nav = () => {
                     <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/home">home</a></li>
                     <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/calendar">calendar</a></li>
                     <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/notes/create">dialry</a></li>
-                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a>logout</a></li>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><form method="post" action="http://localhost:8888/lifenote/public/logout"><button type="submit" name="_token" value={props.csrf}>logout</button></form></li>
                 </ul>
             </nav>
         </>
