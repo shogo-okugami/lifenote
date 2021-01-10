@@ -17,7 +17,7 @@ const ToggleDarkButton = (props) => {
 
     return (
         <>
-            <div className={'c-btn--toggleDark' + (isDark ? ' is-dark' : '')}onClick={() => handleClick()}><span><img src='images/moon.svg' /></span></div>
+            <div className={'c-btn--toggleDark' + (isDark ? ' is-dark' : '')}onClick={() => handleClick()}><span><img src="http://localhost:8888/lifenote/public/images/moon.svg" /></span></div>
         </>
     )
 
