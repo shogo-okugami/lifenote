@@ -1,13 +1,11 @@
 import React, { useRef } from 'react'
 import TextArea from './TextArea'
 
-const DialryForm = ({userId,csrf,date,errors}) => {
-
-    console.log(errors)
+const DialryForm = ({userId,csrf,date,isDark,errors}) => {
 
     return (
         <>
-            <form className="c-form" method="post" action="http://localhost:8888/lifenote/public/notes">
+            <form className={"c-form " + (isDark ? 'is-dark' : '')} method="post" action="http://localhost:8888/lifenote/public/notes">
                 <input type="hidden" name="_token" value={csrf} />
                 <input type="hidden" name="user_id" value={userId} />
                 <div className="c-form__item">
