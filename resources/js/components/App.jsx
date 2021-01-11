@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Nav from './Nav'
 import NoteList from './NoteList'
 import Calendar from './Calendar'
+import DialryForm from './DialryForm'
 import ToggleDarkButton from './ToggleDarkButton'
 
 const settingContext = createContext()
@@ -20,7 +21,7 @@ const setColorMode = (color) => {
 
 }
 
-const App = (props) => {
+const App = ({userId,isLogin,csrf,content,errors,date}) => {
 
     const colors = ['normal', 'red', 'blue', 'yellow', 'green', 'pink']
 
@@ -30,25 +31,27 @@ const App = (props) => {
 
     const darked = isDark ? 'is-dark' : ''
 
-    const content = () => {
+    console.log('App render')
 
-        switch (props.content) {
+    const main = (() => {
+
+        switch (content) {
 
             case 'note':
-                return <NoteList userId={props.userId} />
+                return <NoteList userId={userId} />
                 break;
             case 'calendar':
                 return <Calendar />
                 break
-            case 'diary':
-                return <Diary />
+            case 'dialry':
+                return <DialryForm userId={userId} csrf={csrf} errors={errors} date={date} isDark={isDark} />
                 break
             default:
-                return <NoteList userId={props.userId} />
+                return <NoteList userId={userId} />
                 break
         }
 
-    }
+    })()
 
     return (
         <>
@@ -56,14 +59,14 @@ const App = (props) => {
                 <header id="header" className={'l-header ' + darked}>
                     <div className="l-header__inner">
                         <h1 className="c-heading--large">lifenote</h1>
-                        {props.isLogin && <ToggleDarkButton userId={props.userId} />}
+                        {isLogin && <ToggleDarkButton userId={userId} />}
                     </div>
                 </header>
 
+                <Nav csrf={csrf} />
                 <main id="main" className={'l-wrapper ' + (isDark ? 'is-dark' : '')}>
-                    <Nav csrf={props.csrf} />
                     <div className="l-wrapper__inner">
-                        {content()}
+                        {main}
                     </div>
                 </main>
             </settingContext.Provider>
@@ -81,7 +84,11 @@ if (Element) {
     const parsedIsLogin = JSON.parse(isLogin)
     const content = Element.getAttribute('content')
     const parsedContent = JSON.parse(content)
-    ReactDOM.render(<App userId={parsedUserId} isLogin={parsedIsLogin} csrf={parsedCsrf} content={parsedContent} />, Element);
+    const errors = Element.getAttribute('errors')
+    const parsedErrors = JSON.parse(errors)
+    const date = Element.getAttribute('date')
+    const parsedDate = JSON.parse(date)
+    ReactDOM.render(<App userId={parsedUserId} isLogin={parsedIsLogin} csrf={parsedCsrf} content={parsedContent} errors={parsedErrors} date={parsedDate} />, Element);
 }
 
 export { settingContext }
