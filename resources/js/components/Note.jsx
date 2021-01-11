@@ -1,5 +1,5 @@
 
-import React , {useContext} from 'react';
+import React, { useContext } from 'react';
 import weeks from '../weeks'
 import { settingContext } from './App'
 
@@ -26,19 +26,32 @@ const Note = (props) => {
 
     const isDark = useSettingContext.darkMode.isDark
 
+    const nl2br = (text) => {
+        let regex = /(\n)/g
+        return text.split(regex).map((line, index) => {
+            if (line.match(regex)) {
+                return <br key={index} />
+            }
+            else {
+                return line
+            }
+        }
+        )
+    }
+
     return (
         <>
             <div key={note.id} className={'c-card ' + (isDark ? 'is-dark' : '')}>
                 <div className="c-card__body">
                     <div className={'c-card__date ' + (isDark ? 'is-dark' : '')}>
                         <div className="c-card__date__inner">
-                            {date.month}/{date.day} {date.ofWeek}<span className={ isDark ? 'is-dark' : ''}>{date.year}</span>
+                            {date.month}/{date.day} {date.ofWeek}<span className={isDark ? 'is-dark' : ''}>{date.year}</span>
                         </div>
                     </div>
                     <div className="c-card__text">
-                        <p>
-                            {note.text}
-                        </p>
+                        <div>
+                          {nl2br(note.text)}
+                        </div>
                     </div>
                 </div>
             </div>
