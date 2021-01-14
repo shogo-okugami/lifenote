@@ -1,18 +1,68 @@
-@mixin btn($backGround) {
-  color: #fff;
-  border-radius: 5px;
-  padding: 15px 5px;
-  width: 100%;
-  background: $backGround;
-  text-align: center;
-  font-size: 20px;
-  letter-spacing: 1px;
-  &:focus {
-    outline: 0;
-  }
+@mixin btn($color: #fff, $radius: 5px, $bgColor: #fff, $padding: 15px 5px, $width: 100%, $fontSize: 20px) {
+    color: $color;
+    border-radius: $radius;
+    padding: $padding;
+    width: $width;
+    background: $bgColor;
+    text-align: center;
+    font-size: $fontSize;
+    letter-spacing: 1px;
+    &:focus {
+        outline: 0;
+    }
 }
 .c-btn {
-  &--primary {
-    @include btn(#6cb2eb);
-  }
+    &--primary {
+        @include btn($bgColor: #6cb2eb);
+    }
+    &--toggleDark {
+        @include btn($radius: 20px, $padding: 0, $bgColor: none, $width: 48px);
+        border: 1px solid #444;
+        height: 20px;
+        position: relative;
+        & span {
+            display: block;
+            width: 30px;
+            background: #383838;
+            height: 30px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -25%;
+            left: 0;
+            transition : left 0.25s;
+            & img {
+              display : block;
+              position : absolute;
+              height : 20px;
+              width : 15px;
+              top : 15%;
+              right: 25%;
+            }
+        }
+        &.is-dark {
+            @include btn($radius: 20px, $padding: 0, $bgColor: #3c0257, $width: 48px);
+            border: 1px solid #280042;
+            height: 20px;
+            position: relative;
+            & span {
+                display: block;
+                width: 30px;
+                background: #5207b4;
+                height: 30px;
+                border-radius: 50%;
+                position: absolute;
+                bottom: -25%;
+                left: 50%;
+                transition : left 0.25s;
+                & img {
+                    display : block;
+                    position : absolute;
+                    height : 20px;
+                    width : 15px;
+                    top : 15%;
+                    right: 25%;
+                  }
+            }
+        }
+    }
 }
