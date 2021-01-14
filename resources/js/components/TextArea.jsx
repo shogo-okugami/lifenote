@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 const inputTextArea = ({ errors }) => {
 
+    console.log('TextArea render')
+
     const [count, setCount] = useState(0)
     const [isOver, setIsOver] = useState(false)
-
-    console.log('render')
 
     const handleKeyUp = (e) => {
 
@@ -15,13 +15,7 @@ const inputTextArea = ({ errors }) => {
 
         const newCount = value.length
 
-        console.log(newCount)
-
-        if ( newCount > 500) {
-            setIsOver(true)
-        } else {
-            setIsOver(false)
-        }
+        newCount > 500 ? setIsOver(true) : setIsOver(false)
 
     }
 
