@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Note;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreNoteRequest;
-use App\Http\Resources\NoteResource;
+use App\Http\Resources\Note as NoteResource;
 
 class NoteController extends Controller
 {
@@ -19,9 +19,10 @@ class NoteController extends Controller
     public function index(Request $request)
     {
         $user_id = $request->input('user_id');
+        $offset = $request->input('page');
+        $limit = $request->input('nextPage');
 
-        return NoteResource::collection(Note::where('user_id', $user_id)->orderBy('created_at','desc')->get());
-
+        return NoteResource::collection(Note::where('user_id', $user_id)->orderBy('created_at', 'desc')->offset($offset)->limit($limit)->get());
     }
 
     /**
@@ -42,10 +43,9 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
-        $user_id = Auth::id();
         $note = Note::updateOrCreate(
             ['created_at' => $request->created_at],
-            ['text' => $request->text, 'user_id' => $user_id, 'created_at' => $request->created_at,]
+            $request->all()
         );
         $note->save();
         return redirect()->route('home');
