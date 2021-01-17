@@ -1,16 +1,16 @@
-
 .l-wrapper {
-  display : flex;
-  justify-content: space-between;
-  min-height : 85%;
-  position : relative;
-  &__inner {
-    padding : 60px 0;
-    margin : 0 auto;
-    width : 1200px;
-    height : 100%;
-  }
-  &.is-dark {
-      background : #111;
-  }
+    width: 80%;
+    justify-content: space-between;
+    min-height: 85%;
+    position: relative;
+    background : #f8fafc;
+    &__inner {
+        padding: 70px 0;
+        margin: 0 auto;
+        width: 80%;
+        height: 100%;
+    }
+    &.is-dark {
+        background: #111;
+    }
 }

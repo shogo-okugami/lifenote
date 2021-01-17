@@ -2,13 +2,18 @@
     padding: 45px 80px 30px;
     background: #fff;
     height: 15%;
+    border-bottom : 1px solid #ddd;
+    width : 100%;
     &__inner {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
+        height : 60%;
+        width : 100%
     }
     &.is-dark {
         background: #222;
         color: #fff;
+        border-bottom : 1px solid #555;
     }
 }
