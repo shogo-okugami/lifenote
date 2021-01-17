@@ -1,20 +1,12 @@
-
 .l-nav {
-  background : #fff;
-  width : 20%;
-  min-height : 100%;
-  border-right : 1px solid #ddd;
-  &.is-fixed {
-    position : fixed;
-    width : 20%;
-    height : 100%;
-    background : #fff;
-    top : 0;
-    left : 0;
-  }
-  &.is-dark {
-      background : #222;
-      color : #fff;
-      border-right: 1px solid #555;
-  }
+    background: #fff;
+    width: 20%;
+    min-height: 100%;
+    border-right: 1px solid #ddd;
+    position: fixed;
+    &.is-dark {
+        background: #222;
+        color: #fff;
+        border-right: 1px solid #555;
+    }
 }
