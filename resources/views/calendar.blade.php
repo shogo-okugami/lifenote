@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="calendar">
+
+<div id="app"
+userId='@json(Auth::id())'
+isLogin='@json(Auth::check())'
+content='@json('calendar')'>
 </div>
 
 @endsection
