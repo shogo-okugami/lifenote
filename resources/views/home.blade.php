@@ -2,7 +2,11 @@
 
 @section('content')
 
-<div id="note" userId="@json(Auth::id())">
+<div id="app"
+ userId='@json(Auth::id())'
+ isLogin='@json(Auth::check())'
+ csrf='@json(csrf_token())'
+ content='@json('note')'>
 </div>
 
 @endsection
