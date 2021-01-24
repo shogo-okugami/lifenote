@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import weeks from '../weeks'
 import months from '../months'
 import DialryForm from './DialryForm'
+import Note from './Note'
 import { settingContext } from './App'
 
 const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => {
@@ -23,7 +24,12 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
     })()
 
     const pageFlag = document.documentElement.clientWidth > 800 ? true : false
-    console.log(pageFlag)
+
+    const [notes, setNotes] = useState(index)
+    const notesDates = notes.map(note => note.created_at.substr(0, 10))
+    const [note, setNote] = useState(notes.find(note => note.created_at.substr(0, 10) === today))
+    const [content, setContent] = useState((() => notesDates.includes(today)))
+    const [inputDateValue, setInputDateValue] = useState(defaultDate)
     const useSettingContext = useContext(settingContext)
     const isDark = useSettingContext.darkMode.isDark
 
@@ -40,8 +46,6 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
     const startDay = startDate.getDay()
 
     let dayCount = 1
-
-    const [notes, setNotes] = useState(index)
 
     useEffect(() => {
 
@@ -107,8 +111,6 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
 
     }
 
-    const [content, setContent] = useState(pageFlag)
-
     const switchContent = async (paramId, ...array) => {
 
         const paramDate = (() => {
@@ -126,8 +128,12 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
             const resp = await res.json()
             console.log(resp.data)
             if (resp.data.length) {
+                console.log(defaultDate)
+                setInputDateValue(today)
                 setContent(true)
+                setNote(resp.data[0])
             } else {
+                setInputDateValue(paramDate)
                 setContent(false)
             }
         } catch (error) {
@@ -135,9 +141,34 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
         }
     }
 
-    const calendarBody = (() => {
+    const findDate = (...array) => {
 
-        const notesDates = notes.map(data => data.created_at.substr(0, 10))
+        const noteDate = (() => {
+            const newArray = array.map(num => {
+                return num < 10 ? '0' + String(num) : String(num)
+            })
+
+            return newArray.join('-')
+        })()
+        return notesDates.includes(noteDate)
+
+    }
+
+    const getDate = (...array) => {
+
+        const noteDate = (() => {
+            const newArray = array.map(num => {
+                return num < 10 ? '0' + String(num) : String(num)
+            })
+
+            return newArray.join('-')
+        })()
+
+        return noteDate
+
+    }
+
+    const calendarBody = (() => {
 
         return (
             <>
@@ -153,14 +184,14 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
                             {
                                 (() => {
 
-                                    const date = [];
+                                    const dates = [];
 
                                     for (let d = 0; d < 7; d++) {
 
                                         if (w === 0 && d < startDay) {
 
                                             let num = lastMonthEndDayCount - startDay + d + 1
-                                            date.push(<td key={d}
+                                            dates.push(<td key={d}
                                                 onClick={() => pageFlag ? switchContent(userId, (month === 1 ? year - 1 : year), (month === 1 ? 12 : month - 1), num) : redirect(userId, (month === 1 ? year - 1 : year), (month === 1 ? 12 : month - 1), num)}
                                                 className={"p-calendar__date--disabled js-target"}>{num}</td>)
 
@@ -168,33 +199,29 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
 
                                             let num = dayCount - endDayCount
 
-                                            date.push(<td key={d}
+                                            dates.push(<td key={d}
                                                 onClick={() => pageFlag ? switchContent(userId, (month === 12 ? year + 1 : year), (month === 12 ? 1 : month + 1), num) : redirect(userId, (month === 12 ? year + 1 : year), (month === 12 ? 1 : month + 1), num)}
                                                 className={"p-calendar__date--disabled js-target"}>{num}</td>)
                                             dayCount++
 
                                         } else {
                                             const day = dayCount
-                                            const array = [year, month, day]
-                                            let noteDate = (() => {
-                                                const newArray = array.map(num => {
-                                                    return num < 10 ? '0' + String(num) : String(num)
-                                                })
 
-                                                return newArray.join('-')
-                                            })()
+                                            const flag = findDate(year, month, day)
 
-                                            const flag = notesDates.includes(noteDate)
+                                            const date = getDate(year, month, day)
 
-                                            date.push(<td key={d}
+                                            dates.push(<td key={d}
                                                 onClick={() => pageFlag ? switchContent(userId, year, month, day) : redirect(userId, year, month, day)}
-                                                className={"p-calendar__date" + (flag ? ' is-posted' : '') + (noteDate === today ? ' is-today' : '')}
-                                            >{dayCount}
+                                                className={"p-calendar__date" + (flag ? ' is-posted' : '')}
+                                            >
+                                                <div className={date === today ? ' is-today' : ''}>{dayCount}</div>
+                                                { flag && <span className='js-target'></span>}
                                             </td>)
                                             dayCount++
                                         }
                                     }
-                                    return date
+                                    return dates
                                 })()
                             }
                         </tr>)
@@ -229,7 +256,7 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
                     </tbody>
                 </table>
             </div>
-            {content ? <div>sample</div> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={defaultDate} />}
+            {content ? <Note note={note} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={inputDateValue} />}
         </div>
     );
 }
