@@ -1,8 +1,10 @@
+import { fromPairs } from 'lodash'
 import React from 'react'
+import { nl2br } from '../functions'
 
-const Note = ({note}) => {
+const Note = ({ note }) => {
 
-    return <div>{note.created_at}{note.text}</div>
+    return <div>{nl2br(note.text)}</div>
 
 }
 
