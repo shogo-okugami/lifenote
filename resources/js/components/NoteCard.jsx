@@ -2,9 +2,8 @@
 import React, { useContext } from 'react';
 import weeks from '../weeks'
 import { nl2br } from '../functions'
-import { settingContext } from './App'
 
-const NoteCard = ({ userId, note: noteItem }) => {
+const NoteCard = ({ userId, note: noteItem, isDark }) => {
 
     const note = noteItem
 
@@ -22,11 +21,6 @@ const NoteCard = ({ userId, note: noteItem }) => {
     }
 
     const date = getNoteDate(note.created_at)
-
-    const useSettingContext = useContext(settingContext)
-
-    const isDark = useSettingContext.darkMode.isDark
-
 
     const redirect = (noteId) => {
 

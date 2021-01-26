@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useState, useRef, useContext, useMemo } from 'react';
 import weeks from '../weeks'
 import months from '../months'
 import DialryForm from './DialryForm'
 import Note from './Note'
-import { settingContext } from './App'
 
-const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => {
+const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate, isDark }) => {
 
     const [date, setDate] = useState(new Date())
     const year = date.getFullYear()
@@ -30,8 +29,6 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
     const [note, setNote] = useState(notes.find(note => note.created_at.substr(0, 10) === today))
     const [content, setContent] = useState((() => notesDates.includes(today)))
     const [inputDateValue, setInputDateValue] = useState(defaultDate)
-    const useSettingContext = useContext(settingContext)
-    const isDark = useSettingContext.darkMode.isDark
 
     useEffect(() => {
         isOpen && menuRef.current.focus()
@@ -65,17 +62,6 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
 
     }, [date])
 
-    useEffect(() => {
-
-        const elements = document.getElementsByClassName('js-target')
-
-        for (const element of elements) {
-            isDark ? element.classList.add('is-dark') : element.classList.remove('is-dark')
-        }
-
-    }, [isDark])
-
-
     const changeNextMonth = () => {
         setDate(new Date((month === 12 ? year + 1 : year), (month === 12 ? month - 12 : month)))
     }
@@ -99,7 +85,6 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
         try {
             const res = await fetch(`api/users/${paramId}/note/${paramDate}`)
             const resp = await res.json()
-            console.log(resp.data)
             if (resp.data.length) {
                 window.location.href = 'http://localhost:8888/lifenote/public/home'
             } else {
@@ -126,12 +111,11 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
         try {
             const res = await fetch(`api/users/${paramId}/note/${paramDate}`)
             const resp = await res.json()
-            console.log(resp.data)
             if (resp.data.length) {
                 console.log(defaultDate)
                 setInputDateValue(today)
-                setContent(true)
                 setNote(resp.data[0])
+                setContent(true)
             } else {
                 setInputDateValue(paramDate)
                 setContent(false)
@@ -168,87 +152,90 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate }) => 
 
     }
 
-    const calendarBody = (() => {
+    console.log('render')
 
-        return (
-            <>
-                <tr>
-                    {
-                        weeks.map((day, index) => <td className="p-calendar__date" key={index}>{day}</td>)
-                    }
-                </tr>
-                {(() => {
-                    const rows = []
-                    for (let w = 0; w < 6; w++) {
-                        rows.push(<tr key={w} className={'p-calendar__row js-target'}>
-                            {
-                                (() => {
+    const calendarBody = useMemo(
+        () => {
 
-                                    const dates = [];
+            return (
+                <>
+                    <tr>
+                        {
+                            weeks.map((day, index) => <td className="p-calendar__date" key={index}>{day}</td>)
+                        }
+                    </tr>
+                    {(() => {
+                        const rows = []
+                        for (let w = 0; w < 6; w++) {
+                            rows.push(<tr key={w} className={'p-calendar__row' + (isDark ? ' is-dark' : '')}>
+                                {
+                                    (() => {
 
-                                    for (let d = 0; d < 7; d++) {
+                                        const dates = [];
 
-                                        if (w === 0 && d < startDay) {
+                                        for (let d = 0; d < 7; d++) {
 
-                                            let num = lastMonthEndDayCount - startDay + d + 1
-                                            dates.push(<td key={d}
-                                                onClick={() => pageFlag ? switchContent(userId, (month === 1 ? year - 1 : year), (month === 1 ? 12 : month - 1), num) : redirect(userId, (month === 1 ? year - 1 : year), (month === 1 ? 12 : month - 1), num)}
-                                                className={"p-calendar__date--disabled js-target"}>{num}</td>)
+                                            if (w === 0 && d < startDay) {
 
-                                        } else if (dayCount > endDayCount) {
+                                                let num = lastMonthEndDayCount - startDay + d + 1
+                                                dates.push(<td key={d}
+                                                    onClick={() => pageFlag ? switchContent(userId, (month === 1 ? year - 1 : year), (month === 1 ? 12 : month - 1), num) : redirect(userId, (month === 1 ? year - 1 : year), (month === 1 ? 12 : month - 1), num)}
+                                                    className={'p-calendar__date--disabled' + (isDark ? ' is-dark' : '')}>{num}</td>)
 
-                                            let num = dayCount - endDayCount
+                                            } else if (dayCount > endDayCount) {
 
-                                            dates.push(<td key={d}
-                                                onClick={() => pageFlag ? switchContent(userId, (month === 12 ? year + 1 : year), (month === 12 ? 1 : month + 1), num) : redirect(userId, (month === 12 ? year + 1 : year), (month === 12 ? 1 : month + 1), num)}
-                                                className={"p-calendar__date--disabled js-target"}>{num}</td>)
-                                            dayCount++
+                                                let num = dayCount - endDayCount
 
-                                        } else {
-                                            const day = dayCount
+                                                dates.push(<td key={d}
+                                                    onClick={() => pageFlag ? switchContent(userId, (month === 12 ? year + 1 : year), (month === 12 ? 1 : month + 1), num) : redirect(userId, (month === 12 ? year + 1 : year), (month === 12 ? 1 : month + 1), num)}
+                                                    className={'p-calendar__date--disabled' + (isDark ? ' is-dark' : '')}>{num}</td>)
+                                                dayCount++
 
-                                            const flag = findDate(year, month, day)
+                                            } else {
+                                                const day = dayCount
 
-                                            const date = getDate(year, month, day)
+                                                const flag = findDate(year, month, day)
 
-                                            dates.push(<td key={d}
-                                                onClick={() => pageFlag ? switchContent(userId, year, month, day) : redirect(userId, year, month, day)}
-                                                className={"p-calendar__date" + (flag ? ' is-posted' : '')}
-                                            >
-                                                <div className={date === today ? ' is-today' : ''}>{dayCount}</div>
-                                                { flag && <span className='js-target'></span>}
-                                            </td>)
-                                            dayCount++
+                                                const date = getDate(year, month, day)
+
+                                                dates.push(<td key={d}
+                                                    onClick={() => pageFlag ? switchContent(userId, year, month, day) : redirect(userId, year, month, day)}
+                                                    className={'p-calendar__date' + (flag ? ' is-posted' : '')}
+                                                >
+                                                    <div className={(isDark ? 'is-dark' : '') + (date === today ? ' is-today' : '')}>{dayCount}</div>
+                                                    {flag && <span className={'js-target' + (isDark ? ' is-dark' : '')}></span>}
+                                                </td>)
+                                                dayCount++
+                                            }
                                         }
-                                    }
-                                    return dates
-                                })()
-                            }
-                        </tr>)
-                    }
-                    return rows
-                })()}
-            </>
-        )
-    })()
+                                        return dates
+                                    })()
+                                }
+                            </tr>)
+                        }
+                        return rows
+                    })()}
+                </>
+            )
+        }, [date,notes])
 
     return (
-        <div className={'p-calendar u-flex js-target'}>
+        <div className={'p-calendar u-flex' + (isDark ? ' is-dark' : '')}>
             <div className='p-calendar__body'>
                 <div className="p-calendar__heading">
-                    <div className="p-calendar__switch--prev"><img onClick={() => changePrevMonth()} src="images/nav-left.svg" /></div>
+                    <div className="p-calendar__switch--prev"><img className='icon' onClick={() => changePrevMonth()} src="images/nav-left.svg" /></div>
                     <div onClick={() => setIsOpen(!isOpen)}
                         onBlur={() => setIsOpen(false)} ref={menuRef}
                         tabIndex={0}
-                        className={'p-calendar__month js-target'}>
+                        className={'p-calendar__month' + (isDark ? ' is-dark' : '')}>
                         {months[month - 1]}
-                        <ul className={"p-calendar__month__menu"}
+                        <ul className={"p-calendar__month__menu js-target"}
                             style={isOpen ? { display: 'block' } : { display: 'none' }}>
-                            {months.map((month, index) => <li onClick={() => setDate(new Date(year, index))} key={index}>{month}</li>)}
+                            {months.map((month, index) => <li onClick={() => setDate(new Date(year, index))} className={(isDark ? ' is-dark' : '')} key={index}>{month}</li>)}
                         </ul>
                     </div>
                     <div className="p-calendar__year">{year}</div>
-                    <div className="p-calendar__switch--next"><img onClick={() => changeNextMonth()} src="images/nav-right.svg" /></div>
+                    <div className="p-calendar__switch--next"><img className='icon' onClick={() => changeNextMonth()} src="images/nav-right.svg" /></div>
                 </div>
                 <table>
                     <tbody>

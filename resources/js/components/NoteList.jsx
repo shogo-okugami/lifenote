@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import InfiniteScroll from 'react-infinite-scroller'
 import ReactLoading from 'react-loading'
-import Note from './Note'
+import NoteCard from './NoteCard'
 
-const NoteList = (props) => {
+const NoteList = ({ userId,isDark}) => {
 
     const [index, setIndex] = useState({
         notes: [],
@@ -18,7 +18,7 @@ const NoteList = (props) => {
 
         if (hasMore) {
             try {
-                const res = await fetch(`api/home?user_id=${props.userId}&page=${index.page}&nextPage=${index.nextPage}`)
+                const res = await fetch(`api/home?user_id=${userId}&page=${index.page}&nextPage=${index.nextPage}`)
                 const resp = await res.json()
                 if (resp.data.length > 0) {
                     setIndex({
@@ -41,7 +41,7 @@ const NoteList = (props) => {
         <>
             {index.notes.map(note => {
                 return (
-                    <Note key={note.id} note={note} />
+                    <NoteCard key={note.id} userId={userId} note={note} isDark={isDark} />
                 )
             })}
         </>

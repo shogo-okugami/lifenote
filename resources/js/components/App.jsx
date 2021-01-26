@@ -7,8 +7,6 @@ import Calendar from './Calendar'
 import DialryForm from './DialryForm'
 import ToggleDarkButton from './ToggleDarkButton'
 
-const settingContext = createContext()
-
 const setColorMode = (color) => {
 
     switch (color) {
@@ -32,14 +30,12 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     const darked = isDark ? 'is-dark' : ''
 
-    console.log(darked)
-
     const main = (() => {
 
         switch (content) {
 
             case 'note':
-                return <Note userId={userId} note={note} />
+                return <Note userId={userId} note={note} isDark={isDark} />
                 break;
             case 'calendar':
                 return <Calendar userId={userId} notes={notes} errors={errors} csrf={csrf} isDark={isDark} date={date} />
@@ -48,7 +44,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
                 return <DialryForm userId={userId} csrf={csrf} errors={errors} date={date} isDark={isDark} />
                 break
             default:
-                return <NoteList userId={userId} />
+                return <NoteList userId={userId} isDark={isDark} />
                 break
         }
 
@@ -56,21 +52,18 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     return (
         <>
-            <settingContext.Provider value={{ colorMode: { color: color, setColor: setColor }, darkMode: { isDark: isDark, setIsDark: setIsDark } }}>
-                <header id="header" className={'l-header ' + darked}>
-                    <div className="l-header__inner">
-                        <h1 className="c-heading--large">lifenote</h1>
-                        {isLogin && <ToggleDarkButton userId={userId} />}
-                    </div>
-                </header>
-
-                <div className={'l-wrapper ' + (isDark ? 'is-dark' : '')}>
-                    <Nav csrf={csrf} />
-                    <main id="main"  className="l-wrapper__inner">
-                        {main}
-                    </main>
+            <header id="header" className={'l-header ' + darked}>
+                <div className="l-header__inner">
+                    <h1 className="c-heading--large">lifenote</h1>
+                    {isLogin && <ToggleDarkButton userId={userId} isDark={isDark} setIsDark={setIsDark} />}
                 </div>
-            </settingContext.Provider>
+            </header>
+            <div id='wrapper' className={'l-wrapper ' + (isDark ? 'is-dark' : '')}>
+                <Nav csrf={csrf} isDark={isDark}/>
+                <main id="main" className="l-wrapper__inner">
+                    {main}
+                </main>
+            </div>
         </>
     )
 }
@@ -102,5 +95,3 @@ if (Element) {
         notes={parsedNotes}
         note={parsedNote} />, Element);
 }
-
-export { settingContext }

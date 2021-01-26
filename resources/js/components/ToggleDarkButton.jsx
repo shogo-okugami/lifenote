@@ -1,15 +1,10 @@
-import React, { useContext } from 'react';
-import { settingContext } from './App'
+import React, { useState } from 'react';
 
-const ToggleDarkButton = (props) => {
-
-    const useSettingContext = useContext(settingContext)
-
-    const { isDark, setIsDark } = useSettingContext.darkMode
+const ToggleDarkButton = ({ isDark, setIsDark }) => {
 
     const handleClick = () => {
 
-        localStorage.setItem('darked',isDark ? '' : 'on')
+        localStorage.setItem('darked', isDark ? '' : 'on')
 
         setIsDark(!isDark)
 
@@ -17,7 +12,7 @@ const ToggleDarkButton = (props) => {
 
     return (
         <>
-            <div className={'c-btn--toggleDark' + (isDark ? ' is-dark' : '')}onClick={() => handleClick()}><span><img src="http://localhost:8888/lifenote/public/images/moon.svg" /></span></div>
+            <div className={'c-btn--toggleDark' + (isDark ? ' is-dark' : '')} onClick={() => handleClick()}><span><img src="http://localhost:8888/lifenote/public/images/moon.svg" /></span></div>
         </>
     )
 
