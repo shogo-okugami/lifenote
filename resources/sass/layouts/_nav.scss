@@ -3,7 +3,11 @@
     width: 20%;
     min-height: 100%;
     border-right: 1px solid #ddd;
-    position: fixed;
+    &.is-fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
     &.is-dark {
         background: #222;
         color: #fff;
