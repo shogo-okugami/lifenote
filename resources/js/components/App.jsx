@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext, useContext, useLayoutEffect 
 import ReactDOM from 'react-dom'
 import Nav from './Nav'
 import NoteList from './NoteList'
+import Note from './Note'
 import Calendar from './Calendar'
 import DialryForm from './DialryForm'
 import ToggleDarkButton from './ToggleDarkButton'
@@ -21,7 +22,7 @@ const setColorMode = (color) => {
 
 }
 
-const App = ({userId,isLogin,csrf,content,errors,date}) => {
+const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     const colors = ['normal', 'red', 'blue', 'yellow', 'green', 'pink']
 
@@ -31,17 +32,17 @@ const App = ({userId,isLogin,csrf,content,errors,date}) => {
 
     const darked = isDark ? 'is-dark' : ''
 
-    console.log('App render')
+    console.log(darked)
 
     const main = (() => {
 
         switch (content) {
 
             case 'note':
-                return <NoteList userId={userId} />
+                return <Note userId={userId} note={note} />
                 break;
             case 'calendar':
-                return <Calendar />
+                return <Calendar userId={userId} notes={notes} errors={errors} csrf={csrf} isDark={isDark} date={date} />
                 break
             case 'dialry':
                 return <DialryForm userId={userId} csrf={csrf} errors={errors} date={date} isDark={isDark} />
@@ -63,12 +64,12 @@ const App = ({userId,isLogin,csrf,content,errors,date}) => {
                     </div>
                 </header>
 
-                <Nav csrf={csrf} />
-                <main id="main" className={'l-wrapper ' + (isDark ? 'is-dark' : '')}>
-                    <div className="l-wrapper__inner">
+                <div className={'l-wrapper ' + (isDark ? 'is-dark' : '')}>
+                    <Nav csrf={csrf} />
+                    <main id="main"  className="l-wrapper__inner">
                         {main}
-                    </div>
-                </main>
+                    </main>
+                </div>
             </settingContext.Provider>
         </>
     )
@@ -88,7 +89,18 @@ if (Element) {
     const parsedErrors = JSON.parse(errors)
     const date = Element.getAttribute('date')
     const parsedDate = JSON.parse(date)
-    ReactDOM.render(<App userId={parsedUserId} isLogin={parsedIsLogin} csrf={parsedCsrf} content={parsedContent} errors={parsedErrors} date={parsedDate} />, Element);
+    const notes = Element.getAttribute('notes')
+    const parsedNotes = JSON.parse(notes)
+    const note = Element.getAttribute('note')
+    const parsedNote = JSON.parse(note)
+    ReactDOM.render(<App userId={parsedUserId}
+        isLogin={parsedIsLogin}
+        csrf={parsedCsrf}
+        content={parsedContent}
+        errors={parsedErrors}
+        date={parsedDate}
+        notes={parsedNotes}
+        note={parsedNote} />, Element);
 }
 
 export { settingContext }
