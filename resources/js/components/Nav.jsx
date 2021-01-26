@@ -11,24 +11,11 @@ const Nav = ({ csrf }) => {
 
     useEffect(() => {
 
-        console.log('effect')
-
-        const nav = document.getElementById('nav')
-
-        const navWidth = nav.offsetWidth
-
-        const main = document.getElementById('main')
-
-        main.style.marginLeft = navWidth + 'px'
-
-
         document.addEventListener('scroll', handeleScroll)
 
         return () => document.removeEventListener('scroll', handeleScroll)
 
     }, [])
-
-
 
     useEffect (() =>{
 
@@ -40,17 +27,23 @@ const Nav = ({ csrf }) => {
 
         const nav = document.getElementById('nav')
 
+        const navWidth = nav.offsetWidth
+
         const header = document.getElementById('header')
+
+        const main = document.getElementById('main')
 
         const headerHeight = header.offsetHeight
 
         if (window.pageYOffset > headerHeight) {
 
-            nav.style.top = 0
+            nav.classList.add('is-fixed')
+            main.style.marginLeft = navWidth + 'px'
 
         } else {
 
-            nav.style.top = (Math.floor(headerHeight) - (window.pageYOffset)) + 'px'
+            nav.classList.remove('is-fixed')
+            main.style.marginLeft = 0
 
         }
     }
