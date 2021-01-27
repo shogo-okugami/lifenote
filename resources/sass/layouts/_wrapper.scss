@@ -1,14 +1,22 @@
 .l-wrapper {
-    width: 80%;
-    justify-content: space-between;
+    display: block;
     min-height: 85%;
     position: relative;
-    background : #f8fafc;
+    background: #f8fafc;
+    &--row {
+        @extend .l-wrapper;
+        display: flex;
+        justify-content: space-between;
+    }
     &__inner {
         padding: 70px 0;
         margin: 0 auto;
-        width: 80%;
+        width: 65%;
         height: 100%;
+        &--small {
+            @extend .l-wrapper__inner;
+            width : 40%;
+        }
     }
     &.is-dark {
         background: #111;
