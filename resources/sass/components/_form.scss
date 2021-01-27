@@ -1,24 +1,42 @@
-
 .c-form {
-  background : #fff;
-  padding : 40px;
-  min-height : 100%;
-  &__item {
-    margin-bottom : 60px;
-  }
-  &__input {
-    border-bottom :  1px solid #3ca8f0;
-    width : 100%;
-    padding : 10px;
-  }
-  &__textarea {
-    border :  1px solid #3ca8f0;
-    width : 100%;
-    padding : 10px;
-  }
-  &__message {
-    padding : 10px 0;
-    color : $red;
-    font-size : 18px;
-  }
+    background: #fff;
+    padding: 40px;
+    min-height: 100%;
+    border: 1px solid #ddd;
+    &__item {
+        margin-bottom: 60px;
+    }
+    &__input {
+        border-bottom: 1px solid #3ca8f0;
+        width: 100%;
+        padding: 10px;
+    }
+    &__textarea {
+        border: 1px solid #3ca8f0;
+        width: 100%;
+        padding: 10px;
+        &__counter {
+            font-size: 20px;
+            &.is-over {
+                color: $red;
+            }
+        }
+    }
+    &__message {
+        color: $red;
+        font-size: 20px;
+    }
+    &__password__check {
+        padding : 20px 20px;
+    }
+    &.is-dark {
+        background: #222;
+        color: #fff;
+        border: 1px solid #555;
+    }
+    &.is-arranged {
+        width: 45%;
+        border: none;
+        padding : 20px 0 20px 20px;
+    }
 }
