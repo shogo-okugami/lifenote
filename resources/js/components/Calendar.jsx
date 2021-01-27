@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useContext, useMemo } from 'react';
 import weeks from '../weeks'
 import months from '../months'
+import MonthMenu from './MonthMenu'
 import DialryForm from './DialryForm'
 import Note from './Note'
 
@@ -9,8 +10,7 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate, isDar
     const [date, setDate] = useState(new Date())
     const year = date.getFullYear()
     const month = date.getMonth() + 1;
-    const [isOpen, setIsOpen] = useState(false)
-    const menuRef = useRef(null)
+
     const today = (() => {
 
         let dt = new Date();
@@ -29,10 +29,6 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate, isDar
     const [note, setNote] = useState(notes.find(note => note.created_at.substr(0, 10) === today))
     const [content, setContent] = useState((() => notesDates.includes(today)))
     const [inputDateValue, setInputDateValue] = useState(defaultDate)
-
-    useEffect(() => {
-        isOpen && menuRef.current.focus()
-    }, [isOpen])
 
     const startDate = new Date(year, month - 1, 1) //月の最初の年月日を取得
 
@@ -224,16 +220,7 @@ const Calendar = ({ userId, notes: index, errors, csrf, date: defaultDate, isDar
             <div className='p-calendar__body'>
                 <div className="p-calendar__heading">
                     <div className="p-calendar__switch--prev"><img className='icon' onClick={() => changePrevMonth()} src="images/nav-left.svg" /></div>
-                    <div onClick={() => setIsOpen(!isOpen)}
-                        onBlur={() => setIsOpen(false)} ref={menuRef}
-                        tabIndex={0}
-                        className={'p-calendar__month' + (isDark ? ' is-dark' : '')}>
-                        {months[month - 1]}
-                        <ul className={"p-calendar__month__menu js-target"}
-                            style={isOpen ? { display: 'block' } : { display: 'none' }}>
-                            {months.map((month, index) => <li onClick={() => setDate(new Date(year, index))} className={(isDark ? ' is-dark' : '')} key={index}>{month}</li>)}
-                        </ul>
-                    </div>
+                    <MonthMenu year={year} month={month} setDate={setDate} isDark={isDark} />
                     <div className="p-calendar__year">{year}</div>
                     <div className="p-calendar__switch--next"><img className='icon' onClick={() => changeNextMonth()} src="images/nav-right.svg" /></div>
                 </div>
