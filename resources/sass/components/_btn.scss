@@ -14,6 +14,9 @@
 .c-btn {
     &--primary {
         @include btn($bgColor: #6cb2eb);
+        &.c-btn--small {
+            @include btn($bgColor: #6cb2eb, $padding: 10px 5px);
+        }
     }
     &--toggleDark {
         @include btn($radius: 20px, $padding: 0, $bgColor: none, $width: 48px);
@@ -29,14 +32,14 @@
             position: absolute;
             bottom: -25%;
             left: 0;
-            transition : left 0.25s;
+            transition: left 0.25s;
             & img {
-              display : block;
-              position : absolute;
-              height : 20px;
-              width : 15px;
-              top : 15%;
-              right: 25%;
+                display: block;
+                position: absolute;
+                height: 20px;
+                width: 15px;
+                top: 15%;
+                right: 25%;
             }
         }
         &.is-dark {
@@ -53,15 +56,15 @@
                 position: absolute;
                 bottom: -25%;
                 left: 50%;
-                transition : left 0.25s;
+                transition: left 0.25s;
                 & img {
-                    display : block;
-                    position : absolute;
-                    height : 20px;
-                    width : 15px;
-                    top : 15%;
+                    display: block;
+                    position: absolute;
+                    height: 20px;
+                    width: 15px;
+                    top: 15%;
                     right: 25%;
-                  }
+                }
             }
         }
     }
