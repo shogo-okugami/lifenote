@@ -15,6 +15,22 @@
         color : #555;
       }
     }
+    & form {
+        display : block;
+        padding : 20px 30px;
+        cursor: pointer;
+        font-size: 22px;
+        &:hover {
+          text-decoration: none;
+          color : #555;
+        }
+        & button {
+            letter-spacing: 1.5px;
+            &:focus {
+                outline: 0;
+            }
+        }
+      }
     &.is-dark {
         background : #222;
         color : #fff;
