@@ -16,17 +16,15 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-  return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/home', function(){
     return view('home');
 })->name('home')->middleware('auth');
 
-Route::resource('notes', 'NoteController')->except(['index', 'show'])->middleware('auth');
+Auth::routes();
 
-Route::get('calendar', function () {
-  return view('calendar');
-})->name('calendar')->middleware('auth');
+Route::resource('notes', 'NoteController')->except(['index', 'show' , 'create'])->middleware('auth');
+
+Route::get('notes/create/{date?}', 'NoteController@create')->middleware('auth');
+
+Route::get('notes/{id}', 'NoteController@show')->name('notes.show')->middleware('auth');
+
+Route::get('calendar', 'NoteController@indexByCalendar')->name('calendar')->middleware('auth');
