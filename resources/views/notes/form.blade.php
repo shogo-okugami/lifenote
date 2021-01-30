@@ -5,9 +5,10 @@
  userId='@json(Auth::id())'
  isLogin='@json(Auth::check())'
  csrf='@json(csrf_token())'
+ note='@json($note)'
  content='@json('dialry')'
  errors='@json($errors->toArray())'
- date='@json(date('Y-m-d'))'
+ date='@json($date)'
  >
 </div>
 @endsection
