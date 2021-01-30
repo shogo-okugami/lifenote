@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('home', 'NoteController@index');
+
+Route::get('users/{id}/note/{date}','NoteController@getNote');
+
+Route::get('users/{id}/notes/{date}', 'NoteController@getNotesByCalendar');
