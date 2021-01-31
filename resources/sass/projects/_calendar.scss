@@ -1,62 +1,205 @@
 .p-calendar {
-  background: #fff;
-  padding: 40px;
-  color: #444;
-  &__heading {
-    display: flex;
-    justify-content: space-evenly;
-    text-align: center;
-    font-size: 28px;
-    padding: 20px 0;
-    letter-spacing: 1px;
-    width: 50%;
-    margin: 0 auto;
-    position: relative;
-  }
-  & table {
+    background: #fff;
     padding: 40px;
-  }
-  &__body {
-    width: 50%;
-    margin: 0 auto;
-  }
-  &__date {
-    padding: 25px 0;
-    font-size: 18px;
-    text-align: center;
-    &:first-child {
-      color: $red;
+    color: #444;
+    border: 1px solid #ddd;
+    height: 722px;
+    &__heading {
+        display: flex;
+        justify-content: space-evenly;
+        text-align: center;
+        font-size: 28px;
+        padding: 20px 0;
+        letter-spacing: 1px;
+        position: relative;
     }
-    &:last-child {
-      color: $blue;
+    &__month {
+        width: 30%;
+        position: relative;
+        &__menu {
+            width: 100%;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            z-index: 1;
+            & li {
+                width: 100%;
+                padding: 5px;
+                font-size: 20px;
+                &:hover {
+                    background: #eee;
+                }
+                &.is-dark {
+                    &:hover {
+                        background: #000;
+                    }
+                }
+            }
+            &.is-dark {
+                background: #222;
+                border: 1px solid #555;
+            }
+        }
+        &:hover {
+            background: #eee;
+        }
+        &:focus {
+            outline: 0;
+        }
+        &.is-dark {
+            &:hover {
+                background: #000;
+            }
+        }
     }
-    &--disabled {
-      padding: 25px 0;
-      font-size: 18px;
-      text-align: center;
-      color: #ccc;
+    &__year {
+        width: 20%;
+        position: relative;
+        &:hover {
+            background: #eee;
+        }
+        &.is-dark {
+            &:hover {
+                background: #000;
+            }
+        }
+        &__box {
+            display: none;
+            &--showed {
+                position: absolute;
+                width: 15%;
+                top: 0;
+                right: 0;
+                height: 100%;
+                border: 1px solid #ddd;
+                display: block;
+                &.is-dark {
+                    border: 1px solid #555;
+                }
+            }
+        }
+        &__switch {
+            position: absolute;
+            width: 100%;
+            height: 15px;
+            display: block;
+            &--up {
+                @extend .p-calendar__year__switch;
+                top: 0;
+                & img {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                }
+            }
+            &--down {
+                @extend .p-calendar__year__switch;
+                bottom: 0;
+                & img {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                }
+            }
+        }
     }
-  }
-  &__switch {
-    &--prev {
-      position: absolute;
-      top: 35%;
-      right: 90%;
-      & img {
-        width: 25px;
-        height: 25px;
-        display: block;
-      }
+    &__body {
+        width: 55%;
+        //margin: 0 auto;
+        & table {
+            width: 100%;
+            padding: 40px;
+        }
     }
-    &--next {
-      position: absolute;
-      top: 35%;
-      left: 90%;
-      & img {
-        width: 25px;
-        height: 25px;
-        display: block;
-      }
+    &__row {
+        border-top: 1px solid #ddd;
+        &:nth-child(2) {
+            border: none;
+        }
+        &.is-dark {
+            border-top: 1px solid #555;
+            &:nth-child(2) {
+                border: none;
+            }
+        }
     }
-  }
+    &__date {
+        width: 10%;
+        padding: 25px 0;
+        font-size: 18px;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        &.is-sun {
+            color: $red;
+        }
+        &.is-sat {
+            color: $blue;
+        }
+        &--disabled {
+            @extend .p-calendar__date;
+            color: #ccc;
+            &.is-dark {
+                color: #555;
+            }
+        }
+        & div {
+            margin: 0 auto;
+            &.is-today {
+                color: #fff;
+                background: #888;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                &.is-dark {
+                    color: #222;
+                    background: #fff;
+                }
+            }
+        }
+        &__circle {
+            display: inline-block;
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #888;
+            transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            bottom: 15%;
+            &.is-dark {
+                background: #555;
+            }
+        }
+    }
+    &__switch {
+        &--prev {
+            position: absolute;
+            top: 35%;
+            right: 90%;
+            & img {
+                width: 25px;
+                height: 25px;
+                display: block;
+            }
+        }
+        &--next {
+            position: absolute;
+            top: 35%;
+            left: 90%;
+            & img {
+                width: 25px;
+                height: 25px;
+                display: block;
+            }
+        }
+    }
+    &.is-dark {
+        background: #222;
+        color: #fff;
+        border: 1px solid #555;
+    }
 }
