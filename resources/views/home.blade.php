@@ -6,7 +6,7 @@
  userId='@json(Auth::id())'
  isLogin='@json(Auth::check())'
  csrf='@json(csrf_token())'
- content='@json('note')'>
+ content='@json('notes')'>
 </div>
 
 @endsection
