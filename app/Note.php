@@ -8,23 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Note extends Model
 {
 
-  protected $fillable = ['created_at', 'text', 'user_id'];
+    protected $fillable = ['created_at', 'text', 'user_id'];
 
-  public const WEEKS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    protected $dates = ['created_at',];
 
-  //アクセサ　年・月・日
-  public function getDayAttribute()
-  {
-    return self::WEEKS[$this->created_at->dayOfWeek];
-  }
-
-  public function getMonthAttribute()
-  {
-    return $this->created_at->month;
-  }
-
-  public function getDateAttribute()
-  {
-    return $this->created_at->day;
-  }
+    protected $casts = [
+        'created_at' => 'date:Y-m-d',
+    ];
 }
