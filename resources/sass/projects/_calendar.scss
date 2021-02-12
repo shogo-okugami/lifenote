@@ -132,18 +132,18 @@
         text-align: center;
         cursor: pointer;
         position: relative;
-        &.is-sun {
-            color: $red;
-        }
-        &.is-sat {
-            color: $blue;
-        }
-        &--disabled {
+        &.is-disabled {
             @extend .p-calendar__date;
             color: #ccc;
             &.is-dark {
                 color: #555;
             }
+        }
+        &.is-sun {
+            color: $red;
+        }
+        &.is-sat {
+            color: $blue;
         }
         & div {
             margin: 0 auto;
