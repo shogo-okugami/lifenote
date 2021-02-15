@@ -25,7 +25,6 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
-        "flatpickr": "^4.6.6",
         "react-infinite-scroller": "^1.2.4",
         "react-loading": "^2.0.3"
     }
