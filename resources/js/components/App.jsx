@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext, useLayoutEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import ReactDOM from 'react-dom'
 import Nav from './Nav'
 import NoteList from './NoteList'
@@ -7,59 +7,42 @@ import Calendar from './Calendar'
 import DialryForm from './DialryForm'
 import ToggleDarkButton from './ToggleDarkButton'
 
-const setColorMode = (color) => {
-
-    switch (color) {
-        case 'red':
-            return 'is-red'
-            break;
-        default:
-            return ''
-            break;
-    }
-
-}
-
 const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
-
-    const colors = ['normal', 'red', 'blue', 'yellow', 'green', 'pink']
-
-    const [color, setColor] = useState(colors[Number(localStorage.getItem('color'))])
 
     const [isDark, setIsDark] = useState(Boolean(localStorage.getItem('darked')))
 
-    const darked = isDark ? 'is-dark' : ''
+    const mediaScreenL = document.documentElement.clientWidth > 800 ? true : false
 
-    const main = (() => {
+    const main = useMemo(() => {
 
         switch (content) {
 
             case 'note':
-                return <Note userId={userId} note={note} isDark={isDark} />
+                return <Note userId={userId} note={note} csrf={csrf} isDark={isDark} />
                 break;
             case 'calendar':
-                return <Calendar userId={userId} notes={notes} errors={errors} csrf={csrf} isDark={isDark} date={date} />
+                return <Calendar userId={userId} mediaScreenL={mediaScreenL} notes={notes} errors={errors} csrf={csrf} isDark={isDark} date={date} />
                 break
             case 'dialry':
-                return <DialryForm userId={userId} csrf={csrf} errors={errors} date={date} isDark={isDark} />
+                return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} />
                 break
             default:
                 return <NoteList userId={userId} isDark={isDark} />
                 break
         }
 
-    })()
+    },[isDark])
 
     return (
         <>
-            <header id="header" className={'l-header ' + darked}>
+            <header id="header" className={'l-header' + (isDark ? ' is-dark' : '')}>
                 <div className="l-header__inner">
                     <h1 className="c-heading--large">lifenote</h1>
                     {isLogin && <ToggleDarkButton userId={userId} isDark={isDark} setIsDark={setIsDark} />}
                 </div>
             </header>
-            <div id='wrapper' className={'l-wrapper ' + (isDark ? 'is-dark' : '')}>
-                <Nav csrf={csrf} isDark={isDark}/>
+            <div id='wrapper' className={'l-wrapper' + (mediaScreenL ? '--row' : '') + (isDark ? ' is-dark' : '')}>
+                <Nav csrf={csrf} isDark={isDark} />
                 <main id="main" className="l-wrapper__inner">
                     {main}
                 </main>
