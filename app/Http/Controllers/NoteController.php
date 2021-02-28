@@ -8,6 +8,8 @@ use App\Note;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Resources\Note as NoteResource;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class NoteController extends Controller
 {
@@ -22,7 +24,63 @@ class NoteController extends Controller
         $offset = $request->input('page');
         $limit = $request->input('nextPage');
 
-        return NoteResource::collection(Note::where('user_id', $user_id)->orderBy('created_at', 'desc')->offset($offset)->limit($limit)->get());
+        return NoteResource::collection(
+            Note::where('user_id', $user_id)
+                ->orderBy('created_at', 'desc')
+                ->offset($offset)
+                ->limit($limit)
+                ->get()
+        );
+    }
+
+    public function getNotesByCalendar($id, $date)
+    {
+
+        $date = explode('-',$date);
+        $year = (int)($date[0]);
+        $month = (int)($date[1]);
+        $date = Carbon::createFromDate($year,$month,1);
+        $startOfMonth = Carbon::createFromDate($year,$month,1)->startOfMonth();
+        $startOfCalendar = $startOfMonth->subDays($startOfMonth->dayOfWeek)->toDateString();
+        $lastOfMonth = Carbon::createFromDate($year,$month,1)->lastOfMonth();
+        $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
+
+        return NoteResource::collection(
+            Note::where('user_id', $id)
+            ->whereBetween('created_at', [$startOfCalendar, $lastOfCalendar])
+            ->orderBy('created_at')
+            ->get()
+        );
+    }
+
+    public function indexByCalendar()
+    {
+
+        $user_id = Auth::id();
+
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $startOfCalendar = $startOfMonth->subDays($startOfMonth->dayOfWeek)->toDateString();
+        $lastOfMonth= Carbon::now()->lastOfMonth();
+        $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
+
+        $notes = NoteResource::collection(Note::where('user_id', $user_id)
+            ->whereBetween('created_at', [$startOfCalendar, $lastOfCalendar])
+            ->orderBy('created_at')
+            ->get());
+
+        return view('calendar', ['notes' => $notes]);
+    }
+
+    public function getNote($id, $date)
+    {
+
+        $note = NoteResource::collection(
+            Note::where('user_id', $id)
+                ->whereDate('created_at', $date)
+                ->get()
+        );
+
+        return $note;
     }
 
     /**
@@ -30,9 +88,10 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(string $date = null)
     {
-        return view('notes.form');
+        $date = $date ?: date('Y-m-d');
+        return view('notes.form', ['note' => null, 'date' => $date]);
     }
 
     /**
@@ -48,7 +107,7 @@ class NoteController extends Controller
             $request->all()
         );
         $note->save();
-        return redirect()->route('home');
+        return redirect()->route('notes.show', ['id' => $note->id]);
     }
 
     /**
@@ -59,7 +118,15 @@ class NoteController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $note = Note::find($id);
+
+        if (isset($note)) {
+
+            return view('notes.note', ['note' => $note]);
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -70,7 +137,21 @@ class NoteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $note = Note::find($id);
+        $date = $note->created_at->toDateString();
+
+        if (isset($note)) {
+
+            return view(
+                'notes.form',
+                [
+                    'note' => $note,
+                    'date' => $date,
+                ]
+            );
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -96,6 +177,8 @@ class NoteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Note::where('id', $id)->delete();
+
+        return redirect()->route('home');
     }
 }
