@@ -9,24 +9,22 @@ const NoteList = ({ userId,isDark}) => {
     const [index, setIndex] = useState({
         notes: [],
         page: 0,
-        nextPage: 20,
     })
 
     const [hasMore, setHasMore] = useState(true)
 
-    const loadMore = async (pageStart) => {
+    const loadMore = async () => {
 
         if (hasMore) {
             try {
-                const res = await fetch(`api/home?user_id=${userId}&page=${index.page}&nextPage=${index.nextPage}`)
+                const res = await fetch(`api/home?user_id=${userId}&page=${index.page}`)
                 const resp = await res.json()
                 if (resp.data.length > 0) {
                     setIndex({
                         notes: [...index.notes, ...resp.data],
                         page: index.page + 20,
-                        nextPage: 20,
                     })
-                } else {//if (resp.data.length < 1) {
+                } else {
                     setHasMore(false)
                 }
             } catch (error) {
