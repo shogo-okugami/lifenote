@@ -22,13 +22,12 @@ class NoteController extends Controller
     {
         $user_id = $request->input('user_id');
         $offset = $request->input('page');
-        $limit = $request->input('nextPage');
 
         return NoteResource::collection(
             Note::where('user_id', $user_id)
                 ->orderBy('created_at', 'desc')
                 ->offset($offset)
-                ->limit($limit)
+                ->limit(20)
                 ->get()
         );
     }
