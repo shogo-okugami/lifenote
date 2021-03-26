@@ -35,20 +35,20 @@ class NoteController extends Controller
     public function getNotesByCalendar($id, $date)
     {
 
-        $date = explode('-',$date);
+        $date = explode('-', $date);
         $year = (int)($date[0]);
         $month = (int)($date[1]);
-        $date = Carbon::createFromDate($year,$month,1);
-        $startOfMonth = Carbon::createFromDate($year,$month,1)->startOfMonth();
+        $date = Carbon::createFromDate($year, $month, 1);
+        $startOfMonth = Carbon::createFromDate($year, $month, 1)->startOfMonth();
         $startOfCalendar = $startOfMonth->subDays($startOfMonth->dayOfWeek)->toDateString();
-        $lastOfMonth = Carbon::createFromDate($year,$month,1)->lastOfMonth();
+        $lastOfMonth = Carbon::createFromDate($year, $month, 1)->lastOfMonth();
         $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
 
         return NoteResource::collection(
             Note::where('user_id', $id)
-            ->whereBetween('created_at', [$startOfCalendar, $lastOfCalendar])
-            ->orderBy('created_at')
-            ->get()
+                ->whereBetween('created_at', [$startOfCalendar, $lastOfCalendar])
+                ->orderBy('created_at')
+                ->get()
         );
     }
 
@@ -59,7 +59,7 @@ class NoteController extends Controller
 
         $startOfMonth = Carbon::now()->startOfMonth();
         $startOfCalendar = $startOfMonth->subDays($startOfMonth->dayOfWeek)->toDateString();
-        $lastOfMonth= Carbon::now()->lastOfMonth();
+        $lastOfMonth = Carbon::now()->lastOfMonth();
         $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
 
         $notes = NoteResource::collection(Note::where('user_id', $user_id)
@@ -115,9 +115,9 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Note $note)
     {
-
+        $this->authorize('view', $note);
         $note = Note::find($id);
 
         if (isset($note)) {
