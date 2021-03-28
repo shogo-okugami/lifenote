@@ -174,9 +174,10 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,Note $note)
     {
-        Note::where('id', $id)->delete();
+        $this->authorize('delete',$note);
+        $note->where('id', $id)->delete();
 
         return redirect()->route('home');
     }
