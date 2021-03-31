@@ -22,6 +22,10 @@ class NotePolicy
         return $user->id === $note->user_id;
     }
 
+    public function edit(User $user, Note $note)
+    {
+        return $user->id === $note->user_id;
+    }
     /**
      * Determine whether the user can update the model.
      *
@@ -57,5 +61,4 @@ class NotePolicy
     {
         //
     }
-
 }
