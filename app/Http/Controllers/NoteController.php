@@ -134,8 +134,9 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Note $note)
     {
+        $this->authorize('edit', $note);
         $note = Note::find($id);
         $date = $note->created_at->toDateString();
 
@@ -174,9 +175,9 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,Note $note)
+    public function destroy($id, Note $note)
     {
-        $this->authorize('delete',$note);
+        $this->authorize('delete', $note);
         $note->where('id', $id)->delete();
 
         return redirect()->route('home');
