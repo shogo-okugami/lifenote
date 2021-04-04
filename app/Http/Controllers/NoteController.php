@@ -157,12 +157,11 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreNoteRequest $request, $id, ?Note $note)
+    public function update(StoreNoteRequest $request, $id, Note $note)
     {
-        $note->where('id', $id);
-        $note->text = $request->text;
-        $note->user_id = Auth::id();
-        $note->save();
+        $this->authorize('update',$note);
+        $note->where('id', $id)->create($request->all);
+        return redirect()->route('notes.show', ['id' => $note->id]);
     }
 
     /**
