@@ -160,8 +160,8 @@ class NoteController extends Controller
     public function update(StoreNoteRequest $request, $id)
     {
         $note = Note::find($id);
-        $this->authorize('update',$note);
-        $note->create($request->all());
+        $this->authorize('update', $note);
+        $note->update($request->all());
         return redirect()->route('notes.show', ['id' => $note->id]);
     }
 
@@ -175,7 +175,7 @@ class NoteController extends Controller
     {
         $note = Note::find($id);
         $this->authorize('delete', $note);
-        $note->where('id', $id)->delete();
+        $note->delete();
 
         return redirect()->route('home');
     }
