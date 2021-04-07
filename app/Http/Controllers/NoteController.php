@@ -101,7 +101,7 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
-        $note = Note::create($request->all());
+        $note = Note::updateOrCreate(['user_id' => $request->user_id, 'created_at' => $request->created_at], $request->all());
         return redirect()->route('notes.show', ['id' => $note->id]);
     }
 
