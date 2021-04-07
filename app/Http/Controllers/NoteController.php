@@ -130,10 +130,10 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Note $note)
+    public function edit($id)
     {
-        $this->authorize('edit', $note);
         $note = Note::find($id);
+        $this->authorize('edit', $note);
         $date = $note->created_at->toDateString();
 
         if (isset($note)) {
