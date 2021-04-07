@@ -111,10 +111,10 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Note $note)
+    public function show($id)
     {
-        $this->authorize('view', $note);
         $note = Note::find($id);
+        $this->authorize('view', $note);
 
         if (isset($note)) {
 
