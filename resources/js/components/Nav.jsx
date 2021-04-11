@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 
-const Nav = ({ csrf,isDark }) => {
-
+const Nav = ({ csrf, isDark, mediaScreenL }) => {
 
     useEffect(() => {
 
@@ -11,11 +10,11 @@ const Nav = ({ csrf,isDark }) => {
 
     }, [])
 
-    useEffect (() =>{
+    useEffect(() => {
 
-      document.body.style.background = isDark ? '#111' : '#fff'
+        document.body.style.background = isDark ? '#111' : '#fff'
 
-    },[isDark])
+    }, [isDark])
 
     const handeleScroll = () => {
 
@@ -33,7 +32,7 @@ const Nav = ({ csrf,isDark }) => {
 
         const headerHeight = header.offsetHeight
 
-        if (window.pageYOffset > headerHeight) {
+        if (window.pageYOffset > headerHeight && !nav.classList.contains('is-bottom')) {
 
             nav.classList.add('is-fixed')
             wrapper.style.marginLeft = navWidth + 'px'
@@ -48,12 +47,12 @@ const Nav = ({ csrf,isDark }) => {
 
     return (
         <>
-            <nav id="nav" className={'l-nav ' + (isDark ? 'is-dark' : '')}>
-                <ul className="c-list">
-                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/">home</a></li>
-                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/calendar">calendar</a></li>
-                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><a href="http://localhost:8888/lifenote/public/notes/create">dialry</a></li>
-                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '')}><form method="post" action="http://localhost:8888/lifenote/public/logout"><button type="submit" name="_token" value={csrf}>logout</button></form></li>
+            <nav id="nav" className={'l-nav ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' is-bottom' : '')}>
+                <ul className={"c-list" + (!mediaScreenL ? ' is-row' : '')}>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' is-row' : '')}><a href="http://localhost:8888/lifenote/public/">Home</a></li>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' is-row' : '')}><a href="http://localhost:8888/lifenote/public/calendar">Calendar</a></li>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' is-row' : '')}><a href="http://localhost:8888/lifenote/public/notes/create">Dialry</a></li>
+                    <li className={'c-list__item ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' is-row' : '')}><form method="post" action="http://localhost:8888/lifenote/public/logout"><button type="submit" name="_token" value={csrf}>Logout</button></form></li>
                 </ul>
             </nav>
         </>
