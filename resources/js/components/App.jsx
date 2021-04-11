@@ -31,7 +31,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
                 break
         }
 
-    },[isDark])
+    }, [isDark])
 
     return (
         <>
@@ -42,7 +42,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
                 </div>
             </header>
             <div id='wrapper' className={'l-wrapper' + (mediaScreenL ? '--row' : '') + (isDark ? ' is-dark' : '')}>
-                <Nav csrf={csrf} isDark={isDark} />
+                <Nav csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} />
                 <main id="main" className="l-wrapper__inner">
                     {main}
                 </main>
