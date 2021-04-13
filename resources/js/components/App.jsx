@@ -27,7 +27,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
                 return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} />
                 break
             default:
-                return <NoteList userId={userId} isDark={isDark} />
+                return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
                 break
         }
 
