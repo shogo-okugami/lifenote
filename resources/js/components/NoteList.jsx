@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import ReactLoading from 'react-loading'
 import NoteCard from './NoteCard'
 
-const NoteList = ({ userId,isDark}) => {
+const NoteList = ({ userId,isDark,mediaScreenL}) => {
 
     const [index, setIndex] = useState({
         notes: [],
@@ -39,7 +39,7 @@ const NoteList = ({ userId,isDark}) => {
         <>
             {index.notes.map(note => {
                 return (
-                    <NoteCard key={note.id} userId={userId} note={note} isDark={isDark} />
+                    <NoteCard key={note.id} userId={userId} note={note} isDark={isDark} mediaScreenL={mediaScreenL} />
                 )
             })}
         </>
