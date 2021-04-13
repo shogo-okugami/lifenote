@@ -4,6 +4,10 @@
     width: 100%;
     margin-bottom: 60px;
     cursor: pointer;
+    @include mq(sp){
+        height : 100px;
+        margin-bottom : 30px;
+    }
     &__body {
         display: flex;
         height: 100%;
@@ -38,6 +42,9 @@
         padding: 20px 30px;
         width: 60%;
         height: 100%;
+        @include mq(sp){
+            padding : 20px 15px;
+        }
         & div {
             overflow: hidden;
             font-size: 18px;
@@ -46,6 +53,11 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 5;
+            @include mq(sp){
+                font-size : 14px;
+                line-height: 1.4em;
+                -webkit-line-clamp: 3;
+            }
         }
     }
     &.is-dark {
