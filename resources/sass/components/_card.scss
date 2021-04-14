@@ -3,6 +3,7 @@
     height: 200px;
     width: 100%;
     margin-bottom: 60px;
+    border : 1px solid #ddd;
     cursor: pointer;
     @include mq(sp){
         height : 100px;
@@ -13,16 +14,15 @@
         height: 100%;
     }
     &__date {
-        background: #ddd;
-        color: #fff;
         text-align: center;
         padding-top: 50px;
         width: 20%;
+        border-right : 1px solid #ddd;
         &__inner {
             font-size: 2rem;
             & span {
                 font-size: 1.8rem;
-                border-top: 1px solid #fff;
+                border-top: 1px solid #ddd;
                 display: block;
                 padding-top: 5px;
                 width: 80%;
