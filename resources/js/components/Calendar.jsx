@@ -13,14 +13,12 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
     const month = date.getMonth() + 1;
 
     const today = (() => {
-
         let dt = new Date();
         let y = dt.getFullYear();
         let m = ("00" + (dt.getMonth() + 1)).slice(-2);
         let d = ("00" + dt.getDate()).slice(-2);
         let result = y + '-' + m + '-' + d;
         return result;
-
     })()
 
     const [notes, setNotes] = useState(index)
@@ -164,7 +162,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
                     </tbody>
                 </table>
             </div>
-            {content ? <Note flag={true} note={note} csrf={csrf} isDark={isDark} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={inputDateValue} />}
+            { mediaScreenL ? content ? <Note flag={true} note={note} csrf={csrf} isDark={isDark} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={inputDateValue} /> : ''}
         </div>
     );
 }
