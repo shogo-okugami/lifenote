@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import weeks from '../weeks'
 import { nl2br } from '../functions'
 
-const NoteCard = ({ userId, note: noteItem, isDark }) => {
+const NoteCard = ({ userId, note: noteItem, isDark, mediaScreenL }) => {
 
     const note = noteItem
 
@@ -30,12 +30,11 @@ const NoteCard = ({ userId, note: noteItem, isDark }) => {
 
     return (
         <>
+            { !mediaScreenL && <div>{date.year + '/' + date.month + '/' + date.day + ' ' + date.ofWeek}</div>}
             <div key={note.id} className={'c-card ' + (isDark ? 'is-dark' : '')} onClick={() => redirect(note.id)}>
                 <div className="c-card__body">
-                    <div className={'c-card__date ' + (isDark ? 'is-dark' : '')}>
-                        <div className="c-card__date__inner">
-                            {date.month}/{date.day} {date.ofWeek}<span className={isDark ? 'is-dark' : ''}>{date.year}</span>
-                        </div>
+                    <div className={'c-card__date ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' u-display--none' : '')}>
+                        <div className="c-card__date__inner">{date.month}/{date.day} {date.ofWeek}<span className={isDark ? 'is-dark' : ''}>{date.year}</span></div>
                     </div>
                     <div className="c-card__text">
                         <div>
