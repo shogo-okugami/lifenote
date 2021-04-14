@@ -2,4 +2,7 @@
 .c-heading--large{
   font-size: 32px;
   letter-spacing: 0.25em;
+  @include mq(sp){
+      font-size : 20px;
+  }
 }
