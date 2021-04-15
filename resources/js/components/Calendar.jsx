@@ -148,7 +148,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
         }, [date, notes, isDark])
 
     return (
-        <div className={'p-calendar u-flex' + (isDark ? ' is-dark' : '')}>
+        <div className={'p-calendar' + (mediaScreenL ? ' u-flex' : '') + (isDark ? ' is-dark' : '')}>
             <div className='p-calendar__body'>
                 <div className="p-calendar__heading">
                     <div className="p-calendar__switch--prev"><img onClick={() => changePrevMonth()} src={`images/nav-left${isDark ? '--darked' : ''}.svg`} /></div>
