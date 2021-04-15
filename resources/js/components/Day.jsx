@@ -18,7 +18,8 @@ const Day = ({ userId, year, month, day, dayOfweek, disabled, isDark, mediaScree
             const res = await fetch(`api/users/${paramId}/note/${paramDate}`)
             const resp = await res.json()
             if (resp.data.length) {
-                window.location.href = 'http://localhost:8888/lifenote/public/home'
+                const id = resp.data[0].id
+                window.location.href = `http://localhost:8888/lifenote/public/notes/${id}`
             } else {
                 window.location.href = `http://localhost:8888/lifenote/public/notes/create/${paramDate}`
             }
