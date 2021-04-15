@@ -4,6 +4,10 @@
     height: 15%;
     border-bottom : 1px solid #ddd;
     width : 100%;
+    @include mq(sp){
+        padding : 0 30px;
+        height : 10%;
+    }
     &__inner {
         display: flex;
         justify-content: space-between;
