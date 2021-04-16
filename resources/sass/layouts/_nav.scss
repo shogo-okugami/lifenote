@@ -20,5 +20,10 @@
         position: fixed;
         bottom : 0;
         border : none;
+        border-top : 1px solid #ddd;
+        z-index : 1;
+        &.is-dark {
+            border-top : 1px solid #555;
+        }
     }
 }
