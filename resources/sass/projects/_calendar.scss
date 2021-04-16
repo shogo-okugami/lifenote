@@ -4,6 +4,10 @@
     color: #444;
     border: 1px solid #ddd;
     height: 722px;
+    @include mq(sp) {
+        padding: 0 15px;
+        height: auto;
+    }
     &__heading {
         display: flex;
         justify-content: space-evenly;
@@ -12,6 +16,10 @@
         padding: 20px 0;
         letter-spacing: 1px;
         position: relative;
+        @include mq(sp) {
+            padding-bottom: 0;
+            font-size: 20px;
+        }
     }
     &__month {
         width: 30%;
@@ -107,7 +115,9 @@
     }
     &__body {
         width: 55%;
-        //margin: 0 auto;
+        @include mq(sp) {
+            width: 100%;
+        }
         & table {
             width: 100%;
             padding: 40px;
@@ -132,6 +142,10 @@
         text-align: center;
         cursor: pointer;
         position: relative;
+        @include mq(sp) {
+            font-size: 16px;
+            padding : 18px 0;
+        }
         &.is-disabled {
             @extend .p-calendar__date;
             color: #ccc;
@@ -153,6 +167,10 @@
                 border-radius: 50%;
                 width: 30px;
                 height: 30px;
+                @include mq(sp){
+                    width : 28px;
+                    height : 28px;
+                }
                 &.is-dark {
                     color: #222;
                     background: #fff;
@@ -176,24 +194,26 @@
         }
     }
     &__switch {
+        position: absolute;
+        top: 35%;
+        @include mq(sp) {
+            top: 56%;
+        }
         &--prev {
-            position: absolute;
-            top: 35%;
+            @extend .p-calendar__switch;
             right: 90%;
-            & img {
-                width: 25px;
-                height: 25px;
-                display: block;
-            }
         }
         &--next {
-            position: absolute;
-            top: 35%;
+            @extend .p-calendar__switch;
             left: 90%;
-            & img {
-                width: 25px;
-                height: 25px;
-                display: block;
+        }
+        & img {
+            width: 25px;
+            height: 25px;
+            display: block;
+            @include mq(sp) {
+                width: 14px;
+                height: 14px;
             }
         }
     }
