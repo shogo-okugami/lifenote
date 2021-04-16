@@ -3,6 +3,11 @@
     border: 1px solid #ddd;
     padding: 40px;
     height: 722px;
+    @include mq(sp){
+        padding : 15px;
+        font-size : 14px;
+        height : 430px;
+    }
     &--arranged {
         width: 45%;
         border: none;
@@ -29,6 +34,10 @@
                 display: block;
                 width: 20px;
                 height: 20px;
+                @include mq(sp){
+                    width : 15px;
+                    height : 15px;
+                }
             }
             & a {
                 display: block;
