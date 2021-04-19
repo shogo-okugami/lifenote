@@ -203,7 +203,7 @@
         position: absolute;
         top: 35%;
         @include mq(sp) {
-            top: 56%;
+            top: 50%;
         }
         &--prev {
             @extend .p-calendar__switch;
@@ -218,8 +218,8 @@
             height: 25px;
             display: block;
             @include mq(sp) {
-                width: 14px;
-                height: 14px;
+                width: 20px;
+                height: 20px;
             }
         }
     }
