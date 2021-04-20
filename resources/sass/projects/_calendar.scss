@@ -6,7 +6,8 @@
     height: 722px;
     @include mq(sp) {
         padding: 0 15px;
-        height: auto;
+        height: 100%;
+        border : none;
     }
     &__heading {
         display: flex;
@@ -149,8 +150,8 @@
         cursor: pointer;
         position: relative;
         @include mq(sp) {
-            font-size: 14px;
-            padding : 18px 0;
+            font-size: 16px;
+            padding : 16px 0;
         }
         &.is-disabled {
             @extend .p-calendar__date;
@@ -174,8 +175,8 @@
                 width: 30px;
                 height: 30px;
                 @include mq(sp){
-                    width : 24px;
-                    height : 24px;
+                    width : 28px;
+                    height : 28px;
                 }
                 &.is-dark {
                     color: #222;
