@@ -3,11 +3,6 @@
     border: 1px solid #ddd;
     padding: 40px;
     height: 722px;
-    @include mq(sp){
-        padding : 15px;
-        font-size : 14px;
-        height : 430px;
-    }
     &--arranged {
         width: 45%;
         border: none;
@@ -19,10 +14,16 @@
         border: 1px solid #555;
         color: #fff;
     }
+    &__heading {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+        font-size: 16px;
+    }
     &__menu {
         display: flex;
-        justify-content: flex-end;
-        margin-bottom: 20px;
         &__icon {
             display: block;
             cursor: pointer;
@@ -34,9 +35,9 @@
                 display: block;
                 width: 20px;
                 height: 20px;
-                @include mq(sp){
-                    width : 15px;
-                    height : 15px;
+                @include mq(sp) {
+                    width: 15px;
+                    height: 15px;
                 }
             }
             & a {
