@@ -100,7 +100,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
         () => {
             return (
                 <>
-                    <tr>
+                    <tr className="p-calendar__row">
                         {
                             weeks.map((day, index) => <td className="p-calendar__date" key={index}>{day}</td>)
                         }
