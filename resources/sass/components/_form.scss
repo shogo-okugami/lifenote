@@ -5,6 +5,7 @@
     border: 1px solid #ddd;
     @include mq(sp){
         padding : 0;
+        border : none;
     }
     &__item {
         margin-bottom: 60px;
