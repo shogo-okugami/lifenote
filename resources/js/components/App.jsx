@@ -11,7 +11,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     const [isDark, setIsDark] = useState(Boolean(localStorage.getItem('darked')))
 
-    const mediaScreenL = document.documentElement.clientWidth >= 960 ? true : false
+    const mediaScreenL = document.documentElement.clientWidth >= 960
 
     const main = useMemo(() => {
 
