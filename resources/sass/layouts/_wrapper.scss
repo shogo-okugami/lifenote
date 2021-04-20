@@ -8,6 +8,10 @@
         display: flex;
         justify-content: space-between;
     }
+    @include mq(sp){
+        min-height: 0;
+        height : 80%;
+    }
     &__inner {
         padding: 70px 0;
         margin: 0 auto;
@@ -15,7 +19,10 @@
         height: 100%;
         @include mq(sp){
             width : 90%;
-            padding : 20px 0;
+            //padding : 20px 0;
+            width: 100%;
+            padding : 0;
+            margin : 0;
         }
         &--small {
             @extend .l-wrapper__inner;
