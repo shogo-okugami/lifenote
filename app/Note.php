@@ -8,11 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Note extends Model
 {
 
-    protected $fillable = ['created_at', 'text', 'user_id'];
+    protected $fillable = ['date', 'text', 'user_id'];
 
-    protected $dates = ['created_at',];
-
-    protected $casts = [
-        'created_at' => 'date:Y-m-d',
-    ];
+    protected $casts = ['date' => 'date:Y/m/d',];
 }
