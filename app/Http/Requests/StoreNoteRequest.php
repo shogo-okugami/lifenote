@@ -24,7 +24,7 @@ class StoreNoteRequest extends FormRequest
   public function rules()
   {
     return [
-      'created_at' => 'required',
+      'date' => 'required',
       'text' => 'required|max:500',
     ];
   }
@@ -34,7 +34,7 @@ class StoreNoteRequest extends FormRequest
     return [
       'text.required' => '入力してください。',
       'text.max' => '500文字以内で入力してください',
-      'created_at.required' => '選択してください。',
+      'date.required' => '選択してください。',
     ];
   }
 }

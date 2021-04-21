@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Resources\Note as NoteResource;
 use Carbon\Carbon;
+use DebugBar\DebugBar;
 use Illuminate\Support\Facades\Log;
 
 class NoteController extends Controller
@@ -25,7 +26,7 @@ class NoteController extends Controller
 
         return NoteResource::collection(
             Note::where('user_id', $user_id)
-                ->orderBy('created_at', 'desc')
+                ->orderBy('date', 'desc')
                 ->offset($offset)
                 ->limit(20)
                 ->get()
@@ -46,8 +47,8 @@ class NoteController extends Controller
 
         return NoteResource::collection(
             Note::where('user_id', $id)
-                ->whereBetween('created_at', [$startOfCalendar, $lastOfCalendar])
-                ->orderBy('created_at')
+                ->whereBetween('date', [$startOfCalendar, $lastOfCalendar])
+                ->orderBy('date')
                 ->get()
         );
     }
@@ -63,8 +64,8 @@ class NoteController extends Controller
         $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
 
         $notes = NoteResource::collection(Note::where('user_id', $user_id)
-            ->whereBetween('created_at', [$startOfCalendar, $lastOfCalendar])
-            ->orderBy('created_at')
+            ->whereBetween('date', [$startOfCalendar, $lastOfCalendar])
+            ->orderBy('date')
             ->get());
 
         return view('calendar', ['notes' => $notes]);
@@ -75,7 +76,7 @@ class NoteController extends Controller
 
         $note = NoteResource::collection(
             Note::where('user_id', $id)
-                ->whereDate('created_at', $date)
+                ->whereDate('date', $date)
                 ->get()
         );
 
@@ -101,7 +102,8 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
-        $note = Note::updateOrCreate(['user_id' => $request->user_id, 'created_at' => $request->created_at], $request->all());
+
+        $note = Note::updateOrCreate(['user_id' => $request->user_id, 'date' => $request->date], $request->all());
         return redirect()->route('notes.show', ['id' => $note->id]);
     }
 
@@ -115,7 +117,7 @@ class NoteController extends Controller
     {
         $note = Note::find($id);
         $this->authorize('view', $note);
-
+        Log::info($note);
         if (isset($note)) {
 
             return view('notes.note', ['note' => $note]);
@@ -134,7 +136,7 @@ class NoteController extends Controller
     {
         $note = Note::find($id);
         $this->authorize('edit', $note);
-        $date = $note->created_at->toDateString();
+        $date = $note->date->toDateString();
 
         if (isset($note)) {
 
