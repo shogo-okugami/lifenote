@@ -18,7 +18,7 @@ class Note extends JsonResource
             'id' => $this->id,
             'text' => $this->text,
             'user_id' => $this->user_id,
-            'date' => $this->date,
+            'date' => $this->date->format('Y/m/d'),
         ];
     }
 }
