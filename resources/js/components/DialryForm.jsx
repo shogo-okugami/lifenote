@@ -13,7 +13,10 @@ const DialryForm = ({ userId, csrf, note = null, date, isDark, errors, flag, med
                 <input type="hidden" name="user_id" value={userId} />
                 <input type="hidden" name="date" value={date} />
                 <TextArea errors={errors} text={editFlag ? note.text : null} mediaScreenL={mediaScreenL} />
-                { mediaScreenL && <button type="submit" className="c-btn--primary">submit</button> }
+                {mediaScreenL ? <button type="submit" className="c-btn--primary">submit</button> :
+                                <button type="submit" className="c-btn--write">
+                                    <img src="http://localhost:8888/lifenote/public/images/pencil.svg" />
+                                </button>}
             </form>
         </>
     )
