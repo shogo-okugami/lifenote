@@ -1,7 +1,7 @@
 import React from 'react'
 import TextArea from './TextArea'
 
-const DialryForm = ({ userId, csrf, note = null, date, isDark, errors, flag }) => {
+const DialryForm = ({ userId, csrf, note = null, date, isDark, errors, flag, mediaScreenL }) => {
 
     const editFlag = note ? true : false;
 
@@ -11,9 +11,9 @@ const DialryForm = ({ userId, csrf, note = null, date, isDark, errors, flag }) =
                 <input type="hidden" name="_token" value={csrf} />
                 {editFlag && <input type="hidden" name="_method" value="PUT" />}
                 <input type="hidden" name="user_id" value={userId} />
-                <input type="hidden" name="created_at" value={date} />
-                <TextArea errors={errors} text={editFlag ? note.text : null} />
-                <button type="submit" className="c-btn--primary">submit</button>
+                <input type="hidden" name="date" value={date} />
+                <TextArea errors={errors} text={editFlag ? note.text : null} mediaScreenL={mediaScreenL} />
+                { mediaScreenL && <button type="submit" className="c-btn--primary">submit</button> }
             </form>
         </>
     )
