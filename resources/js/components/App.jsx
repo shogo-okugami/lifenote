@@ -24,7 +24,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
                 return <Calendar userId={userId} mediaScreenL={mediaScreenL} notes={notes} errors={errors} csrf={csrf} isDark={isDark} date={date} />
                 break
             case 'dialry':
-                return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} />
+                return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} mediaScreenL={mediaScreenL} />
                 break
             default:
                 return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
