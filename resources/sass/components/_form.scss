@@ -3,14 +3,14 @@
     padding: 40px;
     min-height: 100%;
     border: 1px solid #ddd;
-    @include mq(sp){
-        padding : 0;
-        border : none;
+    @include mq(sp) {
+        padding: 0;
+        border: none;
     }
     &__item {
         margin-bottom: 60px;
-        @include mq(sp){
-            margin-bottom : 0;
+        @include mq(sp) {
+            margin-bottom: 0;
         }
     }
     &__input {
@@ -22,15 +22,15 @@
         border: 1px solid #3ca8f0;
         width: 100%;
         padding: 10px;
-        @include mq(sp){
-            border : none;
+        @include mq(sp) {
+            border: none;
             resize: none;
-            padding : 20px;
+            padding: 15px;
         }
         &__counter {
             font-size: 20px;
-            @include mq(sp){
-                font-size : 16px;
+            @include mq(sp) {
+                font-size: 16px;
             }
             &.is-over {
                 color: $red;
@@ -42,7 +42,20 @@
         font-size: 20px;
     }
     &__password__check {
-        padding : 20px 20px;
+        padding: 20px 20px;
+    }
+    &__heading {
+        position: absolute;
+        padding: 18px;
+        height: 10%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: #fff;
+        z-index: 1;
+        text-align: center;
+        border: 1px solid #ddd;
+        font-size: 16px;
     }
     &.is-dark {
         background: #222;
@@ -52,6 +65,6 @@
     &.is-arranged {
         width: 45%;
         border: none;
-        padding : 20px 0 20px 20px;
+        padding: 20px 0 20px 20px;
     }
 }
