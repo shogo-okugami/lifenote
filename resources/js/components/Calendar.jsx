@@ -17,13 +17,13 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
         let y = dt.getFullYear();
         let m = ("00" + (dt.getMonth() + 1)).slice(-2);
         let d = ("00" + dt.getDate()).slice(-2);
-        let result = y + '-' + m + '-' + d;
+        let result = y + '/' + m + '/' + d;
         return result;
     })()
 
     const [notes, setNotes] = useState(index)
-    const notesDates = notes.map(note => note.created_at.substr(0, 10))
-    const [note, setNote] = useState(notes.find(note => note.created_at.substr(0, 10) === today))
+    const notesDates = notes.map(note => note.date.substr(0, 10))
+    const [note, setNote] = useState(notes.find(note => note.date.substr(0, 10) === today))
     const [content, setContent] = useState((() => notesDates.includes(today)))
     const [inputDateValue, setInputDateValue] = useState(defaultDate)
 
@@ -162,7 +162,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
                     </tbody>
                 </table>
             </div>
-            { mediaScreenL ? content ? <Note flag={true} note={note} csrf={csrf} isDark={isDark} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={inputDateValue} /> : ''}
+            { mediaScreenL ? content ? <Note flag={true} note={note} csrf={csrf} isDark={isDark} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={inputDateValue} mediaScreenL={mediaScreenL} /> : ''}
         </div>
     );
 }
