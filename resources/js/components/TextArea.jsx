@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const inputTextArea = ({ errors ,text}) => {
+const inputTextArea = ({ errors ,text, mediaScreenL}) => {
 
     const [count, setCount] = useState(0)
     const [isOver, setIsOver] = useState(false)
@@ -23,10 +23,10 @@ const inputTextArea = ({ errors ,text}) => {
                 <textarea onKeyUp={(e) => handleKeyUp(e)} name="text" className="c-form__textarea" rows="18" placeholder="Please write a dialry">
                     {text && text}
                 </textarea>
-                <div className="u-flex-between u-mt10px">
-                    <div className="c-form__message">{errors.text}</div>
-                    <span className={'c-form__textarea__counter ' + (isOver ? 'is-over' : '')}>{count}/500</span>
-                </div>
+               { mediaScreenL && <div className="u-flex-between u-mt10px">
+                                   <div className="c-form__message">{errors.text}</div>
+                                   <span className={'c-form__textarea__counter ' + (isOver ? 'is-over' : '')}>{count}/500</span>
+                                 </div>}
             </div>
         </>
     )
