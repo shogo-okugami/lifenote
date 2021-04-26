@@ -8,8 +8,7 @@ const NoteCard = ({ userId, note: noteItem, isDark, mediaScreenL }) => {
     const note = noteItem
 
     const getNoteDate = (date) => {
-        let str = date.substr(0, 10)
-        str = str.split('-')
+        let str = date.split('/')
         date = str.map(value => parseInt(value))
         date = new Date(date[0], date[1] - 1, date[2])
         const result = {}
@@ -20,7 +19,7 @@ const NoteCard = ({ userId, note: noteItem, isDark, mediaScreenL }) => {
         return result
     }
 
-    const date = getNoteDate(note.created_at)
+    const date = getNoteDate(note.date)
 
     const redirect = (noteId) => {
 
