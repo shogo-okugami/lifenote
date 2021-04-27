@@ -153,7 +153,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
                 <div className="p-calendar__heading">
                     <div className="p-calendar__switch--prev"><img onClick={() => changePrevMonth()} src={`images/nav-left${isDark ? '--darked' : ''}.svg`} /></div>
                     <MonthMenu userId={userId} year={year} month={month} setDate={setDate} setNotes={setNotes} isDark={isDark} />
-                    <YearSwitch userId={userId} year={year} month={month} setDate={setDate} setNotes={setNotes} isDark={isDark} />
+                    {mediaScreenL ? <YearSwitch userId={userId} year={year} month={month} setDate={setDate} setNotes={setNotes} isDark={isDark} /> : <div>{year}</div>}
                     <div className="p-calendar__switch--next"><img onClick={() => changeNextMonth()} src={`images/nav-right${isDark ? '--darked' : ''}.svg`} /></div>
                 </div>
                 <table>
