@@ -64,7 +64,7 @@ const Day = ({ userId, year, month, day, dayOfweek, disabled, isDark, mediaScree
                 return num < 10 ? '0' + String(num) : String(num)
             })
 
-            return newArray.join('-')
+            return newArray.join('/')
         })()
         return notesDates.includes(noteDate)
 
@@ -77,7 +77,7 @@ const Day = ({ userId, year, month, day, dayOfweek, disabled, isDark, mediaScree
                 return num < 10 ? '0' + String(num) : String(num)
             })
 
-            return newArray.join('-')
+            return newArray.join('/')
         })()
 
         return noteDate
