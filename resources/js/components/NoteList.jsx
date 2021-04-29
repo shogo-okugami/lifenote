@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState, useRef } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import ReactLoading from 'react-loading'
 import NoteCard from './NoteCard'
 
-const NoteList = ({ userId,isDark,mediaScreenL}) => {
+const NoteList = ({ userId, isDark, mediaScreenL }) => {
 
     const [index, setIndex] = useState({
         notes: [],
@@ -35,15 +34,9 @@ const NoteList = ({ userId,isDark,mediaScreenL}) => {
 
     const loader = <ReactLoading key={0} type={'spokes'} color={'#444'} delay={5000} />
 
-    const items = (
-        <>
-            {index.notes.map(note => {
-                return (
-                    <NoteCard key={note.id} userId={userId} note={note} isDark={isDark} mediaScreenL={mediaScreenL} />
-                )
-            })}
-        </>
-    )
+    const dateRef = useRef(null)
+
+    const items = index.notes.map((note,i) => <NoteCard key={i} userId={userId} note={note} isDark={isDark} mediaScreenL={mediaScreenL} index={i} monthlyHeading={dateRef} />)
 
     return (
         <>
