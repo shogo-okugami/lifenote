@@ -1,9 +1,9 @@
 
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import weeks from '../weeks'
 import { nl2br } from '../functions'
 
-const NoteCard = ({ userId, note: noteItem, isDark, mediaScreenL }) => {
+const NoteCard = ({ note: noteItem, isDark, mediaScreenL, index, monthlyHeading }) => {
 
     const note = noteItem
 
@@ -27,10 +27,28 @@ const NoteCard = ({ userId, note: noteItem, isDark, mediaScreenL }) => {
 
     }
 
+    useEffect(() => {
+
+        const card = document.getElementById('card-' + index)//カードのHTML要素を取得
+        const date = card.getAttribute('date') //date属性を取得
+
+        //カードの日付(Y/m)が異なる場合
+        if (monthlyHeading.current !== date) {
+            //div要素を生成
+            let div = document.createElement('div')
+            //テキストを新たな日付にする　
+            div.textContent = date
+            //カードの直前に要素を挿入
+            card.before(div)
+            //日付を更新
+            monthlyHeading.current = date
+        }
+    }, [])
+
     return (
         <>
             { !mediaScreenL && <div>{date.year + '/' + date.month + '/' + date.day + ' ' + date.ofWeek}</div>}
-            <div key={note.id} className={'c-card ' + (isDark ? 'is-dark' : '')} onClick={() => redirect(note.id)}>
+            <div id={"card-" + index} key={note.id} date={note.date.slice(0, 7)} className={'c-card ' + (isDark ? 'is-dark' : '')} onClick={() => redirect(note.id)}>
                 <div className="c-card__body">
                     <div className={'c-card__date ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' u-display--none' : '')}>
                         <div className="c-card__date__inner">{date.month}/{date.day} {date.ofWeek}<span className={isDark ? 'is-dark' : ''}>{date.year}</span></div>
