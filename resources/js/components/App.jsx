@@ -18,7 +18,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
         switch (content) {
 
             case 'note':
-                return <Note userId={userId} note={note} csrf={csrf} isDark={isDark} />
+                return <Note userId={userId} note={note} csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} />
                 break;
             case 'calendar':
                 return <Calendar userId={userId} mediaScreenL={mediaScreenL} notes={notes} errors={errors} csrf={csrf} isDark={isDark} date={date} />
