@@ -162,7 +162,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
                     </tbody>
                 </table>
             </div>
-            { mediaScreenL ? content ? <Note flag={true} note={note} csrf={csrf} isDark={isDark} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={inputDateValue} mediaScreenL={mediaScreenL} /> : ''}
+            { mediaScreenL ? content ? <Note flag={true} note={note} csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={inputDateValue} mediaScreenL={mediaScreenL} /> : ''}
         </div>
     );
 }
