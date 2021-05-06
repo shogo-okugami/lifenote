@@ -5,7 +5,7 @@ const DialryForm = ({ userId, csrf, note = null, date, isDark, errors, flag, med
 
     const editFlag = note ? true : false;
 
-    const dateOfNote = date.replace(/-/g,'/')
+    const dateOfNote = date.replace(/-/g, '/')
 
     return (
         <>
@@ -14,11 +14,14 @@ const DialryForm = ({ userId, csrf, note = null, date, isDark, errors, flag, med
                 <input type="hidden" name="_token" value={csrf} />
                 {editFlag && <input type="hidden" name="_method" value="PUT" />}
                 <input type="hidden" name="user_id" value={userId} />
-                <input type="hidden" name="date" value={date} />
+                {mediaScreenL ? <div className="c-form__item">
+                                  <input className="c-form__input" type="text" name="date" value={dateOfNote} readOnly />
+                                </div>
+                              : <input type="hidden" name="date" value={date} />}
                 <TextArea errors={errors} text={editFlag ? note.text : null} mediaScreenL={mediaScreenL} />
-                {mediaScreenL ? <button type="submit" className="c-btn--primary">submit</button> :
-                                <button type="submit" className="c-btn--write">
-                                    <img src="http://localhost:8888/lifenote/public/images/pencil.svg" />
+                {mediaScreenL ? <button type="submit" className="c-btn--primary">submit</button>
+                              : <button type="submit" className="c-btn--write">
+                                  <img src="http://localhost:8888/lifenote/public/images/pencil.svg" />
                                 </button>}
             </form>
         </>
