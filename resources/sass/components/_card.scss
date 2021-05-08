@@ -7,7 +7,9 @@
     cursor: pointer;
     @include mq(sp){
         height : 100px;
-        margin-bottom : 30px;
+        margin-bottom : 0;
+        border : none;
+        border-bottom: 1px solid #ddd;
     }
     &__body {
         display: flex;
