@@ -28,3 +28,7 @@ Route::get('notes/create/{date?}', 'NoteController@create')->middleware('auth');
 Route::get('notes/{id}', 'NoteController@show')->name('notes.show')->middleware('auth');
 
 Route::get('calendar', 'NoteController@indexByCalendar')->name('calendar')->middleware('auth');
+
+Route::get('setting', function (){
+    return view('home');
+})->name('setting')->middleware('auth');
