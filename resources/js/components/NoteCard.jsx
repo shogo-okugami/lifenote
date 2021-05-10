@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react';
 import weeks from '../weeks'
+import months from '../months'
 import { nl2br } from '../functions'
 
 const NoteCard = ({ note: noteItem, isDark, mediaScreenL, index, monthlyHeading }) => {
@@ -36,8 +37,17 @@ const NoteCard = ({ note: noteItem, isDark, mediaScreenL, index, monthlyHeading 
         if (monthlyHeading.current !== date) {
             //div要素を生成
             let div = document.createElement('div')
+            //日付を年と月に分割
+            let array = date.split('/')
+            //月を取得
+            const index = Number(array[1]) - 1
+            const month = months[index]
+            //年と月を連結する
+            const text = month + ' ' + array[0]
             //テキストを新たな日付にする　
-            div.textContent = date
+            div.textContent = text
+            //要素にクラスを追加
+            div.classList.add('c-heading--date')
             //カードの直前に要素を挿入
             card.before(div)
             //日付を更新
@@ -47,7 +57,6 @@ const NoteCard = ({ note: noteItem, isDark, mediaScreenL, index, monthlyHeading 
 
     return (
         <>
-            { !mediaScreenL && <div>{date.year + '/' + date.month + '/' + date.day + ' ' + date.ofWeek}</div>}
             <div id={"card-" + index} key={note.id} date={note.date.slice(0, 7)} className={'c-card ' + (isDark ? 'is-dark' : '')} onClick={() => redirect(note.id)}>
                 <div className="c-card__body">
                     <div className={'c-card__date ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' u-display--none' : '')}>
