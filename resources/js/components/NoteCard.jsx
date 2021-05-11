@@ -8,19 +8,17 @@ const NoteCard = ({ note: noteItem, isDark, mediaScreenL, index, monthlyHeading 
 
     const note = noteItem
 
-    const getNoteDate = (date) => {
+    const getDate = (date) => {
         let str = date.split('/')
         date = str.map(value => parseInt(value))
         date = new Date(date[0], date[1] - 1, date[2])
         const result = {}
         result.day = date.getDate()
-        result.month = date.getMonth() + 1
-        result.year = date.getFullYear()
         result.ofWeek = weeks[date.getDay()]
         return result
     }
 
-    const date = getNoteDate(note.date)
+    const date = getDate(note.date)
 
     const redirect = (noteId) => {
 
@@ -60,7 +58,9 @@ const NoteCard = ({ note: noteItem, isDark, mediaScreenL, index, monthlyHeading 
             <div id={"card-" + index} key={note.id} date={note.date.slice(0, 7)} className={'c-card ' + (isDark ? 'is-dark' : '')} onClick={() => redirect(note.id)}>
                 <div className="c-card__body">
                     <div className={'c-card__date ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' u-display--none' : '')}>
-                        <div className="c-card__date__inner">{date.month}/{date.day} {date.ofWeek}<span className={isDark ? 'is-dark' : ''}>{date.year}</span></div>
+                        <div className={'c-card__date__inner' + (date.ofWeek === 'Sat' ? ' is-sat' : '') + (date.ofWeek === 'Sun' ? ' is-sun' : '')}>{date.ofWeek}
+                            <span className={(date.ofWeek === 5 ? 'is-sat' : '') + (date.ofWeek === 6 ? 'is-sun' : '')}>{date.day}</span>
+                        </div>
                     </div>
                     <div className="c-card__text">
                         <div>
