@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import ReactDOM from 'react-dom'
 import Nav from './Nav'
 import NoteList from './NoteList'
@@ -10,8 +10,48 @@ import ToggleDarkButton from './ToggleDarkButton'
 const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     const [isDark, setIsDark] = useState(Boolean(localStorage.getItem('darked')))
+    const [windowWidth, setWindowWidth] = useState(document.documentElement.clientWidth) //ウィンドウの横幅
+    const resized = useRef(false) //ウィンドウのリサイズ判定
+    const mediaScreenL = windowWidth >= 960 //PC画面の判定
+    //リサイズイベントを追加する
+    useEffect(() => {
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [document.documentElement.clientWidth])
 
-    const mediaScreenL = document.documentElement.clientWidth >= 960
+    const handleResize = () => {
+        setTimeout(() => {
+            //ウィンドウ幅を更新
+            setWindowWidth(document.documentElement.clientWidth)
+            //リサイズ判定をtrueにする
+            resized.current = true
+        }, 300);
+    }
+    //ウィンドウ幅が更新された際に変更されたstyle属性をリセット
+    useEffect(() => {
+        //SP画面の場合
+        if (!mediaScreenL) {
+            const main = document.getElementById('main')
+            main.style.width = ''
+            const wrapper = document.getElementById('wrapper')
+            wrapper.style.marginLeft = ''
+            //リサイズされていた場合
+            if (resized.current) {
+                const header = document.getElementById('header')
+                header.style.height = header.offsetHeight + 'px'
+                document.body.style.height = 'auto'
+                document.body.style.paddingBottom = document.getElementById('nav').offsetHeight + 'px'
+                resized.current = false
+            }
+        //PC画面の場合
+        } else {
+            const header = document.getElementById('header')
+            header.style.height = ''
+            document.body.style.paddingBottom = ''
+            document.body.style.height = ''
+            if (resized.current) resized.current = false
+        }
+    }, [mediaScreenL])
 
     const main = useMemo(() => {
 
@@ -19,7 +59,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
             case 'note':
                 return <Note userId={userId} note={note} csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} />
-                break;
+                break
             case 'calendar':
                 return <Calendar userId={userId} mediaScreenL={mediaScreenL} notes={notes} errors={errors} csrf={csrf} isDark={isDark} date={date} />
                 break
@@ -31,7 +71,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
                 break
         }
 
-    }, [isDark])
+    }, [isDark, mediaScreenL])
 
     return (
         <>
