@@ -4,10 +4,9 @@ import weeks from '../weeks'
 import months from '../months'
 import { nl2br } from '../functions'
 
-const NoteCard = ({ note: noteItem, isDark, mediaScreenL, index, monthlyHeading }) => {
+const NoteCard = ({ note: noteItem, isDark, index, monthlyHeading }) => {
 
     const note = noteItem
-
     const getDate = (date) => {
         let str = date.split('/')
         date = str.map(value => parseInt(value))
@@ -57,7 +56,7 @@ const NoteCard = ({ note: noteItem, isDark, mediaScreenL, index, monthlyHeading 
         <>
             <div id={"card-" + index} key={note.id} date={note.date.slice(0, 7)} className={'c-card ' + (isDark ? 'is-dark' : '')} onClick={() => redirect(note.id)}>
                 <div className="c-card__body">
-                    <div className={'c-card__date ' + (isDark ? 'is-dark' : '') + (!mediaScreenL ? ' u-display--none' : '')}>
+                    <div className={'c-card__date ' + (isDark ? 'is-dark' : '')}>
                         <div className={'c-card__date__inner' + (date.ofWeek === 'Sat' ? ' is-sat' : '') + (date.ofWeek === 'Sun' ? ' is-sun' : '')}>{date.ofWeek}
                             <span className={(date.ofWeek === 5 ? 'is-sat' : '') + (date.ofWeek === 6 ? 'is-sun' : '')}>{date.day}</span>
                         </div>
