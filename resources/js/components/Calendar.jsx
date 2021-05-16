@@ -145,7 +145,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
                     })()}
                 </>
             )
-        }, [date, notes, isDark])
+        }, [date, notes, isDark, mediaScreenL])
 
     return (
         <div className={'p-calendar' + (mediaScreenL ? ' u-flex' : '') + (isDark ? ' is-dark' : '')}>
