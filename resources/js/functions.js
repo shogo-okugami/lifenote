@@ -44,4 +44,9 @@ const route = (name, params) => {
     return result
 }
 
+//ファイルパス出力関数
+const asset = (value) => {
+    return domain + value
+}
+
 export { nl2br, route }
