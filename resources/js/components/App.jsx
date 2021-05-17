@@ -6,6 +6,7 @@ import Note from './Note'
 import Calendar from './Calendar'
 import DialryForm from './DialryForm'
 import ToggleDarkButton from './ToggleDarkButton'
+import { route } from '../functions'
 
 const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
@@ -43,7 +44,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
                 document.body.style.paddingBottom = document.getElementById('nav').offsetHeight + 'px'
                 resized.current = false
             }
-        //PC画面の場合
+            //PC画面の場合
         } else {
             const header = document.getElementById('header')
             header.style.height = ''
@@ -54,9 +55,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
     }, [mediaScreenL])
 
     const main = useMemo(() => {
-
         switch (content) {
-
             case 'note':
                 return <Note userId={userId} note={note} csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} />
                 break
@@ -70,14 +69,13 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
                 return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
                 break
         }
-
     }, [isDark, mediaScreenL])
 
     return (
         <>
             <header id="header" className={'l-header' + (isDark ? ' is-dark' : '')}>
                 <div className="l-header__inner">
-                    <h1 className="c-heading--large">lifenote</h1>
+                    <h1><a className={'c-heading--large' + (isDark ? ' is-dark' : '')} href={route('home')}>lifenote</a></h1>
                     {isLogin && <ToggleDarkButton userId={userId} isDark={isDark} setIsDark={setIsDark} />}
                 </div>
             </header>
