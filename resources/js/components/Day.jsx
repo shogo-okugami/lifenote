@@ -1,27 +1,20 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import { route } from '../functions';
 
 const Day = ({ userId, year, month, day, dayOfweek, disabled, isDark, mediaScreenL, today, notesDates, setInputDateValue, setNote, setContent }) => {
 
-    const redirect = async (paramId, ...array) => {
+    const redirect = async (paramId, ...date) => {
 
-        const paramDate = (() => {
-
-            const newArray = array.map(num => {
-                return num < 10 ? '0' + String(num) : String(num)
-            })
-
-            return newArray.join('-')
-
-        })()
+        const paramDate = date.map(num => num < 10 ? '0' + String(num) : String(num)).join('-')
 
         try {
             const res = await fetch(`api/users/${paramId}/note/${paramDate}`)
             const resp = await res.json()
             if (resp.data.length) {
                 const id = resp.data[0].id
-                window.location.href = `http://localhost:8888/lifenote/public/notes/${id}`
+                window.location.href = route('notes.show', [id])
             } else {
-                window.location.href = `http://localhost:8888/lifenote/public/notes/create/${paramDate}`
+                window.location.href = route('notes.create', [paramDate])
             }
         } catch (error) {
             console.log(error)
@@ -29,17 +22,9 @@ const Day = ({ userId, year, month, day, dayOfweek, disabled, isDark, mediaScree
 
     }
 
-    const switchContent = async (paramId, ...array) => {
+    const switchContent = async (paramId, ...date) => {
 
-        const paramDate = (() => {
-
-            const newArray = array.map(num => {
-                return num < 10 ? '0' + String(num) : String(num)
-            })
-
-            return newArray.join('-')
-
-        })()
+        const paramDate = date.map(num => num < 10 ? '0' + String(num) : String(num)).join('-')
 
         try {
             const res = await fetch(`api/users/${paramId}/note/${paramDate}`)
@@ -57,31 +42,14 @@ const Day = ({ userId, year, month, day, dayOfweek, disabled, isDark, mediaScree
         }
     }
 
-    const findDate = (...array) => {
-
-        const noteDate = (() => {
-            const newArray = array.map(num => {
-                return num < 10 ? '0' + String(num) : String(num)
-            })
-
-            return newArray.join('/')
-        })()
+    const findDate = (...date) => {
+        const noteDate = date.map(num => num < 10 ? '0' + String(num) : String(num)).join('/')
         return notesDates.includes(noteDate)
-
     }
 
-    const getDate = (...array) => {
-
-        const noteDate = (() => {
-            const newArray = array.map(num => {
-                return num < 10 ? '0' + String(num) : String(num)
-            })
-
-            return newArray.join('/')
-        })()
-
+    const getDate = (...date) => {
+        const noteDate = date.map(num => num < 10 ? '0' + String(num) : String(num)).join('/')
         return noteDate
-
     }
 
     const flag = findDate(year, month, day)
