@@ -5,7 +5,7 @@ import NoteList from './NoteList'
 import Note from './Note'
 import Calendar from './Calendar'
 import DialryForm from './DialryForm'
-import ToggleDarkButton from './ToggleDarkButton'
+import Settings from './Settings'
 import { route } from '../functions'
 
 const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
@@ -65,6 +65,8 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
             case 'dialry':
                 return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} mediaScreenL={mediaScreenL} />
                 break
+            case 'settings':
+                return <Settings isDark={isDark} setIsDark={setIsDark} mediaScreenL={mediaScreenL} />
             default:
                 return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
                 break
@@ -76,7 +78,6 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
             <header id="header" className={'l-header' + (isDark ? ' is-dark' : '')}>
                 <div className="l-header__inner">
                     <h1><a className={'c-heading--large' + (isDark ? ' is-dark' : '')} href={route('home')}>lifenote</a></h1>
-                    {isLogin && <ToggleDarkButton userId={userId} isDark={isDark} setIsDark={setIsDark} />}
                 </div>
             </header>
             <div id='wrapper' className={'l-wrapper' + (mediaScreenL ? '--row' : '') + (isDark ? ' is-dark' : '')}>
