@@ -1,10 +1,10 @@
 import React from 'react'
-import { nl2br } from '../functions'
+import { nl2br, route, asset } from '../functions'
 
 const Note = ({ flag, note, csrf, isDark, mediaScreenL }) => {
 
-    const redirect = ()=>{
-        window.location.href = `http://localhost:8888/lifenote/public/notes/${note.id}/edit`
+    const redirect = () => {
+        window.location.href = route('notes.edit', [note.id])
     }
 
     return (
@@ -14,12 +14,12 @@ const Note = ({ flag, note, csrf, isDark, mediaScreenL }) => {
                     <p>{note.date}</p>
                     <div className={'p-note__menu'}>
                         {mediaScreenL && <span className={'p-note__menu__icon'}>
-                            <img src={`http://localhost:8888/lifenote/public/images/edit${isDark ? '--darked' : ''}.svg`} />
-                            <a href={`http://localhost:8888/lifenote/public/notes/${note.id}/edit`} />
+                            <img src={asset(`/images/edit${isDark ? '--darked' : ''}.svg`)} />
+                            <a href={route('notes.edit', [note.id])} />
                         </span>}
                         <span className={'p-note__menu__icon'} >
-                            <img src={`http://localhost:8888/lifenote/public/images/delete${isDark ? '--darked' : ''}.svg`} />
-                            <form method="post" action={`http://localhost:8888/lifenote/public/notes/${note.id}`}>
+                            <img src={asset(`/images/delete${isDark ? '--darked' : ''}.svg`)} />
+                            <form method="post" action={route('notes.destroy', [note.id])}>
                                 <input type='hidden' name='_token' value={csrf} />
                                 <input type='hidden' name='_method' value='DELETE' />
                                 <button type='submit' />
@@ -30,9 +30,9 @@ const Note = ({ flag, note, csrf, isDark, mediaScreenL }) => {
                 <div className='p-note__text'>
                     {nl2br(note.text)}
                 </div>
-                {!mediaScreenL && <button onClick={()=> redirect()} className="c-btn--write">
-                                    <img src="http://localhost:8888/lifenote/public/images/pencil.svg" />
-                                  </button>}
+                {!mediaScreenL && <button onClick={() => redirect()} className="c-btn--write">
+                    <img src={asset('/images/pencil.svg')} />
+                </button>}
             </div>
         </>
     )
