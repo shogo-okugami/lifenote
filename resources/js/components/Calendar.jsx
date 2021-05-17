@@ -5,6 +5,7 @@ import MonthMenu from './MonthMenu'
 import YearSwitch from './YearSwitch'
 import DialryForm from './DialryForm'
 import Note from './Note'
+import { asset } from '../functions';
 
 const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defaultDate, isDark }) => {
 
@@ -148,13 +149,13 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
         }, [date, notes, isDark, mediaScreenL])
 
     return (
-        <div className={'p-calendar' + (mediaScreenL ? ' u-flex' : '') + (isDark ? ' is-dark' : '')}>
+        <div className={'p-calendar' + (isDark ? ' is-dark' : '') + (mediaScreenL ? ' u-flex' : '')}>
             <div className='p-calendar__body'>
                 <div className="p-calendar__heading">
-                    <div className="p-calendar__switch--prev"><img onClick={() => changePrevMonth()} src={`images/nav-left${isDark ? '--darked' : ''}.svg`} /></div>
+                    <div className="p-calendar__switch--prev"><img onClick={() => changePrevMonth()} src={asset(`/images/nav-left${isDark ? '--darked' : ''}.svg`)} /></div>
                     <MonthMenu userId={userId} year={year} month={month} setDate={setDate} setNotes={setNotes} isDark={isDark} />
                     {mediaScreenL ? <YearSwitch userId={userId} year={year} month={month} setDate={setDate} setNotes={setNotes} isDark={isDark} /> : <div>{year}</div>}
-                    <div className="p-calendar__switch--next"><img onClick={() => changeNextMonth()} src={`images/nav-right${isDark ? '--darked' : ''}.svg`} /></div>
+                    <div className="p-calendar__switch--next"><img onClick={() => changeNextMonth()} src={asset(`/images/nav-right${isDark ? '--darked' : ''}.svg`)} /></div>
                 </div>
                 <table>
                     <tbody>
@@ -162,7 +163,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
                     </tbody>
                 </table>
             </div>
-            { mediaScreenL ? content ? <Note flag={true} note={note} csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} isDark={isDark} date={inputDateValue} mediaScreenL={mediaScreenL} /> : ''}
+            { mediaScreenL ? content ? <Note flag={true} note={note} csrf={csrf} mediaScreenL={mediaScreenL} isDark={isDark} /> : <DialryForm flag={true} errors={errors} userId={userId} csrf={csrf} date={inputDateValue} mediaScreenL={mediaScreenL} isDark={isDark} /> : ''}
         </div>
     );
 }
