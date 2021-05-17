@@ -1,12 +1,14 @@
 
-import React, { useEffect } from 'react';
+import React from 'react'
+import DateHeading from './DateHeading'
 import weeks from '../weeks'
-import months from '../months'
-import { nl2br } from '../functions'
+import { nl2br, route } from '../functions'
 
-const NoteCard = ({ note: noteItem, isDark, index, monthlyHeading }) => {
+const NoteCard = ({ note: data, isDark, index, monthlyHeading }) => {
 
-    const note = noteItem
+    const note = data //ノートを格納
+
+    //ノートの日付(d)と曜日を返す関数
     const getDate = (date) => {
         let str = date.split('/')
         date = str.map(value => parseInt(value))
@@ -18,42 +20,17 @@ const NoteCard = ({ note: noteItem, isDark, index, monthlyHeading }) => {
     }
 
     const date = getDate(note.date)
+    const dateOfHeading = monthlyHeading.current //各ノートの月毎の日付を格納
+    monthlyHeading.current = note.date.slice(0, 7) //ノートの日付(Y/m)を格納
 
-    const redirect = (noteId) => {
-
-        window.location.href = `http://localhost:8888/lifenote/public/notes/${noteId}`
-
+    //リダイレクト関数
+    const redirect = () => {
+        window.location.href = route('notes.show', [note.id])
     }
-
-    useEffect(() => {
-
-        const card = document.getElementById('card-' + index)//カードのHTML要素を取得
-        const date = card.getAttribute('date') //date属性を取得
-
-        //カードの日付(Y/m)が異なる場合
-        if (monthlyHeading.current !== date) {
-            //div要素を生成
-            let div = document.createElement('div')
-            //日付を年と月に分割
-            let array = date.split('/')
-            //月を取得
-            const index = Number(array[1]) - 1
-            const month = months[index]
-            //年と月を連結する
-            const text = month + ' ' + array[0]
-            //テキストを新たな日付にする　
-            div.textContent = text
-            //要素にクラスを追加
-            div.classList.add('c-heading--date')
-            //カードの直前に要素を挿入
-            card.before(div)
-            //日付を更新
-            monthlyHeading.current = date
-        }
-    }, [])
 
     return (
         <>
+            {dateOfHeading !== note.date.slice(0, 7) && <DateHeading text={note.date.slice(0, 7)} isDark={isDark} />}
             <div id={"card-" + index} key={note.id} date={note.date.slice(0, 7)} className={'c-card ' + (isDark ? 'is-dark' : '')} onClick={() => redirect(note.id)}>
                 <div className="c-card__body">
                     <div className={'c-card__date ' + (isDark ? 'is-dark' : '')}>
