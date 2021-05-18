@@ -8,7 +8,7 @@
             display: block;
             padding: 20px 30px;
             cursor: pointer;
-            font-size: 22px;
+            font-size: 20px;
             &:hover {
                 text-decoration: none;
                 color: #555;
@@ -46,6 +46,7 @@
         &.is-row {
             border: none;
         }
+        @include theme($themes);
     }
     &.is-row {
         display: flex;
