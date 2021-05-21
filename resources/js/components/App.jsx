@@ -11,6 +11,21 @@ import { route } from '../functions'
 const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     const [isDark, setIsDark] = useState(Boolean(localStorage.getItem('darked')))
+    const [theme, setTheme] = useState(localStorage.getItem('theme')) //テーマ定数、set関数を定義
+    const getTheme = (theme, ignored = false) => {
+        //themeがnullではない、またはlightではない場合
+        if (theme !== 'light' || theme !== null) {
+            //ダークモード時にもスタイルを適用する場合
+            if (ignored) {
+                return theme !== 'light' ? ` is-${theme}` : ''
+                //ダークモード時はスタイルを適用しない場合
+            } else {
+                return !isDark ? theme !== 'light' ? ` is-${theme}` : '' : ''
+            }
+        } else {
+            return ''
+        }
+    }
     const [windowWidth, setWindowWidth] = useState(document.documentElement.clientWidth) //ウィンドウの横幅
     const resized = useRef(false) //ウィンドウのリサイズ判定
     const mediaScreenL = windowWidth >= 960 //PC画面の判定
@@ -58,30 +73,26 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
         switch (content) {
             case 'note':
                 return <Note userId={userId} note={note} csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} />
-                break
             case 'calendar':
                 return <Calendar userId={userId} mediaScreenL={mediaScreenL} notes={notes} errors={errors} csrf={csrf} isDark={isDark} date={date} />
-                break
             case 'dialry':
                 return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} mediaScreenL={mediaScreenL} />
-                break
             case 'settings':
-                return <Settings isDark={isDark} setIsDark={setIsDark} mediaScreenL={mediaScreenL} />
+                return <Settings isDark={isDark} setIsDark={setIsDark} setTheme={setTheme} getTheme={getTheme} mediaScreenL={mediaScreenL} csrf={csrf} />
             default:
                 return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
-                break
         }
     }, [isDark, mediaScreenL])
 
     return (
         <>
-            <header id="header" className={'l-header' + (isDark ? ' is-dark' : '')}>
+            <header id="header" className={'l-header' + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
                 <div className="l-header__inner">
                     <h1><a className={'c-heading--large' + (isDark ? ' is-dark' : '')} href={route('home')}>lifenote</a></h1>
                 </div>
             </header>
-            <div id='wrapper' className={'l-wrapper' + (mediaScreenL ? '--row' : '') + (isDark ? ' is-dark' : '')}>
-                <Nav csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} />
+            <div id='wrapper' className={'l-wrapper' + (mediaScreenL ? ' is-row' : '') + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
+                <Nav csrf={csrf} isDark={isDark} theme={theme} getTheme={getTheme} mediaScreenL={mediaScreenL} />
                 <main id="main" className="l-wrapper__inner">
                     {main}
                 </main>
