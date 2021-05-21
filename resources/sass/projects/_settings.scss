@@ -1,0 +1,37 @@
+.p-settings {
+    background: #fff;
+    padding: 40px;
+    border: 1px solid #ddd;
+    &__group {
+        margin-bottom: 50px;
+        & h2 {
+            font-size: 20px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+            &.is-dark {
+                border-bottom: 1px solid #555;
+            }
+        }
+        &--color {
+            @extend.p-settings__group;
+        }
+    }
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & p {
+            padding: 5px 0;
+        }
+    }
+    &__btn {
+        @include btn($color: #fff, $radius: 5px, $bgColor: #6cb2eb, $padding: 5px, $width: 15%, $fontSize: 16px);
+    }
+    &.is-dark {
+        background: #222;
+        color: #fff;
+        border: 1px solid #555;
+    }
+}
