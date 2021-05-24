@@ -26,6 +26,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
             return ''
         }
     }
+    const [font, setFont] = useState(localStorage.getItem('font'))
     const [windowWidth, setWindowWidth] = useState(document.documentElement.clientWidth) //ウィンドウの横幅
     const resized = useRef(false) //ウィンドウのリサイズ判定
     const mediaScreenL = windowWidth >= 960 //PC画面の判定
@@ -78,7 +79,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
             case 'dialry':
                 return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} mediaScreenL={mediaScreenL} />
             case 'settings':
-                return <Settings isDark={isDark} setIsDark={setIsDark} setTheme={setTheme} getTheme={getTheme} mediaScreenL={mediaScreenL} csrf={csrf} />
+                return <Settings isDark={isDark} setIsDark={setIsDark} setTheme={setTheme} getTheme={getTheme} setFont={setFont} mediaScreenL={mediaScreenL} csrf={csrf} />
             default:
                 return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
         }
