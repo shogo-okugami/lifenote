@@ -27,6 +27,9 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
         }
     }
     const [font, setFont] = useState(localStorage.getItem('font'))
+    useEffect(() => {
+        document.body.style.fontFamily = font || ''
+    }, [font])
     const [windowWidth, setWindowWidth] = useState(document.documentElement.clientWidth) //ウィンドウの横幅
     const resized = useRef(false) //ウィンドウのリサイズ判定
     const mediaScreenL = windowWidth >= 960 //PC画面の判定
