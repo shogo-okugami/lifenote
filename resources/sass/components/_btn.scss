@@ -35,6 +35,30 @@
     &--secondary {
         @include btn($bgColor: #bdbcbc);
     }
+    &--toggle {
+        @include btn($radius: 20px, $padding: 0, $bgColor: #bdbcbc, $width: 46px);
+        border: 1px solid #bdbcbc;
+        height: 25px;
+        position: relative;
+        & span {
+            display: block;
+            width: 20px;
+            background: #fff;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 5%;
+            left: 2%;
+            transition: left 0.25s;
+        }
+        &.is-on {
+            background : $green;
+            border-color : $green;
+            & span {
+                left: 50%;
+            }
+        }
+    }
     &--toggleDark {
         @include btn($radius: 20px, $padding: 0, $bgColor: none, $width: 48px);
         border: 1px solid #444;
@@ -48,7 +72,7 @@
             border-radius: 50%;
             position: absolute;
             bottom: -25%;
-            left: 0;
+            left: -5%;
             transition: left 0.25s;
             & img {
                 display: block;
