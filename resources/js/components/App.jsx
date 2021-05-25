@@ -8,9 +8,25 @@ import DialryForm from './DialryForm'
 import Settings from './Settings'
 import { route } from '../functions'
 
-const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
+const App = ({ userId, csrf, content, errors, date, notes, note }) => {
 
-    const [isDark, setIsDark] = useState(Boolean(localStorage.getItem('darked')))
+    const [autoDarked, setAutoDarked] = useState(Boolean(localStorage.getItem('auto_darked')))
+    const [isDark, setIsDark] = useState(() => {
+        if (autoDarked) {
+            const darkeMode = window.matchMedia('(prefers-color-scheme: dark)')
+            const darkeModeOn = darkeMode.matches
+            darkeMode.addEventListener('change', (e) => {
+                if (e.matches) {
+                    setIsDark(true)
+                } else {
+                    setIsDark(false)
+                }
+            })
+            return darkeModeOn
+        } else {
+            return Boolean(localStorage.getItem('darked'))
+        }
+    })
     const [theme, setTheme] = useState(localStorage.getItem('theme')) //テーマ定数、set関数を定義
     const getTheme = (theme, ignored = false) => {
         //themeがnullではない、またはlightではない場合
@@ -82,11 +98,11 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
             case 'dialry':
                 return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} mediaScreenL={mediaScreenL} />
             case 'settings':
-                return <Settings isDark={isDark} setIsDark={setIsDark} setTheme={setTheme} getTheme={getTheme} setFont={setFont} mediaScreenL={mediaScreenL} csrf={csrf} />
+                return <Settings autoDarked={autoDarked} setAutoDarked={setAutoDarked} isDark={isDark} setIsDark={setIsDark} setTheme={setTheme} getTheme={getTheme} setFont={setFont} mediaScreenL={mediaScreenL} csrf={csrf} />
             default:
                 return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
         }
-    }, [isDark, mediaScreenL])
+    }, [isDark, autoDarked, mediaScreenL])
 
     return (
         <>
