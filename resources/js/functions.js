@@ -49,4 +49,4 @@ const asset = (value) => {
     return domain + value
 }
 
-export { nl2br, route }
+export { nl2br, route, asset }
