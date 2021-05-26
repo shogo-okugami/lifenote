@@ -10,23 +10,32 @@ import { route } from '../functions'
 
 const App = ({ userId, csrf, content, errors, date, notes, note }) => {
 
-    const [autoDarked, setAutoDarked] = useState(Boolean(localStorage.getItem('auto_darked')))
+    const [autoDarked, setAutoDarked] = useState(Boolean(localStorage.getItem('auto_darked'))) // state.autoDarked
+    const darkeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)') // window.matchMediaオブジェクトの値を格納
+    const darkeModeOn = darkeMediaQuery.matches // OSのダークモードを判定
+    // state.isDark
     const [isDark, setIsDark] = useState(() => {
+        // ダークモード自動切り替えがONの場合
         if (autoDarked) {
-            const darkeMode = window.matchMedia('(prefers-color-scheme: dark)')
-            const darkeModeOn = darkeMode.matches
-            darkeMode.addEventListener('change', (e) => {
-                if (e.matches) {
-                    setIsDark(true)
-                } else {
-                    setIsDark(false)
-                }
-            })
             return darkeModeOn
         } else {
             return Boolean(localStorage.getItem('darked'))
         }
     })
+
+    //OSのダークモードを監視し、変更されたタイミングで関数を実行する
+    useEffect(() => {
+        if (autoDarked) {
+            darkeMediaQuery.addEventListener('change', handleAutoDarke)
+        }
+        return () => darkeMediaQuery.removeEventListener('change', handleAutoDarke)
+    }, [autoDarked])
+
+    // OSに連動してダークモードを切り替える
+    const handleAutoDarke = () => {
+        darkeMediaQuery.matches ? setIsDark(true) : setIsDark(false)
+    }
+
     const [theme, setTheme] = useState(localStorage.getItem('theme')) //テーマ定数、set関数を定義
     const getTheme = (theme, ignored = false) => {
         //themeがnullではない、またはlightではない場合
@@ -102,7 +111,7 @@ const App = ({ userId, csrf, content, errors, date, notes, note }) => {
             default:
                 return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
         }
-    }, [isDark, autoDarked, mediaScreenL])
+    }, [autoDarked, isDark, mediaScreenL])
 
     return (
         <>
