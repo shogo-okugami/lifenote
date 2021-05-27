@@ -17,6 +17,9 @@
         &--color {
             @extend.p-settings__group;
         }
+        &--font {
+            @extend.p-settings__group;
+        }
     }
     &__item {
         display: flex;
@@ -27,7 +30,9 @@
         }
     }
     &__btn {
-        @include btn($color: #fff, $radius: 5px, $bgColor: #6cb2eb, $padding: 5px, $width: 15%, $fontSize: 16px);
+        @include btn($color: #6cb2eb, $radius: 5px, $padding: 5px, $width: 15%, $fontSize: 16px);
+        background : none;
+        border : 1px solid #6cb2eb;
     }
     &.is-dark {
         background: #222;
