@@ -10,15 +10,24 @@ const FontSize = () => {
         setIsShow(false)
     }
 
+    const size = (() => {
+        const currentSize = localStorage.getItem('font_size')
+        if (currentSize) {
+            return sizes.find(element => element === currentSize)
+        } else {
+            'standard'
+        }
+    })()
+
     useEffect(() => {
         isShow && menuRef.current.focus()
     }, [isShow])
 
     return (
         <div className='p-settings__item'>
-            <p>current size </p>
+            <p>current size : {size} </p>
             <button className='p-settings__btn' onClick={() => setIsShow(true)}>
-                <p>change size</p>
+                change size
             </button>
             {isShow &&
                 <ul className='p-settings__menu' ref={menuRef} tabIndex={0} onBlur={() => setIsShow(false)}>
