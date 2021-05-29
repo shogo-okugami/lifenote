@@ -5,7 +5,7 @@ import { AppSettings } from '../App'
 const ThemeSetting = ({ setIsOver }) => {
 
     const isDark = useContext(AppSettings).darked.isDark
-    const { setTheme, getTheme } = useContext(AppSettings).theme
+    const { theme, setTheme, getTheme } = useContext(AppSettings).theme
 
     const themes = ['light', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'indigo', 'pink', 'teal', 'brown', 'cyan']
 
@@ -28,7 +28,7 @@ const ThemeSetting = ({ setIsOver }) => {
         <div className={'p-settings__group--color'}>
             <h2 className={isDark ? ' is-dark' : ''}>Theme</h2>
             <div className='p-settings__item'>
-                <p>current theme</p>
+                <div className='p-settings__current'><p>current theme : </p> <span className={getTheme(theme)} /></div>
                 <button className='p-settings__btn' onClick={() => setIsShow(true)}>change theme</button>
             </div>
             {isShow &&
