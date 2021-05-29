@@ -4,8 +4,6 @@ import { AppSettings } from '../App'
 
 const FontFamily = ({ setIsOver }) => {
 
-    const setFont = useContext(AppSettings).font.setFont
-
     const client = (() => {
         const os = window.navigator.userAgent.toLowerCase();
         if (os.indexOf("windows nt") !== -1) {
@@ -20,8 +18,6 @@ const FontFamily = ({ setIsOver }) => {
             return null
         }
     })()
-
-    const disabled = client === 'iOS' || client === 'Android'
 
     const fonts = (() => {
         switch (client) {
@@ -124,6 +120,20 @@ const FontFamily = ({ setIsOver }) => {
         }
     })()
 
+    let font = (() => {
+        if (localStorage.getItem('font')) {
+            const font = fonts.find(element => element.style === localStorage.getItem('font'))
+            return font.name
+        } else {
+            return 'System Font'
+        }
+    })()
+
+
+    const setFont = useContext(AppSettings).font.setFont
+
+    const disabled = client === 'iOS' || client === 'Android'
+
     const [isShow, setIsShow] = useState(false)
 
     const modalRef = useRef(null)
@@ -142,7 +152,7 @@ const FontFamily = ({ setIsOver }) => {
     return (
         <>
             <div className='p-settings__item'>
-                <p>current font</p>
+                <p>current font : {font}</p>
                 <button className='p-settings__btn' onClick={() => setIsShow(client !== 'iOS' || client !== 'Android' && true)}>change font</button>
             </div>
             {disabled && <div>This feature is not available on {client || 'Your current OS'}.</div>}
