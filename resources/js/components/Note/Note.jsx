@@ -15,7 +15,7 @@ const Note = ({ flag, note, csrf, isDark, mediaScreenL }) => {
     return (
         <>
             <div className={'p-note' + (flag ? '--arranged' : '') + (isDark ? ' is-dark' : '')}>
-                <div className={'p-note__heading'}>
+                <div className={'p-note__heading' + (isDark ? ' is-dark' : '')}>
                     <p>{note.date}</p>
                     <div className={'p-note__menu'}>
                         {mediaScreenL && <span className={'p-note__menu__icon'}>
