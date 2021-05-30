@@ -66,5 +66,8 @@
         width: 45%;
         border: none;
         padding: 20px 0 20px 20px;
+        & .c-form__item {
+            margin-bottom : 30px;
+        }
     }
 }
