@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo, createContext } from 'react'
 import ReactDOM from 'react-dom'
 import Nav from './Nav'
-import NoteList from './NoteList'
-import Note from './Note'
-import Calendar from './Calendar'
-import DialryForm from './DialryForm'
-import Settings from './Settings'
+import NoteList from './Note/NoteList'
+import Note from './Note/Note'
+import Calendar from './Calendar/Calendar'
+import DialryForm from './Form/DialryForm'
+import Settings from './Settings/Settings'
 import { route } from '../functions'
+
+export const AppSettings = createContext(null)
 
 const App = ({ userId, csrf, content, errors, date, notes, note }) => {
 
@@ -107,14 +109,14 @@ const App = ({ userId, csrf, content, errors, date, notes, note }) => {
             case 'dialry':
                 return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} mediaScreenL={mediaScreenL} />
             case 'settings':
-                return <Settings autoDarked={autoDarked} setAutoDarked={setAutoDarked} isDark={isDark} setIsDark={setIsDark} setTheme={setTheme} getTheme={getTheme} setFont={setFont} mediaScreenL={mediaScreenL} csrf={csrf} />
+                return <Settings />
             default:
-                return <NoteList userId={userId} isDark={isDark} mediaScreenL={mediaScreenL} />
+                return <NoteList userId={userId} isDark={isDark} notes={notes} mediaScreenL={mediaScreenL} />
         }
     }, [autoDarked, isDark, mediaScreenL])
 
     return (
-        <>
+        <AppSettings.Provider value={{ darked: { isDark: isDark, setIsDark: setIsDark }, theme: { theme: theme, setTheme: setTheme, getTheme: getTheme }, font: { setFont: setFont }, autoDarked: { autoDarked: autoDarked, setAutoDarked: setAutoDarked }, csrf: csrf, mediaScreenL: mediaScreenL }} >
             <header id="header" className={'l-header' + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
                 <div className="l-header__inner">
                     <h1><a className={'c-heading--large' + (isDark ? ' is-dark' : '')} href={route('home')}>lifenote</a></h1>
@@ -126,7 +128,7 @@ const App = ({ userId, csrf, content, errors, date, notes, note }) => {
                     {main}
                 </main>
             </div>
-        </>
+        </AppSettings.Provider>
     )
 }
 
