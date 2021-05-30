@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class DeleteAccount extends Controller
 {
@@ -12,8 +13,10 @@ class DeleteAccount extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect('login');
     }
 }
