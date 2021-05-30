@@ -30,3 +30,5 @@ Route::get('calendar', 'NoteController@indexByCalendar')->name('calendar')->midd
 Route::get('settings', function () {
     return view('settings');
 })->name('settings')->middleware('auth');
+
+Route::post('delete/{id}','DeleteAccount')->middleware('auth');
