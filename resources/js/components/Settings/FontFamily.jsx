@@ -149,6 +149,8 @@ const FontFamily = ({ setIsOver }) => {
         isShow && modalRef.current.focus()
     }, [isShow])
 
+    const isDark = useContext(AppSettings).darked.isDark
+
     return (
         <>
             <div className='p-settings__item'>
@@ -157,7 +159,7 @@ const FontFamily = ({ setIsOver }) => {
             </div>
             {disabled && <div>This feature is not available on {client || 'Your current OS'}.</div>}
             {isShow &&
-                <div className='c-modal' ref={modalRef} tabIndex={0} onFocus={() => setIsOver(true)}
+                <div className={'c-modal' + (isDark ? ' is-dark' : '')} ref={modalRef} tabIndex={0} onFocus={() => setIsOver(true)}
                     onBlur={() => {
                         setIsOver(false)
                         setIsShow(false)
@@ -165,10 +167,10 @@ const FontFamily = ({ setIsOver }) => {
                     <span onClick={() => {
                         setIsShow(false)
                         setIsOver(false)
-                    }} className='c-modal__close'><img src={asset('/images/close.svg')} /></span>
+                    }} className='c-modal__close'><img src={asset(`/images/close${isDark ? '--darked' : ''}.svg`)} /></span>
                     <ul>
                         {
-                            fonts.map((font, index) => <li className={'c-modal__option'} onClick={() => handleClick(font.style)} key={index}>{font.name}</li>)
+                            fonts.map((font, index) => <li className={'c-modal__option' + (isDark ? ' is-dark' : '')} onClick={() => handleClick(font.style)} key={index}>{font.name}</li>)
                         }
                     </ul>
                 </div>
