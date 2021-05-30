@@ -3,10 +3,10 @@
     border: 1px solid #ddd;
     padding: 40px;
     height: 722px;
-    position : static;
-    @include mq(sp){
-        border : none;
-        padding : 15px;
+    position: static;
+    @include mq(sp) {
+        border: none;
+        padding: 15px;
         height: 100%;
     }
     &--arranged {
@@ -27,27 +27,27 @@
         padding-bottom: 10px;
         border-bottom: 1px solid #ddd;
         font-size: 16px;
-        @include mq(sp){
+        @include mq(sp) {
             display: block;
             text-align: center;
-            position : absolute;
-            width : 100%;
-            height : 10%;
-            margin-bottom : 0;
-            top : 0;
-            left : 0;
+            position: absolute;
+            width: 100%;
+            height: 10%;
+            margin-bottom: 0;
+            top: 0;
+            left: 0;
             z-index: 1;
-            background : #fff;
-            padding : 18px;
+            background: #fff;
+            padding: 18px;
         }
     }
     &__menu {
         display: flex;
-        @include mq(sp){
-            display : block;
+        @include mq(sp) {
+            display: block;
             position: absolute;
-            top : 22px;
-            right : 18px;
+            top: 22px;
+            right: 18px;
         }
         &__icon {
             display: block;
@@ -91,5 +91,25 @@
         overflow: scroll;
         height: 100%;
         line-height: 2rem;
+        $sizes: (
+            standard: (
+                size: 16px,
+                height: 2rem,
+            ),
+            medium: (
+                size: 24px,
+                height: 2.5rem,
+            ),
+            large: (
+                size: 32px,
+                height: 3rem,
+            ),
+        );
+        @each $size, $value in $sizes {
+            &.is-#{$size} {
+                font-size: map-get($value, size);
+                line-height: map-get($value, height);
+            }
+        }
     }
 }
