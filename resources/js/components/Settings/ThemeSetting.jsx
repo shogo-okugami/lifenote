@@ -28,11 +28,11 @@ const ThemeSetting = ({ setIsOver }) => {
         <div className={'p-settings__group--color'}>
             <h2 className={isDark ? ' is-dark' : ''}>Theme</h2>
             <div className='p-settings__item'>
-                <div className='p-settings__current'><p>current theme : </p> <span className={getTheme(theme)} /></div>
+                <div className='p-settings__current'><p>current theme : </p> <span className={getTheme(theme, true)} /></div>
                 <button className='p-settings__btn' onClick={() => setIsShow(true)}>change theme</button>
             </div>
             {isShow &&
-                <div className='c-modal' ref={modalRef} tabIndex={0} onFocus={() => setIsOver(true)}
+                <div className={'c-modal' + (isDark ? ' is-dark' : '')} ref={modalRef} tabIndex={0} onFocus={() => setIsOver(true)}
                     onBlur={() => {
                         setIsOver(false)
                         setIsShow(false)
@@ -40,10 +40,10 @@ const ThemeSetting = ({ setIsOver }) => {
                     <span onClick={() => {
                         setIsShow(false)
                         setIsOver(false)
-                    }} className='c-modal__close'><img src={asset('/images/close.svg')} /></span>
+                    }} className='c-modal__close'><img src={asset(`/images/close${isDark ? '--darked' : ''}.svg`)} /></span>
                     <ul>
                         {
-                            themes.map((theme, index) => <li className={'c-modal__option' + (getTheme(theme))} onClick={() => handleClick(theme)} key={index}><span>{theme}</span></li>)
+                            themes.map((theme, index) => <li className={'c-modal__option' + (isDark ? ' is-dark' : '') + (getTheme(theme, true))} onClick={() => handleClick(theme)} key={index}><span>{theme}</span></li>)
                         }
                     </ul>
                 </div>
