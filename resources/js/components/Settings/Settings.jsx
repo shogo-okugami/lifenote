@@ -6,7 +6,7 @@ import DarkSetting from './DarkSettting'
 import DeleteAccount from './DeleteAccount'
 import LogoutButton from './LogoutButton'
 
-const Settings = () => {
+const Settings = ({ userId }) => {
     const isDark = useContext(AppSettings).darked.isDark
     const [isOver, setIsOver] = useState(false)
 
@@ -17,7 +17,7 @@ const Settings = () => {
                 <FontSetting setIsOver={setIsOver} />
                 <DarkSetting />
                 <LogoutButton />
-                <DeleteAccount setIsOver={setIsOver} />
+                <DeleteAccount userId={userId} setIsOver={setIsOver} />
             </div>
             {isOver && <span className='c-overlay' />}
         </>
