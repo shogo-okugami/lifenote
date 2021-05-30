@@ -9,7 +9,7 @@
 
 <main id="main" class="l-wrapper">
     <div class="l-wrapper__inner--small">
-        <form method="POST" class="c-form" action="{{ route('login') }}">
+        <form method="POST" class="c-form" action="{{ route('register') }}">
             @csrf
             <div class="c-form__item">
                 <input id="email" type="email" class="c-form__input @error('email') is-invalid @enderror" placeholder="E-mail Adress" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
