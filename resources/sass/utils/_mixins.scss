@@ -5,15 +5,17 @@
     }
 }
 
-@mixin themes($themes, $sub-bg-color: false, $border-white: false) {
+@mixin themes($themes, $sub-bg-color: false, $border-white: false, $only-border: false) {
     @each $theme, $array in $themes {
         $main-color: map-get($array, main-color);
         &.is-#{map-get($array,name)} {
-            background: if($sub-bg-color, lighten($main-color, 30%), $main-color);
-            border-color: if($border-white, #{"#fff"}, $main-color);
-            @if ($sub-bg-color == false) {
-                color: #fff;
+            @if ($only-border == false) {
+                background: if($sub-bg-color, lighten($main-color, 30%), $main-color);
+                @if ($sub-bg-color == false) {
+                    color: #fff;
+                }
             }
+            border-color: if($border-white, #{"#fff"}, $main-color);
             & a {
                 color: #fff;
             }
