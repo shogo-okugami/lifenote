@@ -1,23 +1,34 @@
 .l-header {
-    padding: 0 80px;
     background: #fff;
-    height: 15%;
-    border-bottom : 1px solid #ddd;
-    width : 100%;
-    @include mq(sp){
-        padding : 0 30px;
-        height : 10%;
-    }
-    &__inner {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height : 100%;
-        width : 100%
+    height: 150px;
+    width: 100%;
+    display: flex;
+    @include mq(sp) {
+        padding: 0 30px;
+        height: 50px;
     }
     &.is-dark {
         background: #222;
-        color: #fff;
-        border-bottom : 1px solid #555;
     }
+    &__title {
+        padding: 50px 0;
+        height: 100%;
+        width: 20%;
+        border-bottom: 1px solid #ddd;
+        padding-left : 80px;
+        &.is-dark {
+            color: #fff;
+            border-bottom: 1px solid #555;
+        }
+        @include themes($themes, $border-white: true);
+    }
+    &__rest {
+        width: 80%;
+        border-bottom: 1px solid #ddd;
+        &.is-dark {
+            border-bottom: 1px solid #555;
+        }
+        @include themes($themes);
+    }
+    @include themes($themes, $border-white: true);
 }
