@@ -1,6 +1,7 @@
 
 // Variables
-@import 'variables';
+@import 'utils/variables';
+@import 'utils/mixins';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
@@ -20,4 +21,4 @@
 @import 'projects/calendar';
 @import 'projects/note';
 @import 'projects/settings';
-@import 'utility';
+@import 'utils/utility';
