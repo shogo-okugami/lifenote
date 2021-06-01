@@ -1,21 +1,35 @@
 .c-heading {
     &--large {
+        color: #555;
         font-size: 32px;
         letter-spacing: 0.25em;
         @include mq(sp) {
             font-size: 20px;
         }
+        &:hover {
+            @extend.c-heading--large;
+        }
+        &.is-dark {
+            color: #fff;
+            background : #222;
+        }
     }
     &--date {
-        font-size: 30px;
-        margin-bottom : 30px;
-         @include mq(sp) {
-             font-size : 14px;
-             margin-bottom : 0;
-             text-align: center;
-             background : #f8f9fa;
-             border-bottom: 1px solid #ddd;
-             padding: 5px 0;
-         }
+        font-size: 36px;
+        margin-bottom: 40px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        padding-bottom : 10px;
+        @include mq(sp) {
+            font-size: 14px;
+            margin-bottom: 0;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 5px 0;
+        }
+        &.is-dark {
+            color : #fff;
+            border-bottom: 1px solid #555;
+        }
     }
 }
