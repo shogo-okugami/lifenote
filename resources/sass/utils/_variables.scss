@@ -25,8 +25,50 @@ $breakpoints: (
     tablet: "screen and (max-width : 959px)",
 );
 
-@mixin mq($breakpoint) {
-    @media #{map-get($breakpoints, $breakpoint)} {
-        @content;
-    }
-}
+// Themes
+$themes: (
+    red: (
+        name: "red",
+        main-color: $red,
+    ),
+    blue: (
+        name: "blue",
+        main-color: $blue,
+    ),
+    green: (
+        name: "green",
+        main-color: $green,
+    ),
+    orange: (
+        name: "orange",
+        main-color: $orange,
+    ),
+    indigo: (
+        name: "indigo",
+        main-color: $indigo,
+    ),
+    purple: (
+        name: "purple",
+        main-color: $purple,
+    ),
+    pink: (
+        name: "pink",
+        main-color: $pink,
+    ),
+    teal: (
+        name: "teal",
+        main-color: $teal,
+    ),
+    cyan: (
+        name: "cyan",
+        main-color: $cyan,
+    ),
+    yellow: (
+        name: "yellow",
+        main-color: $yellow,
+    ),
+    brown: (
+        name: "brown",
+        main-color: $brown,
+    ),
+);
