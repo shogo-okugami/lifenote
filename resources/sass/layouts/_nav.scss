@@ -18,12 +18,13 @@
         min-height: 0;
         height: 10%;
         position: fixed;
-        bottom : 0;
-        border : none;
-        border-top : 1px solid #ddd;
-        z-index : 1;
+        bottom: 0;
+        border: none;
+        border-top: 1px solid #ddd;
+        z-index: 1;
         &.is-dark {
-            border-top : 1px solid #555;
+            border-top: 1px solid #555;
         }
     }
+    @include themes($themes, $border-white: true);
 }
