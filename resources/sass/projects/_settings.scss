@@ -51,6 +51,37 @@
         border: 1px solid #6cb2eb;
         position: relative;
     }
+    &__menu {
+        background: #fff;
+        position: absolute;
+        padding: 10px 0;
+        border: 1px solid #ddd;
+        width: 15%;
+        border-radius: 5px;
+        top: 110%;
+        right: 0;
+        z-index: 1;
+        box-shadow: 0px 0px 12px -6px rgba(0, 0, 0, 0.6);
+        text-align: center;
+        & li {
+            color: #555;
+            padding: 5px 0;
+            letter-spacing: 1px;
+            &:hover {
+                background: #ddd;
+            }
+        }
+        &.is-dark {
+            background: #222;
+            border: 1px solid #555;
+            & li {
+                color: #fff;
+                &:hover {
+                    background: #111;
+                }
+            }
+        }
+    }
     &.is-dark {
         background: #222;
         color: #fff;
