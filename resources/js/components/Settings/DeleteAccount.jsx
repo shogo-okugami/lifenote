@@ -12,7 +12,7 @@ const DeleteAccount = ({ userId, setIsOver }) => {
     }, [isShow])
 
     const handleMouseDown = () => {
-        const form = document.getElementById('delete_form')
+        const form = document.getElementById('delete-form')
         form.submit();
     }
 
@@ -32,7 +32,7 @@ const DeleteAccount = ({ userId, setIsOver }) => {
                     <p>Delete your account and all of your notes.<br />
                        Are you really sure to want to do it ?
                     </p>
-                    <form id='delete_form' action={route('delete', [userId])} method='POST'>
+                    <form id='delete-form' action={route('delete', [userId])} method='POST'>
                         <input type='hidden' name='_token' value={csrf} />
                         <button onMouseDown={() => handleMouseDown()} type='submit' className='c-btn--danger'>Delete</button>
                         <button className='c-btn--secondary'>Cancel</button>
