@@ -20,15 +20,15 @@
         padding-top: 40px;
         width: 15%;
         border-right: 1px solid #ddd;
-        @include mq(sp){
+        @include mq(sp) {
             width: 20%;
-            padding-top : 20px;
+            padding-top: 20px;
         }
         &__inner {
             font-size: 22px;
             letter-spacing: 1.5px;
-            @include mq(sp){
-                font-size : 8px;
+            @include mq(sp) {
+                font-size: 8px;
             }
             &.is-sat {
                 color: $blue;
@@ -42,7 +42,7 @@
                 width: 80%;
                 margin: 0 auto;
                 letter-spacing: 1px;
-                @include mq(sp){
+                @include mq(sp) {
                     font-size: 24px;
                 }
             }
@@ -79,5 +79,11 @@
         background: #222;
         color: #fff;
         border: 1px solid #555;
+        @include mq(sp) {
+            height: 100px;
+            margin-bottom: 0;
+            border: none;
+            border-bottom: 1px solid #555;
+        }
     }
 }
