@@ -1,0 +1,100 @@
+.c-modal {
+    position: absolute;
+    padding: 60px 40px;
+    background: #fff;
+    width: auto;
+    height: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    &__close {
+        position: absolute;
+        display: block;
+        top: 1%;
+        right: 2%;
+        & img {
+            width: 15px;
+            height: 15px;
+        }
+    }
+    &--delete {
+        @extend .c-modal;
+        padding: 30px;
+        width: 25%;
+        & p {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        & form {
+            display: flex;
+            justify-content: space-around;
+            & .c-btn--danger {
+                @include btn($bgColor: #e45252, $padding: 5px, $fontSize: 16px, $width: 40%);
+            }
+            & .c-btn--secondary {
+                @include btn($bgColor: #bdbcbc, $padding: 5px, $fontSize: 16px, $width: 40%);
+            }
+        }
+    }
+    &.is-dark {
+        background: #222;
+        border: 1px solid #555;
+    }
+}
+
+.p-settings__group--color {
+    & .c-modal {
+        & ul {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100%;
+            margin-right: -15px;
+            margin-bottom: -15px;
+        }
+        &__option {
+            display: block;
+            box-sizing: border-box;
+            padding: 5px;
+            width: calc(25% - 15px);
+            height: 100px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            &.is-dark {
+                color : #555;
+                background: #fff;
+                border: 1px solid #fff;
+            }
+            @include themes($themes);
+        }
+    }
+}
+
+.p-settings__group--font {
+    & .c-modal {
+        padding: 30px 0 0;
+        width: 40%;
+        cursor: pointer;
+        &__option {
+            padding: 5px 40px;
+            border-bottom: 1px solid #ddd;
+            &:hover {
+                background: #ddd;
+            }
+            &.is-dark {
+                border-bottom: 1px solid #555;
+                &:hover {
+                    background: #111;
+                }
+            }
+            &:last-child {
+                border: none;
+            }
+        }
+    }
+}
