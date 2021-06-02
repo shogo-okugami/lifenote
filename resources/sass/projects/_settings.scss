@@ -127,6 +127,10 @@
             margin-bottom: 15px;
         }
     }
+    &__error {
+        color : $error;
+        margin-bottom: 20px;
+    }
     &.is-dark {
         background: #222;
         color: #fff;
