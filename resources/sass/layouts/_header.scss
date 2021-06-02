@@ -6,6 +6,10 @@
     @include mq(sp) {
         padding: 0 30px;
         height: 50px;
+        border-bottom: 1px solid #ddd;
+        &.is-dark {
+            border-bottom: 1px solid #555;
+        }
     }
     &.is-dark {
         background: #222;
@@ -15,12 +19,20 @@
         height: 100%;
         width: 20%;
         border-bottom: 1px solid #ddd;
-        padding-left : 80px;
+        padding-left: 80px;
+        z-index: 1;
         &.is-dark {
             color: #fff;
             border-bottom: 1px solid #555;
         }
         @include themes($themes, $border-white: true);
+        @include mq(sp) {
+            padding: 10px 0;
+            border: none;
+            &.is-dark {
+                border: none;
+            }
+        }
     }
     &__rest {
         width: 80%;
@@ -29,6 +41,12 @@
             border-bottom: 1px solid #555;
         }
         @include themes($themes);
+        @include mq(sp) {
+            border: none;
+            &.is-dark {
+                border: none;
+            }
+        }
     }
     @include themes($themes, $border-white: true);
 }
