@@ -81,6 +81,15 @@
         @include mq(sp) {
             width: 100%;
         }
+        &.is-disabled {
+            @extend.p-settings__btn;
+            background: #bdbcbc;
+            border-color : #bdbcbc;
+            color : #fff;
+            @include mq(sp){
+                width: 100%;
+            }
+        }
     }
     &__menu {
         background: #fff;
