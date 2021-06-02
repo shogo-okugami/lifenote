@@ -5,7 +5,7 @@
     }
 }
 
-@mixin themes($themes, $sub-bg-color: false, $border-white: false, $only-border: false) {
+@mixin themes($themes, $sub-bg-color: false, $border-color: false, $only-border: false) {
     @each $theme, $array in $themes {
         $main-color: map-get($array, main-color);
         &.is-#{map-get($array,name)} {
@@ -15,7 +15,7 @@
                     color: #fff;
                 }
             }
-            border-color: if($border-white, #{"#fff"}, $main-color);
+            border-color: if($border-color, $border-color, $main-color);
             & a {
                 color: #fff;
             }
