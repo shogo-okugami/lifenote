@@ -20,13 +20,13 @@
         width: 20%;
         border-bottom: 1px solid #ddd;
         padding-left: 80px;
-        z-index: 1;
         &.is-dark {
             color: #fff;
             border-bottom: 1px solid #555;
         }
-        @include themes($themes, $border-white: true);
+        @include themes($themes, $border-color: #fff);
         @include mq(sp) {
+            z-index: 1;
             padding: 10px 0;
             border: none;
             &.is-dark {
@@ -48,5 +48,5 @@
             }
         }
     }
-    @include themes($themes, $border-white: true);
+    @include themes($themes);
 }
