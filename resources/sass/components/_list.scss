@@ -46,7 +46,7 @@
         &.is-row {
             border: none;
         }
-        @include theme($themes);
+        @include themes($themes, $border-color: #fff);
     }
     &.is-row {
         display: flex;
