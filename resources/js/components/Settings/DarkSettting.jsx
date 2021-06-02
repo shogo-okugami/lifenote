@@ -4,7 +4,7 @@ import AutoDarked from './AutoDarked'
 
 const DarkSetting = () => {
     return (
-        <div className={'p-settings__group'}>
+        <div className={'p-settings__group--dark'}>
             <ToggleDarkButton />
             <AutoDarked />
         </div>
