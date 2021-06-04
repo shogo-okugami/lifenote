@@ -11,7 +11,7 @@ const DialryForm = ({ userId, csrf, note = null, date, isDark, errors, flag, med
     return (
         <>
             <form className={"c-form " + (isDark ? 'is-dark' : '') + (flag ? ' is-arranged' : '')} method="post" action={editFlag ? route('notes.update', [note.id]) : route('notes.store')}>
-                {!mediaScreenL && <div className="c-form__heading" >{dateOfNote}</div>}
+                {!mediaScreenL && <div className={'c-form__heading' + (isDark ? ' is-dark' : '')} >{dateOfNote}</div>}
                 <input type="hidden" name="_token" value={csrf} />
                 {editFlag && <input type="hidden" name="_method" value="PUT" />}
                 <input type="hidden" name="user_id" value={userId} />
