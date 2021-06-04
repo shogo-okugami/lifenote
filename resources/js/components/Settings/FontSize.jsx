@@ -27,7 +27,7 @@ const FontSize = () => {
 
     return (
         <div className='p-settings__item'>
-            <p>current size : {size} </p>
+            <p className='p-settings__current'>current size : {size} </p>
             <button className='p-settings__btn' onClick={() => setIsShow(true)}>
                 change size
             </button>
