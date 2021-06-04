@@ -56,6 +56,11 @@
         text-align: center;
         border-bottom: 1px solid #ddd;
         font-size: 16px;
+        &.is-dark{
+            background: #222;
+            color: #fff;
+            border-bottom: 1px solid #555;
+        }
     }
     &.is-dark {
         background: #222;
