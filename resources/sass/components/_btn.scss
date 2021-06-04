@@ -31,9 +31,17 @@
     }
     &--danger {
         @include btn($bgColor: #e45252);
+        @include mq(sp) {
+            padding: 5px;
+            font-size: 16px;
+        }
     }
     &--secondary {
         @include btn($bgColor: #bdbcbc);
+        @include mq(sp) {
+            padding: 5px;
+            font-size: 16px;
+        }
     }
     &--toggle {
         @include btn($radius: 20px, $padding: 0, $bgColor: #bdbcbc, $width: 46px);
@@ -52,8 +60,8 @@
             transition: left 0.25s;
         }
         &.is-on {
-            background : $green;
-            border-color : $green;
+            background: $green;
+            border-color: $green;
             & span {
                 left: 50%;
             }
