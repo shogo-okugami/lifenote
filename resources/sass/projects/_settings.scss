@@ -121,6 +121,9 @@
                 }
             }
         }
+        @include mq(sp){
+            width: 100%;
+        }
     }
     &__current {
         @include mq(sp) {
