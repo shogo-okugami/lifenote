@@ -132,7 +132,7 @@ const FontFamily = ({ setIsOver }) => {
 
     const setFont = useContext(AppSettings).font.setFont
 
-    const disabled = client === 'iOS' || client === 'Android'
+    const disabled = client === 'iOS' || client === 'Android' || client === null
 
     const [isShow, setIsShow] = useState(false)
 
@@ -150,14 +150,15 @@ const FontFamily = ({ setIsOver }) => {
     }, [isShow])
 
     const isDark = useContext(AppSettings).darked.isDark
+    const mediaScreenL = useContext(AppSettings).mediaScreenL
 
     return (
         <>
-            <div className='p-settings__item'>
-                <p>current font : {font}</p>
-                <button className='p-settings__btn' onClick={() => setIsShow(client !== 'iOS' || client !== 'Android' && true)}>change font</button>
+            <div className={'p-settings__item' + (!mediaScreenL ? ' u-mb15' : '')}>
+                <p className='p-settings__current'>current font : {font}</p>
+                <button className={'p-settings__btn' + (disabled ? ' is-disabled' : '')} onClick={() => setIsShow(!disabled && true)}>change font</button>
             </div>
-            {disabled && <div>This feature is not available on {client || 'Your current OS'}.</div>}
+            {disabled && <div className='p-settings__error'>This feature is not available on {client || 'Your current OS'}.</div>}
             {isShow &&
                 <div className={'c-modal' + (isDark ? ' is-dark' : '')} ref={modalRef} tabIndex={0} onFocus={() => setIsOver(true)}
                     onBlur={() => {
