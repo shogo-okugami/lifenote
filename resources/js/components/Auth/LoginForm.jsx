@@ -26,8 +26,8 @@ const LoginForm = ({ csrf }) => {
                         </label>
                     </div>
                 </div>
-                <button type="submit" className="c-btn--primary c-btn--small">Login</button>
-                <a className="btn btn-link" href="{{ route('password.request') }}">Forget Your Password?</a>
+                <button type="submit" className="c-btn--primary c-btn--small u-mb15">Login</button>
+                <a className="c-form__link u-mb15" href="">Forget Your Password?</a>
             </form>
         </div>
     )
