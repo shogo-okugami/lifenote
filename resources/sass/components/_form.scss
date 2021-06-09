@@ -56,10 +56,17 @@
         text-align: center;
         border-bottom: 1px solid #ddd;
         font-size: 16px;
-        &.is-dark{
+        &.is-dark {
             background: #222;
             color: #fff;
             border-bottom: 1px solid #555;
+        }
+    }
+    &__link {
+        color: $cyan;
+        display: block;
+        &:hover{
+          text-decoration: underline;
         }
     }
     &.is-dark {
@@ -72,7 +79,7 @@
         border: none;
         padding: 20px 0 20px 20px;
         & .c-form__item {
-            margin-bottom : 30px;
+            margin-bottom: 30px;
         }
     }
 }
