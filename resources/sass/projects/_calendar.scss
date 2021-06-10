@@ -7,7 +7,7 @@
     @include mq(sp) {
         padding: 0 15px;
         height: 100%;
-        border : none;
+        border: none;
     }
     &__heading {
         display: flex;
@@ -126,8 +126,8 @@
     }
     &__row {
         border-top: 1px solid #ddd;
-        &:nth-child(1){
-            border : none;
+        &:nth-child(1) {
+            border: none;
             & .p-calendar__date {
                 padding: 10px 0 0;
             }
@@ -151,7 +151,7 @@
         position: relative;
         @include mq(sp) {
             font-size: 16px;
-            padding : 16px 0;
+            padding: 16px 0;
         }
         &.is-disabled {
             @extend .p-calendar__date;
@@ -174,9 +174,9 @@
                 border-radius: 50%;
                 width: 30px;
                 height: 30px;
-                @include mq(sp){
-                    width : 28px;
-                    height : 28px;
+                @include mq(sp) {
+                    width: 28px;
+                    height: 28px;
                 }
                 &.is-dark {
                     color: #222;
@@ -228,5 +228,8 @@
         background: #222;
         color: #fff;
         border: 1px solid #555;
+        @include mq(sp) {
+            border: none;
+        }
     }
 }
