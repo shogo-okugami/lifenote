@@ -104,6 +104,17 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     const [paddingBottom, setPaddingBottom] = useState(null) //paddingBottomとset関数を定義
 
+    // ホーム画面又は設定画面でbodyのheightをautoに指定
+    // 設定画面でボトムナビゲーションを表示する際はpaddingBottomを指定してbodyを底上げする
+    useEffect(() => {
+        if (content === 'notes' || content === 'settings') {
+            document.body.style.height = 'auto'
+            if (content === 'settings') {
+                document.body.style.paddingBottom = paddingBottom + 'px'
+            }
+        }
+    }, [content, paddingBottom])
+
     const main = useMemo(() => {
         switch (content) {
             case 'login':
