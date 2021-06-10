@@ -102,6 +102,8 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
         }
     }, [mediaScreenL, theme, isDark])
 
+    const [paddingBottom, setPaddingBottom] = useState(null) //paddingBottomとset関数を定義
+
     const main = useMemo(() => {
         switch (content) {
             case 'login':
