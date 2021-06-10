@@ -73,6 +73,9 @@
         background: #222;
         color: #fff;
         border: 1px solid #555;
+        @include mq(sp){
+            border: none;
+        }
     }
     &.is-arranged {
         width: 45%;
