@@ -12,7 +12,7 @@ import { route } from '../functions'
 
 export const AppSettings = createContext(null)
 
-const App = ({ userId, csrf, content, errors, date, notes, note }) => {
+const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     const [autoDarked, setAutoDarked] = useState(Boolean(localStorage.getItem('auto_darked'))) // state.autoDarked
     const darkeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)') // window.matchMediaオブジェクトの値を格納
