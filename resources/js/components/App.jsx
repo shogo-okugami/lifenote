@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo, createContext } from 'react'
 import ReactDOM from 'react-dom'
 import Nav from './Nav'
+import LoginForm from './Auth/LoginForm'
+import RegisterForm from './Auth/RegisterForm'
 import NoteList from './Note/NoteList'
 import Note from './Note/Note'
 import Calendar from './Calendar/Calendar'
@@ -86,22 +88,26 @@ const App = ({ userId, csrf, content, errors, date, notes, note }) => {
             if (resized.current) {
                 const header = document.getElementById('header')
                 header.style.height = header.offsetHeight + 'px'
-                document.body.style.height = 'auto'
-                document.body.style.paddingBottom = document.getElementById('nav').offsetHeight + 'px'
                 resized.current = false
             }
             //PC画面の場合
         } else {
             const header = document.getElementById('header')
             header.style.height = ''
+            const wrapper = document.getElementById('wrapper')
+            wrapper.style.marginLeft = 0
             document.body.style.paddingBottom = ''
             document.body.style.height = ''
             if (resized.current) resized.current = false
         }
-    }, [mediaScreenL])
+    }, [mediaScreenL, theme, isDark])
 
     const main = useMemo(() => {
         switch (content) {
+            case 'login':
+                return <LoginForm csrf={csrf} isLogin={isLogin} />
+            case 'register':
+                return <RegisterForm csrf={csrf} isLogin={isLogin} errors={errors} />
             case 'note':
                 return <Note userId={userId} note={note} csrf={csrf} isDark={isDark} mediaScreenL={mediaScreenL} />
             case 'calendar':
@@ -109,7 +115,7 @@ const App = ({ userId, csrf, content, errors, date, notes, note }) => {
             case 'dialry':
                 return <DialryForm userId={userId} csrf={csrf} note={note} errors={errors} date={date} isDark={isDark} mediaScreenL={mediaScreenL} />
             case 'settings':
-                return <Settings />
+                return <Settings userId={userId} mediaScreenL={mediaScreenL} />
             default:
                 return <NoteList userId={userId} isDark={isDark} notes={notes} mediaScreenL={mediaScreenL} />
         }
@@ -118,12 +124,13 @@ const App = ({ userId, csrf, content, errors, date, notes, note }) => {
     return (
         <AppSettings.Provider value={{ darked: { isDark: isDark, setIsDark: setIsDark }, theme: { theme: theme, setTheme: setTheme, getTheme: getTheme }, font: { setFont: setFont }, autoDarked: { autoDarked: autoDarked, setAutoDarked: setAutoDarked }, csrf: csrf, mediaScreenL: mediaScreenL }} >
             <header id="header" className={'l-header' + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
-                <div className="l-header__inner">
+                <div className={'l-header__title' + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
                     <h1><a className={'c-heading--large' + (isDark ? ' is-dark' : '')} href={route('home')}>lifenote</a></h1>
                 </div>
+                <div className={'l-header__rest' + (isDark ? ' is-dark' : '') + (getTheme(theme))} />
             </header>
             <div id='wrapper' className={'l-wrapper' + (mediaScreenL ? ' is-row' : '') + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
-                <Nav csrf={csrf} isDark={isDark} theme={theme} getTheme={getTheme} mediaScreenL={mediaScreenL} />
+                {isLogin && <Nav csrf={csrf} isDark={isDark} theme={theme} getTheme={getTheme} mediaScreenL={mediaScreenL} setPaddingBottom={setPaddingBottom} />}
                 <main id="main" className="l-wrapper__inner">
                     {main}
                 </main>
