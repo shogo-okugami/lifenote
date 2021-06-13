@@ -1,11 +1,11 @@
 .l-header {
     background: #fff;
-    height: 150px;
+    height: 15%;
     width: 100%;
     display: flex;
     @include mq(sp) {
         padding: 0 30px;
-        height: 50px;
+        height: 10%;
         border-bottom: 1px solid #ddd;
         &.is-dark {
             border-bottom: 1px solid #555;
