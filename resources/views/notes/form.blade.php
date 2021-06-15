@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title','Dialry')
+
 @section('content')
 <div id="app"
  userId='@json(Auth::id())'
