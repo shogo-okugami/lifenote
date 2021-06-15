@@ -27,6 +27,10 @@
         @include btn($bgColor: #6cb2eb);
         &.c-btn--small {
             @include btn($bgColor: #6cb2eb, $padding: 10px 5px);
+            @include mq(sp){
+                padding: 10px;
+                font-size: 16px;
+            }
         }
     }
     &--danger {
