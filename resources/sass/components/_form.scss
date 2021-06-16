@@ -4,13 +4,13 @@
     min-height: 100%;
     border: 1px solid #ddd;
     @include mq(sp) {
-        padding: 0;
+        padding: 25px;
         border: none;
     }
     &__item {
         margin-bottom: 60px;
         @include mq(sp) {
-            margin-bottom: 0;
+            margin-bottom: 30px;
         }
     }
     &__input {
@@ -65,15 +65,15 @@
     &__link {
         color: $cyan;
         display: block;
-        &:hover{
-          text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
         }
     }
     &.is-dark {
         background: #222;
         color: #fff;
         border: 1px solid #555;
-        @include mq(sp){
+        @include mq(sp) {
             border: none;
         }
     }
@@ -83,6 +83,19 @@
         padding: 20px 0 20px 20px;
         & .c-form__item {
             margin-bottom: 30px;
+        }
+    }
+    &--dialry {
+        @extend.c-form;
+        @include mq(sp) {
+            padding: 0;
+            border: none;
+        }
+        &__item {
+            margin-bottom: 60px;
+            @include mq(sp) {
+                margin-bottom: 0;
+            }
         }
     }
 }
