@@ -15,20 +15,19 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+// ホーム
 Route::get('/', 'NoteController@index')->name('home')->middleware('auth');
-
+// 認証
 Auth::routes();
-
-Route::resource('notes', 'NoteController')->except(['index', 'show', 'create'])->middleware('auth');
-
+// ノート作成
 Route::get('notes/create/{date?}', 'NoteController@create')->middleware('auth');
-
-Route::get('notes/{id}', 'NoteController@show')->name('notes.show')->middleware('auth');
-
+// ノート表示、更新、編集、削除
+Route::resource('notes', 'NoteController')->except(['index', 'create'])->middleware('auth');
+// カレンダー
 Route::get('calendar', 'NoteController@indexByCalendar')->name('calendar')->middleware('auth');
-
+// 設定
 Route::get('settings', function () {
     return view('settings');
 })->name('settings')->middleware('auth');
-
-Route::post('delete/{id}','DeleteAccount')->middleware('auth');
+// アカウント削除
+Route::post('delete/{id}', 'DeleteAccount')->middleware('auth');
