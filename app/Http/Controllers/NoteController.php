@@ -9,28 +9,24 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Resources\Note as NoteResource;
 use Carbon\Carbon;
-use DebugBar\DebugBar;
-use Illuminate\Support\Facades\Log;
 
 class NoteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * ユーザーの投稿したノート一覧を取得
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $user_id = $request->input('user_id');
-        $offset = $request->input('page');
+        $userId = Auth::id();
+        $notes = Note::where('user_id', $userId)
+            ->orderBy('date', 'desc')
+            ->offset(0)
+            ->limit(20)
+            ->get();
 
-        return NoteResource::collection(
-            Note::where('user_id', $user_id)
-                ->orderBy('date', 'desc')
-                ->offset($offset)
-                ->limit(20)
-                ->get()
-        );
+        return view('home', ['notes' => $notes]);
     }
 
     public function getNotesByCalendar($id, $date)
@@ -102,9 +98,8 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
-
         $note = Note::updateOrCreate(['user_id' => $request->user_id, 'date' => $request->date], $request->all());
-        return redirect()->route('notes.show', ['id' => $note->id]);
+        return redirect()->route('notes.show', ['note' => $note->id]);
     }
 
     /**
@@ -117,7 +112,6 @@ class NoteController extends Controller
     {
         $note = Note::find($id);
         $this->authorize('view', $note);
-        Log::info($note);
         if (isset($note)) {
 
             return view('notes.note', ['note' => $note]);
