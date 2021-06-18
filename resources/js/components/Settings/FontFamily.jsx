@@ -19,6 +19,8 @@ const FontFamily = ({ setIsOver }) => {
         }
     })()
 
+    const disabled = client === 'iOS' || client === 'Android' || client === null
+
     const fonts = (() => {
         switch (client) {
             case 'windows':
@@ -121,18 +123,21 @@ const FontFamily = ({ setIsOver }) => {
     })()
 
     let font = (() => {
-        if (localStorage.getItem('font')) {
-            const font = fonts.find(element => element.style === localStorage.getItem('font'))
-            return font.name
+        let font = 'System Font'
+        if (!disabled) {
+            if (localStorage.getItem('font')) {
+                font = fonts.find(element => element.style === localStorage.getItem('font'))
+                return font.name
+            } else {
+                return font
+            }
         } else {
-            return 'System Font'
+            return font
         }
     })()
 
 
     const setFont = useContext(AppSettings).font.setFont
-
-    const disabled = client === 'iOS' || client === 'Android' || client === null
 
     const [isShow, setIsShow] = useState(false)
 
