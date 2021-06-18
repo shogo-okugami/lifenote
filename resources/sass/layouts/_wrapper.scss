@@ -1,16 +1,15 @@
 .l-wrapper {
     display: block;
     min-height: 85%;
-    position: relative;
     background: #f8fafc;
-    &--row {
+    &.is-row {
         @extend .l-wrapper;
         display: flex;
         justify-content: space-between;
     }
-    @include mq(sp){
+    @include mq(sp) {
         min-height: 0;
-        height : 80%;
+        height: 100%;
         position: static;
     }
     &__inner {
@@ -18,18 +17,19 @@
         margin: 0 auto;
         width: 65%;
         height: 100%;
-        @include mq(sp){
-            width : 90%;
+        @include mq(sp) {
+            width: 90%;
             width: 100%;
-            padding : 0;
-            margin : 0;
+            padding: 0;
+            margin: 0;
         }
         &--small {
             @extend .l-wrapper__inner;
-            width : 40%;
+            width: 40%;
         }
     }
     &.is-dark {
         background: #111;
     }
+    @include themes($themes, $sub-bg-color: true);
 }
