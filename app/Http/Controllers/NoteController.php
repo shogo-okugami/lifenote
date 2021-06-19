@@ -29,6 +29,25 @@ class NoteController extends Controller
         return view('home', ['notes' => $notes]);
     }
 
+   /**
+    * ノートを指定されたoffsetから20件取得する
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function getMoreIndex(Request $request)
+    {
+        $userId = $request->input('user_id');
+        $offset = $request->input('page');
+
+        $notes = Note::where('user_id', $userId)
+            ->orderBy('date', 'desc')
+            ->offset($offset)
+            ->limit(20)
+            ->get();
+        return response()->json($notes);
+    }
+
     public function getNotesByCalendar($id, $date)
     {
 
