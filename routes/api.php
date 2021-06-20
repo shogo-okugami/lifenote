@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('home', 'NoteController@getMore');
+Route::get('home', 'NoteController@getMoreIndex');
 
 Route::get('users/{id}/note/{date}','NoteController@getNote');
 
