@@ -41,15 +41,19 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
     }
 
     const [theme, setTheme] = useState(localStorage.getItem('theme')) //テーマ定数、set関数を定義
-    const getTheme = (theme, ignored = false) => {
-        //themeがnullではない、またはlightではない場合
-        if (theme !== 'light' || theme !== null) {
-            //ダークモード時にもスタイルを適用する場合
-            if (ignored) {
-                return theme !== 'light' ? ` is-${theme}` : ''
-                //ダークモード時はスタイルを適用しない場合
+    const getTheme = (theme, isLogin = true, ignored = false) => {
+        if (isLogin) {
+            //themeがnullではない、またはlightではない場合
+            if (theme !== 'light' || theme !== null) {
+                //ダークモード時にもスタイルを適用する場合
+                if (ignored) {
+                    return theme !== 'light' ? ` is-${theme}` : ''
+                    //ダークモード時はスタイルを適用しない場合
+                } else {
+                    return !isDark ? theme !== 'light' ? ` is-${theme}` : '' : ''
+                }
             } else {
-                return !isDark ? theme !== 'light' ? ` is-${theme}` : '' : ''
+                return ''
             }
         } else {
             return ''
@@ -57,7 +61,7 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
     }
     const [font, setFont] = useState(localStorage.getItem('font'))
     useEffect(() => {
-        document.body.style.fontFamily = font || ''
+        document.body.style.fontFamily = (isLogin && font) || ''
     }, [font])
     const [windowWidth, setWindowWidth] = useState(document.documentElement.clientWidth) //ウィンドウの横幅
     const resized = useRef(false) //ウィンドウのリサイズ判定
@@ -136,13 +140,13 @@ const App = ({ userId, isLogin, csrf, content, errors, date, notes, note }) => {
 
     return (
         <AppSettings.Provider value={{ darked: { isDark: isDark, setIsDark: setIsDark }, theme: { theme: theme, setTheme: setTheme, getTheme: getTheme }, font: { setFont: setFont }, autoDarked: { autoDarked: autoDarked, setAutoDarked: setAutoDarked }, csrf: csrf, mediaScreenL: mediaScreenL }} >
-            <header id="header" className={'l-header' + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
-                <div className={'l-header__title' + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
-                    <h1><a className={'c-heading--large' + (isDark ? ' is-dark' : '')} href={route('home')}>lifenote</a></h1>
+            <header id="header" className={'l-header' + (isLogin && isDark ? ' is-dark' : '') + (getTheme(theme, isLogin))}>
+                <div className={'l-header__title' + (isLogin && isDark ? ' is-dark' : '') + (getTheme(theme, isLogin))}>
+                    <h1><a className={'c-heading--large' + (isLogin && isDark ? ' is-dark' : '')} href={route('home')}>lifenote</a></h1>
                 </div>
-                <div className={'l-header__rest' + (isDark ? ' is-dark' : '') + (getTheme(theme))} />
+                <div className={'l-header__rest' + (isLogin && isDark ? ' is-dark' : '') + (getTheme(theme, isLogin))} />
             </header>
-            <div id='wrapper' className={'l-wrapper' + (mediaScreenL ? ' is-row' : '') + (isDark ? ' is-dark' : '') + (getTheme(theme))}>
+            <div id='wrapper' className={'l-wrapper' + (mediaScreenL ? ' is-row' : '') + (isLogin && isDark ? ' is-dark' : '') + (getTheme(theme, isLogin))}>
                 {isLogin && <Nav csrf={csrf} isDark={isDark} theme={theme} getTheme={getTheme} mediaScreenL={mediaScreenL} setPaddingBottom={setPaddingBottom} />}
                 <main id="main" className="l-wrapper__inner">
                     {main}
