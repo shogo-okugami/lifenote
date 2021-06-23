@@ -29,11 +29,11 @@ class NoteController extends Controller
         return view('home', ['notes' => $notes]);
     }
 
-   /**
-    * ノートを指定されたoffsetから20件取得する
-    *
-    * @return \Illuminate\Http\Response
-    */
+    /**
+     * ノートを指定されたoffsetから20件取得する
+     *
+     * @return \Illuminate\Http\Response
+     */
 
     public function getMoreIndex(Request $request)
     {
@@ -48,7 +48,7 @@ class NoteController extends Controller
         return response()->json($notes);
     }
 
-    public function getNotesByCalendar($id, $date)
+    public function getNotesByCalendar(int $id, string $date)
     {
 
         $date = explode('-', $date);
@@ -86,7 +86,7 @@ class NoteController extends Controller
         return view('calendar', ['notes' => $notes]);
     }
 
-    public function getNote($id, $date)
+    public function getNote(int $id, string $date)
     {
 
         $note = NoteResource::collection(
@@ -127,7 +127,7 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $note = Note::find($id);
         $this->authorize('view', $note);
@@ -145,7 +145,7 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $note = Note::find($id);
         $this->authorize('edit', $note);
@@ -172,12 +172,12 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreNoteRequest $request, $id)
+    public function update(StoreNoteRequest $request, int $id)
     {
         $note = Note::find($id);
         $this->authorize('update', $note);
         $note->update($request->all());
-        return redirect()->route('notes.show', ['id' => $note->id]);
+        return redirect()->route('notes.show', ['note' => $note->id]);
     }
 
     /**
@@ -186,7 +186,7 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $note = Note::find($id);
         $this->authorize('delete', $note);
