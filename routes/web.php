@@ -19,10 +19,10 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', 'NoteController@index')->name('home')->middleware('auth');
 // 認証
 Auth::routes();
-// ノート作成
-Route::get('notes/create/{date?}', 'NoteController@create')->middleware('auth');
 // ノート表示、更新、編集、削除
-Route::resource('notes', 'NoteController')->except(['index', 'create'])->middleware('auth');
+Route::resource('notes', 'NoteController')->except(['index'])->middleware('auth')->where(['notes' => '[0-9]+']);
+// ノート作成
+Route::get('notes/create/{date?}', 'NoteController@create')->middleware('auth')->where('date', '\d{4}-\d{2}-\d{2}');
 // カレンダー
 Route::get('calendar', 'NoteController@indexByCalendar')->name('calendar')->middleware('auth');
 // 設定
@@ -30,4 +30,4 @@ Route::get('settings', function () {
     return view('settings');
 })->name('settings')->middleware('auth');
 // アカウント削除
-Route::post('delete/{id}', 'DeleteAccount')->middleware('auth');
+Route::post('delete/{id}', 'DeleteAccount')->middleware('auth')->where('id', '[0-9]+');
