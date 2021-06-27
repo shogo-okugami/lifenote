@@ -62,7 +62,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
                 const res = await fetch(`api/users/${userId}/notes/${String(param.year) + '-' + (param.month < 10 ? '0' + String(param.month) : String(param.month))}`)
                 const resp = await res.json()
                 setDate(new Date(date.year, date.month))
-                setNotes(resp.data)
+                setNotes(resp)
             } catch (error) {
                 console.log(error)
             }
@@ -89,7 +89,7 @@ const Calendar = ({ userId, mediaScreenL, notes: index, errors, csrf, date: defa
                 const res = await fetch(`api/users/${userId}/notes/${String(param.year) + '-' + (param.month < 10 ? '0' + String(param.month) : String(param.month))}`)
                 const resp = await res.json()
                 setDate(new Date(date.year, date.month))
-                setNotes(resp.data)
+                setNotes(resp)
             } catch (error) {
                 console.log(error)
             }
