@@ -14,7 +14,7 @@ const YearSwitch = ({ userId, year, month, setDate, setNotes, isDark }) => {
                 const res = await fetch(`api/users/${userId}/notes/${String(year) + '-' + (month < 10 ? '0' + String(month) : String(month))}`)
                 const resp = await res.json()
                 setDate(new Date(year, month))
-                setNotes(resp.data)
+                setNotes(resp)
             } catch (error) {
                 console.log(error)
             }
@@ -31,7 +31,7 @@ const YearSwitch = ({ userId, year, month, setDate, setNotes, isDark }) => {
                 const res = await fetch(`api/users/${userId}/notes/${String(year) + '-' + (month < 10 ? '0' + String(month) : String(month))}`)
                 const resp = await res.json()
                 setDate(new Date(year, month))
-                setNotes(resp.data)
+                setNotes(resp)
             } catch (error) {
                 console.log(error)
             }
