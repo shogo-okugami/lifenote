@@ -17,7 +17,7 @@ const MonthMenu = ({ userId, year, month, setDate, setNotes , isDark }) => {
                 const res = await fetch(`api/users/${userId}/notes/${String(year) + '-' + (month + 1 < 10 ? '0' + String(month + 1) : String(month + 1))}`)
                 const resp = await res.json()
                 setDate(new Date(year, month))
-                setNotes(resp.data)
+                setNotes(resp)
             } catch (error) {
                 console.log(error)
             }
