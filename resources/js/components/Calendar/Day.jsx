@@ -10,8 +10,8 @@ const Day = ({ userId, year, month, day, dayOfweek, disabled, isDark, mediaScree
         try {
             const res = await fetch(`api/users/${paramId}/note/${paramDate}`)
             const resp = await res.json()
-            if (resp.data.length) {
-                const id = resp.data[0].id
+            if (resp.length) {
+                const id = resp[0].id
                 window.location.href = route('notes.show', [id])
             } else {
                 window.location.href = route('notes.create', [paramDate])
@@ -29,9 +29,9 @@ const Day = ({ userId, year, month, day, dayOfweek, disabled, isDark, mediaScree
         try {
             const res = await fetch(`api/users/${paramId}/note/${paramDate}`)
             const resp = await res.json()
-            if (resp.data.length) {
+            if (resp.length) {
                 setInputDateValue(today)
-                setNote(resp.data[0])
+                setNote(resp[0])
                 setContent(true)
             } else {
                 setInputDateValue(paramDate)
