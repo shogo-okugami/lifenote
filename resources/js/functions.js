@@ -73,4 +73,8 @@ const getTheme = ({ theme, isDark, isLogin = true, ignored = false }) => {
     }
 }
 
-export { nl2br, route, asset, getTheme }
+const getDark = (isDark, isLogin = true) => {
+    return isLogin ? isDark ? ' is-dark' : '' : ''
+}
+
+export { nl2br, route, asset, getTheme, getDark }
