@@ -45,11 +45,16 @@ const route = (name, params) => {
 }
 
 //ファイルパス出力関数
-const asset = (value) => {
-    return domain + value
+const asset = (value, isDark) => {
+    let result = domain + value
+    if (isDark) {
+        let fileName = result.match(/([^/]+)\./)[1];
+        result = result.replace(fileName, fileName + '--darked')
+    }
+    return result
 }
 
-const getTheme = ({theme, isDark, isLogin = true, ignored = false}) => {
+const getTheme = ({ theme, isDark, isLogin = true, ignored = false }) => {
     if (isLogin) {
         //themeがnullではない、またはlightではない場合
         if (theme !== 'light' || theme !== null) {
