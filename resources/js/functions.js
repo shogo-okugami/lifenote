@@ -49,4 +49,23 @@ const asset = (value) => {
     return domain + value
 }
 
-export { nl2br, route, asset }
+const getTheme = ({theme, isDark, isLogin = true, ignored = false}) => {
+    if (isLogin) {
+        //themeがnullではない、またはlightではない場合
+        if (theme !== 'light' || theme !== null) {
+            //ダークモード時にもスタイルを適用する場合
+            if (ignored) {
+                return theme !== 'light' ? ` is-${theme}` : ''
+                //ダークモード時はスタイルを適用しない場合
+            } else {
+                return !isDark ? theme !== 'light' ? ` is-${theme}` : '' : ''
+            }
+        } else {
+            return ''
+        }
+    } else {
+        return ''
+    }
+}
+
+export { nl2br, route, asset, getTheme }
