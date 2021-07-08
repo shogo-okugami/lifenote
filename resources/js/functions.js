@@ -77,4 +77,7 @@ const getDark = (isDark, isLogin = true) => {
     return isLogin ? isDark ? ' is-dark' : '' : ''
 }
 
-export { nl2br, route, asset, getTheme, getDark }
+//クラス名取得関数
+const getClassName = (conditions, className) => conditions ? ` ${className}` : ''
+
+export { nl2br, route, asset, getTheme, getDark, getClassName }
