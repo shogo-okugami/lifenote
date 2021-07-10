@@ -26,6 +26,7 @@
         width: 30%;
         position: relative;
         &__menu {
+            display: none;
             width: 100%;
             position: absolute;
             top: 100%;
@@ -33,6 +34,9 @@
             background: #fff;
             border: 1px solid #ddd;
             z-index: 1;
+            &.is-open {
+                display: block;
+            }
             & li {
                 width: 100%;
                 padding: 5px;
@@ -76,7 +80,7 @@
         }
         &__box {
             display: none;
-            &--showed {
+            &.is-show {
                 position: absolute;
                 width: 15%;
                 top: 0;
