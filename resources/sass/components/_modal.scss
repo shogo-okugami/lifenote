@@ -1,5 +1,5 @@
 .c-modal {
-    position: absolute;
+    position: fixed;
     padding: 60px 40px;
     background: #fff;
     width: auto;
@@ -133,7 +133,7 @@
         width: 40%;
         cursor: pointer;
         &__option {
-            padding: 5px 40px;
+            padding: 10px 40px;
             border-bottom: 1px solid #ddd;
             &:hover {
                 background: #ddd;
