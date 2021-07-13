@@ -4,9 +4,12 @@
     width: 100%;
     display: flex;
     @include mq(sp) {
-        padding: 0 30px;
-        height: 10%;
+        position: fixed;
+        top: 0;
+        padding: 10px 30px;
+        height: 60px;
         border-bottom: 1px solid #ddd;
+        z-index: 1;
         &.is-dark {
             border-bottom: 1px solid #555;
         }
@@ -27,7 +30,7 @@
         @include themes($themes, $border-color: #fff);
         @include mq(sp) {
             z-index: 1;
-            padding: 10px 0;
+            padding: 5px 0;
             border: none;
             &.is-dark {
                 border: none;
