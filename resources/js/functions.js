@@ -44,6 +44,8 @@ const route = (name, params) => {
     return result
 }
 
+const redirect = (path, params) => window.location.href = route(path, params)
+
 //ファイルパス出力関数
 const asset = (value, isDark) => {
     let result = domain + value
@@ -80,4 +82,4 @@ const getDark = (isDark, isLogin = true) => {
 //クラス名取得関数
 const getClassName = (conditions, className) => conditions ? ` ${className}` : ''
 
-export { nl2br, route, asset, getTheme, getDark, getClassName }
+export { nl2br, route, redirect, asset, getTheme, getDark, getClassName }
