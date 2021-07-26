@@ -497,6 +497,10 @@ body {
     @include mq(sp) {
         padding: 60px 0 50px;
     }
+    &.is-dark {
+        background: #111;
+    }
+    @include themes($themes, $sub-bg-color: true);
 }
 
 html {
