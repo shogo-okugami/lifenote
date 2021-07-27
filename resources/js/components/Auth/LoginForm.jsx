@@ -1,22 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { route } from '../../functions'
+import { app } from '../App/useApp'
 
-const LoginForm = ({ csrf }) => {
+const LoginForm = ({ errors }) => {
+
+    const { csrf } = useContext(app)
+
     return (
         <div className="l-wrapper__inner">
             <form method="POST" className="c-form" action={route('login')}>
                 <input type='hidden' name='_token' value={csrf} readOnly />
                 <div className="c-form__item">
-                    <input id="email" type="text" className="c-form__input @error('email') is-invalid @enderror" placeholder="E-mail Adress" name="email" defaultValue="" required />
-                    <span className="invalid-feedback" role="alert">
-                        <strong>{ }</strong>
-                    </span>
+                    <input id="email" type="text" className="c-form__input" placeholder="E-mail Adress" name="email" defaultValue="" required />
+                    <div className="c-form__message">{errors.email}</div>
                 </div>
                 <div className="c-form__item u-mb0">
-                    <input id="password" type="password" className="c-form__input @error('password') is-invalid @enderror" placeholder="Password" name="password" required autoComplete="current-password" />
-                    <span className="invalid-feedback" role="alert">
-                        <strong>{ }</strong>
-                    </span>
+                    <input id="password" type="password" className="c-form__input" placeholder="Password" name="password" required autoComplete="current-password" />
+                    <div className="c-form__message"></div>
                 </div>
                 <div className="c-form__item u-mb0">
                     <div className="c-form__password__check">
