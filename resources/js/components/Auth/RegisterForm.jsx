@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { route } from '../../functions'
+import { app } from '../App/useApp'
 
-const RegisterForm = ({ csrf, errors }) => {
+const RegisterForm = ({ errors }) => {
+
+    const { csrf } = useContext(app)
 
     return (
         <div className="l-wrapper__inner">
