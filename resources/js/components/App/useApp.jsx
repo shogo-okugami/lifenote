@@ -8,11 +8,12 @@ import Calendar from '../Calendar/Calendar/Calendar'
 import DialryForm from '../Form/DialryForm/DialryForm'
 import Settings from '../Settings/Settings/Settings'
 import App from './App'
+import { getDark, getTheme } from "../../functions"
 
 const AppContext = createContext(null)
 const app = AppContext
 
-const useApp = ( isLogin, csrf, content, errors, date, notes, note) => {
+const useApp = (isLogin, csrf, content, errors, date, notes, note) => {
 
     const [autoDarked, setAutoDarked] = useState(Boolean(localStorage.getItem('auto_darked'))) // state.autoDarked
     const darkeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)') // window.matchMediaオブジェクトの値を格納
@@ -41,6 +42,13 @@ const useApp = ( isLogin, csrf, content, errors, date, notes, note) => {
     }
 
     const [theme, setTheme] = useState(localStorage.getItem('theme')) //テーマ定数、set関数を定義
+
+    useEffect(() => {
+        const colored = getTheme({ theme, isDark, isLogin, ignored: true }) || getDark(isDark, isLogin)
+        const className = colored && (getDark(isDark, isLogin) || getTheme({ theme, isDark, isLogin })).substring(1)
+        colored && document.body.classList.add(className)
+        return () => colored && document.body.classList.remove(className)
+    }, [isDark, theme])
 
     const [font, setFont] = useState(localStorage.getItem('font'))
     useEffect(() => {
@@ -89,25 +97,19 @@ const useApp = ( isLogin, csrf, content, errors, date, notes, note) => {
         }
     }, [mediaScreenL, theme, isDark])
 
-    const [paddingBottom, setPaddingBottom] = useState(null) //paddingBottomとset関数を定義
-
     // ホーム画面又は設定画面でbodyのheightをautoに指定
-    // 設定画面でボトムナビゲーションを表示する際はpaddingBottomを指定してbodyを底上げする
     useEffect(() => {
-        if (content === 'notes' || content === 'settings') {
+        if (content === 'settings') {
             document.body.style.height = 'auto'
-            if (content === 'settings') {
-                document.body.style.paddingBottom = paddingBottom + 'px'
-            }
         }
-    }, [content, paddingBottom])
+    }, [content,isDark])
 
     const main = useMemo(() => {
         switch (content) {
             case 'login':
-                return <LoginForm csrf={csrf} isLogin={isLogin} />
+                return <LoginForm errors={errors} />
             case 'register':
-                return <RegisterForm csrf={csrf} isLogin={isLogin} errors={errors} />
+                return <RegisterForm csrf={csrf} errors={errors} />
             case 'note':
                 return <Note note={note} />
             case 'calendar':
@@ -121,7 +123,7 @@ const useApp = ( isLogin, csrf, content, errors, date, notes, note) => {
         }
     }, [autoDarked, isDark, mediaScreenL])
 
-    return { AppContext, isDark, setIsDark, theme, setTheme, setFont, autoDarked, setAutoDarked, csrf, mediaScreenL, main, setPaddingBottom }
+    return { AppContext, isDark, setIsDark, theme, setTheme, setFont, autoDarked, setAutoDarked, csrf, mediaScreenL, main }
 }
 
 const Element = document.getElementById('app');
