@@ -22,7 +22,7 @@ const ThemeSetting = ({ setIsOver }) => {
                     <span onClick={() => {
                         setIsShow(false)
                         setIsOver(false)
-                    }} className='c-modal__close'><img src={asset('/images/close.svg', isDark)} /></span>
+                    }} className={'c-modal__close' + getDark(isDark)}><img src={asset('/images/close.svg', isDark)} /></span>
                     <ul>
                         {
                             themes.map((theme, index) => <li className={'c-modal__option' + (getDark(isDark)) + (getTheme({ theme, isDark, ignored: true }))} onClick={() => handleClick(theme)} key={index}><span>{theme}</span></li>)
