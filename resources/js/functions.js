@@ -82,4 +82,7 @@ const getDark = (isDark, isLogin = true) => {
 //クラス名取得関数
 const getClassName = (conditions, className) => conditions ? ` ${className}` : ''
 
-export { nl2br, route, redirect, asset, getTheme, getDark, getClassName }
+//スクロール・ホイール停止関数
+const disableScroll = event => event.preventDefault()
+
+export { nl2br, route, redirect, asset, getTheme, getDark, getClassName, disableScroll }
