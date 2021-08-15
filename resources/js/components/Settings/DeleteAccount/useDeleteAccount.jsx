@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect, useContext, useCallback } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import { app } from '../../App/useApp'
+import { disableScroll } from '../../../functions'
 
 const useDeleteAccount = () => {
 
@@ -17,9 +18,7 @@ const useDeleteAccount = () => {
         return () => document.removeEventListener(event, disableScroll)
     }, [isShow])
 
-    const disableScroll = useCallback(event => event.preventDefault(), [])
-
-    const handleMouseDown = useCallback((form = document.getElementById('delete-form')) => form.submit(), [])
+    const handleMouseDown = (form = document.getElementById('delete-form')) => form.submit()
 
     return { userId, isDark, getDark, csrf, mediaScreenL, isShow, setIsShow, modalRef, handleMouseDown }
 }
