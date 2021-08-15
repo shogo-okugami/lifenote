@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef, useContext, useCallback } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import { app } from '../../App/useApp'
+import { disableScroll } from '../../../functions'
 
 const useThemeSetting = (setIsOver) => {
 
-    const { darked: { isDark }, theme: { theme, setTheme } } = useContext(app)
+    const { darked: { isDark }, theme: { theme, setTheme }, mediaScreenL } = useContext(app)
 
     const themes = ['light', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'indigo', 'pink', 'teal', 'brown', 'cyan']
 
@@ -11,15 +12,20 @@ const useThemeSetting = (setIsOver) => {
 
     const modalRef = useRef(null)
 
-    const handleClick = useCallback((theme) => {
+    const handleClick = (theme) => {
         localStorage.setItem('theme', theme)
         setTheme(theme)
         setIsShow(false)
         setIsOver(false)
-    }, [])
+    }
 
     useEffect(() => {
-        isShow && modalRef.current.focus()
+        const event = 'mousewheel'
+        if (isShow) {
+            modalRef.current.focus()
+            mediaScreenL && document.addEventListener(event, disableScroll, { passive: false })
+        }
+        return () => document.removeEventListener(event, disableScroll)
     }, [isShow])
 
     return { isDark, theme, themes, isShow, setIsShow, modalRef, handleClick }
