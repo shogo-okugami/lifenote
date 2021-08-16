@@ -28,8 +28,11 @@
             position: relative;
             top: 0;
             right: 0;
-            height: 5%;
+            height: 40px;
             border-bottom: 1px solid #ddd;
+            &.is-dark {
+                border-color: #555;
+            }
         }
         & img {
             width: 15px;
@@ -61,9 +64,9 @@
                 @include btn($bgColor: #bdbcbc, $padding: 5px, $fontSize: 16px, $width: 40%);
             }
         }
-        &.is-dark{
+        &.is-dark {
             background: #222;
-            color : #fff;
+            color: #fff;
         }
         @include mq(sp) {
             width: 80%;
@@ -91,6 +94,7 @@
 
 .p-settings__group--color {
     & .c-modal {
+        position: absolute;
         & ul {
             display: flex;
             flex-wrap: wrap;
@@ -123,6 +127,11 @@
                 border: 0;
             }
             @include themes($themes);
+        }
+        @include mq(sp) {
+            &.is-dark {
+                border: none;
+            }
         }
     }
 }
