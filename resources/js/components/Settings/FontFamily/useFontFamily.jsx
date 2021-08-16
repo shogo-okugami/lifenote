@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, useContext, useCallback } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import { app } from '../../App/useApp'
+import { disableScroll } from '../../../functions'
 
 const useFontFamily = (setIsOver) => {
 
@@ -8,7 +9,12 @@ const useFontFamily = (setIsOver) => {
     const modalRef = useRef(null)
 
     useEffect(() => {
-        isShow && modalRef.current.focus()
+        const event = 'mousewheel'
+        if (isShow) {
+            modalRef.current.focus()
+            mediaScreenL && document.addEventListener(event, disableScroll, { passive: false })
+        }
+        return () => document.removeEventListener(event, disableScroll)
     }, [isShow])
 
     const client = (() => {
@@ -143,12 +149,12 @@ const useFontFamily = (setIsOver) => {
         }
     })()
 
-    const handleClick = useCallback((font) => {
+    const handleClick = (font) => {
         localStorage.setItem('font', font)
         setFont(font)
         setIsShow(false)
         setIsOver(false)
-    }, [])
+    }
 
     return { isDark, mediaScreenL, client, disabled, modalRef, font, isShow, setIsShow, fonts, handleClick }
 
