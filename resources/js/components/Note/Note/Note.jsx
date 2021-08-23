@@ -17,7 +17,7 @@ const Note = ({ flag, note }) => {
                             <a href={route('notes.edit', [note.id])} />
                         </span>}
                         <span className={'p-note__menu__icon'} >
-                            <img src={asset('/images/delete.svg', isDark || theme)} />
+                            <img src={asset('/images/delete.svg', isDark)} />
                             <form method="post" action={route('notes.destroy', [note.id])}>
                                 <input type='hidden' name='_token' value={csrf} />
                                 <input type='hidden' name='_method' value='DELETE' />
