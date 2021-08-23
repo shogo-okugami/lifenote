@@ -13,7 +13,8 @@ const useThemeSetting = (setIsOver) => {
     const modalRef = useRef(null)
 
     const handleClick = (theme) => {
-        localStorage.setItem('theme', theme)
+        //テーマがlightの場合は空文字を設定する
+        localStorage.setItem('theme', theme !== 'light' ? theme : '')
         setTheme(theme)
         setIsShow(false)
         setIsOver(false)
