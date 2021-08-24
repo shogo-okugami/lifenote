@@ -37,6 +37,8 @@ class NoteController extends Controller
     /**
      * ノートを指定されたoffsetから20件取得する
      *
+     * @param Illuminate\Http\Request
+     *
      * @return \Illuminate\Http\Response
      */
 
@@ -53,17 +55,24 @@ class NoteController extends Controller
         return response()->json($notes);
     }
 
+    /**
+     * @param int $id
+     * @param string $date
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getNotesByCalendar(int $id, string $date)
     {
+        //日付の年と月を取得する
         $date = explode('-', $date);
         $year = (int)($date[0]);
         $month = (int)($date[1]);
-        $date = Carbon::createFromDate($year, $month, 1);
-        $startOfMonth = Carbon::createFromDate($year, $month, 1)->startOfMonth();
-        $startOfCalendar = $startOfMonth->subDays($startOfMonth->dayOfWeek)->toDateString();
-        $lastOfMonth = Carbon::createFromDate($year, $month, 1)->lastOfMonth();
-        $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
+        $startOfMonth = Carbon::createFromDate($year, $month, 1)->startOfMonth(); //月初の日付を取得
+        $startOfCalendar = $startOfMonth->subDays($startOfMonth->dayOfWeek)->toDateString(); //カレンダーの始まりの日付を取得
+        $lastOfMonth = Carbon::createFromDate($year, $month, 1)->lastOfMonth(); //月末の日付を取得
+        $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString(); //カレンダーの終わりの日付を取得
 
+        // 選択されたカレンダーの日付の範囲でノートを取得する
         $notes = Note::where('user_id', $id)
             ->whereBetween('date', [$startOfCalendar, $lastOfCalendar])
             ->orderBy('date')
@@ -71,15 +80,21 @@ class NoteController extends Controller
         return response()->json($notes);
     }
 
+    /**
+     * 現在のカレンダーによるノートの一覧を取得する
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function indexByCalendar()
     {
-        $user_id = Auth::id();
+        $user_id = Auth::id(); //ユーザーIDを取得
 
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $startOfCalendar = $startOfMonth->subDays($startOfMonth->dayOfWeek)->toDateString();
-        $lastOfMonth = Carbon::now()->lastOfMonth();
-        $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
+        $startOfMonth = Carbon::now()->startOfMonth(); //月初の日付を取得
+        $startOfCalendar = $startOfMonth->subDays($startOfMonth->dayOfWeek)->toDateString(); //カレンダーの始まりの日付を取得
+        $lastOfMonth = Carbon::now()->lastOfMonth(); //月末の日付を取得
+        $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString(); //カレンダーの終わりの日付を取得
 
+        // 現在のカレンダーの日付の範囲でノートを取得する
         $notes = Note::where('user_id', $user_id)
             ->whereBetween('date', [$startOfCalendar, $lastOfCalendar])
             ->orderBy('date')
@@ -88,8 +103,16 @@ class NoteController extends Controller
         return view('calendar', ['notes' => $notes]);
     }
 
+    /**
+     * ユーザーが選択した日付のノートを取得
+     * @param int $id
+     * @param string $date
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getNote(int $id, string $date)
     {
+        // ユーザーIDと日付に合致するノートを取得
         $note = Note::where('user_id', $id)
             ->whereDate('date', $date)
             ->get();
