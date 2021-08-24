@@ -57,15 +57,4 @@ class NotePolicy
         return $user->id === $note->user_id;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Note  $note
-     * @return mixed
-     */
-    public function restore(User $user, Note $note)
-    {
-        //
-    }
 }
