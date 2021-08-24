@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 use App\Note;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreNoteRequest;
-use App\Http\Resources\Note as NoteResource;
 use Carbon\Carbon;
 
 class NoteController extends Controller
 {
+
+    public function __construct()
+    {
+        // CRUDメソッド実行前に認可処理を実行
+        $this->authorizeResource(Note::class, 'note');
+    }
     /**
      * ユーザーの投稿したノート一覧を取得
      *
@@ -50,7 +55,6 @@ class NoteController extends Controller
 
     public function getNotesByCalendar(int $id, string $date)
     {
-
         $date = explode('-', $date);
         $year = (int)($date[0]);
         $month = (int)($date[1]);
@@ -60,17 +64,15 @@ class NoteController extends Controller
         $lastOfMonth = Carbon::createFromDate($year, $month, 1)->lastOfMonth();
         $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
 
-        return NoteResource::collection(
-            Note::where('user_id', $id)
-                ->whereBetween('date', [$startOfCalendar, $lastOfCalendar])
-                ->orderBy('date')
-                ->get()
-        );
+        $notes = Note::where('user_id', $id)
+            ->whereBetween('date', [$startOfCalendar, $lastOfCalendar])
+            ->orderBy('date')
+            ->get();
+        return response()->json($notes);
     }
 
     public function indexByCalendar()
     {
-
         $user_id = Auth::id();
 
         $startOfMonth = Carbon::now()->startOfMonth();
@@ -78,118 +80,97 @@ class NoteController extends Controller
         $lastOfMonth = Carbon::now()->lastOfMonth();
         $lastOfCalendar = $lastOfMonth->addDays(6 - $lastOfMonth->dayOfWeek)->toDateString();
 
-        $notes = NoteResource::collection(Note::where('user_id', $user_id)
+        $notes = Note::where('user_id', $user_id)
             ->whereBetween('date', [$startOfCalendar, $lastOfCalendar])
             ->orderBy('date')
-            ->get());
+            ->get();
 
         return view('calendar', ['notes' => $notes]);
     }
 
     public function getNote(int $id, string $date)
     {
+        $note = Note::where('user_id', $id)
+            ->whereDate('date', $date)
+            ->get();
 
-        $note = NoteResource::collection(
-            Note::where('user_id', $id)
-                ->whereDate('date', $date)
-                ->get()
-        );
-
-        return $note;
+        return response()->json($note);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * ノート投稿フォームを表示
      *
+     * @param string $date ノートの日付
      * @return \Illuminate\Http\Response
      */
     public function create(string $date = null)
     {
-        $date = $date ?: date('Y-m-d');
+        $date = $date ?: date('Y-m-d'); // 引数がnullの場合は現在の日付を取得する
         return view('notes.form', ['note' => null, 'date' => $date]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * ノートを保存
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreNoteRequest $request)
     {
+        // 投稿した日付と同じ日付のノートが存在する場合は更新、存在しない場合は作成する
         $note = Note::updateOrCreate(['user_id' => $request->user_id, 'date' => $request->date], $request->all());
         return redirect()->route('notes.show', ['note' => $note->id]);
     }
 
     /**
-     * Display the specified resource.
+     * ノートを表示
      *
-     * @param  int  $id
+     * @param  Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(Note $note)
     {
-        $note = Note::find($id);
-        $this->authorize('view', $note);
-        if (isset($note)) {
-
-            return view('notes.note', ['note' => $note]);
-        } else {
-            return redirect()->route('home');
-        }
+        return view('notes.note', ['note' => $note]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * ノート編集フォームを表示
      *
-     * @param  int  $id
+     * @param  Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $id)
+    public function edit(Note $note)
     {
-        $note = Note::find($id);
-        $this->authorize('edit', $note);
-        $date = $note->date->toDateString();
-
-        if (isset($note)) {
-
-            return view(
-                'notes.form',
-                [
-                    'note' => $note,
-                    'date' => $date,
-                ]
-            );
-        } else {
-            return redirect()->route('home');
-        }
+        return view(
+            'notes.form',
+            [
+                'note' => $note,
+                'date' => $note->date->toDateString(),
+            ]
+        );
     }
 
     /**
-     * Update the specified resource in storage.
+     * ノートを更新
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreNoteRequest $request, int $id)
+    public function update(StoreNoteRequest $request, Note $note)
     {
-        $note = Note::find($id);
-        $this->authorize('update', $note);
         $note->update($request->all());
         return redirect()->route('notes.show', ['note' => $note->id]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * ノートを削除
      *
-     * @param  int  $id
+     * @param  Note $note
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy(Note $note)
     {
-        $note = Note::find($id);
-        $this->authorize('delete', $note);
         $note->delete();
 
         return redirect()->route('home');
