@@ -10,8 +10,14 @@ class NotePolicy
 {
     use HandlesAuthorization;
 
+    // ノート一覧表示の認可処理
+    public function viewAny()
+    {
+        return true;
+    }
+
     /**
-     * Determine whether the user can view the model.
+     * ノート閲覧の認可処理
      *
      * @param  \App\User  $user
      * @param  \App\Note  $note
@@ -22,12 +28,13 @@ class NotePolicy
         return $user->id === $note->user_id;
     }
 
-    public function edit(User $user, Note $note)
+    public function create()
     {
-        return $user->id === $note->user_id;
+        return true;
     }
+
     /**
-     * Determine whether the user can update the model.
+     * ノート更新の認可処理
      *
      * @param  \App\User  $user
      * @param  \App\Note  $note
@@ -39,7 +46,7 @@ class NotePolicy
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * ノート削除の認可処理
      *
      * @param  \App\User  $user
      * @param  \App\Note  $note
